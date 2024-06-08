@@ -27,6 +27,7 @@
 #include "dsi-panel-rm67195-amoled-fhd-cmd.dtsi"
 #include "dsi-panel-lgd-incell-sw49106-fhd-video.dtsi"
 #include "dsi-panel-hx8399c-fhd-plus-video.dtsi"
+#include "dsi-panel-ssd2092-truly-1080p-video.dtsi"
 
 &soc {
 	dsi_panel_pwr_supply: dsi_panel_pwr_supply {
@@ -187,6 +188,17 @@
 	qcom,mdss-dsi-max-refresh-rate = <60>;
 	qcom,mdss-dsi-pan-enable-dynamic-fps;
 	qcom,mdss-dsi-pan-fps-update = "dfps_immediate_porch_mode_vfp";
+};
+
+&dsi_ssd2092_truly_1080p_video {
+	qcom,mdss-dsi-panel-timings-phy-v2 = [25 20 09 0a 06 03 04 a0
+		25 20 09 0a 06 03 04 a0
+		25 20 09 0a 06 03 04 a0
+		25 20 09 0a 06 03 04 a0
+		25 1f 08 0a 06 03 04 a0];
+	qcom,mdss-dsi-min-refresh-rate = <48>;
+	qcom,mdss-dsi-max-refresh-rate = <60>;
+	qcom,mdss-dsi-panel-status-check-mode = "te_signal_check";
 };
 
 &dsi_nt35597_truly_dsc_video {

@@ -185,3 +185,4 @@ obj-$(CONFIG_BIF)		+= bif/
 obj-$(CONFIG_SENSORS_SSC)	+= sensors/
 obj-$(CONFIG_ESOC)              += esoc/
 obj-$(CONFIG_TEE)		+= tee/
+obj-$(CONFIG_SND_SOC_TAS2560_STEREO)	+= tas_calib/
