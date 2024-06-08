@@ -15,7 +15,7 @@
 
 #include "sdm660-htc_iml.dtsi"
 #include "sdm660-mtp-htc_iml.dtsi"
-#include "sdm660-external-codec.dtsi"
+#include "sdm660-internal-codec.dtsi"
 #include "synaptics-dsx-i2c.dtsi"
 
 / {
