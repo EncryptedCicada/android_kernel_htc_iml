@@ -250,15 +250,13 @@
 &soc {
 
 	goodix_fp {
-	compatible = "goodix,fingerprint";
-	interrupt-parent = <&tlmm>;
-	interrupt = <72 0x0>;
-        vcc_spi_supply = <&pm660_l16>;
-	vcc_ana_supply = <&pm660_l16>;
-	vdd_io-supply = <&pm660_l16>;
-	fp-gpio-irq = <&tlmm 72 0x00>;
-	fp-gpio-reset = <&tlmm 20 0x00>;
-	status = "okay";
+		compatible = "goodix,fingerprint";
+		interrupt-parent = <&tlmm>;
+		interrupt = <72 0x0>;
+		vdd_ana-supply = <&pm660l_l3>;
+		fp-gpio-irq = <&tlmm 72 0x00>;
+		fp-gpio-reset = <&tlmm 20 0x00>;
+		status = "okay";
 	};
 
 	hall_switch {
