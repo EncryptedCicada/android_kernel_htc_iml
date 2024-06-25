@@ -11,6 +11,7 @@
  */
 
 &soc {
+	/* Check Done */
 	ufsphy1: ufsphy@1da7000 {
 		compatible = "qcom,ufs-phy-qmp-v3-660";
 		reg = <0x1da7000 0xdb8>;
@@ -22,9 +23,14 @@
 		clocks = <&clock_rpmcc RPM_LN_BB_CLK1>,
 			<&clock_gcc GCC_UFS_CLKREF_CLK>,
 			<&clock_gcc GCC_UFS_PHY_AUX_CLK>;
-		status = "disabled";
+		status = "ok";
+		vdda-phy-supply = <&pm660l_l1>;
+		vdda-pll-supply = <&pm660_l10>;
+		vdda-phy-max-microamp = <51400>;
+		vdda-pll-max-microamp = <14200>;
 	};
 
+	/* Check Done */
 	ufs_ice: ufsice@1db0000 {
 		compatible = "qcom,ice";
 		reg = <0x1db0000 0x8000>;
@@ -48,6 +54,7 @@
 		qcom,instance-type = "ufs";
 	};
 
+	/* Check Done */
 	sdcc1_ice: sdcc1ice@c0c8000 {
 		compatible = "qcom,ice";
 		reg = <0xc0c8000 0x8000>;
@@ -70,6 +77,7 @@
 		qcom,instance-type = "sdcc";
 	};
 
+	/* Check Done */
 	ufs1: ufshc@1da4000 {
 		compatible = "qcom,ufshc";
 		reg = <0x1da4000 0x3000>;
@@ -137,10 +145,18 @@
 
 		resets = <&clock_gcc GCC_UFS_BCR>;
 		reset-names = "core_reset";
-
-		status = "disabled";
+		vdd-hba-supply = <&gdsc_ufs>;
+		vdd-hba-fixed-regulator;
+		vcc-supply = <&pm660l_l4>;
+		vccq2-supply = <&pm660_l8>;
+		vcc-max-microamp = <500000>;
+		vccq2-max-microamp = <600000>;
+		qcom,vddp-ref-clk-supply = <&pm660_l1>;
+		qcom,vddp-ref-clk-max-microamp = <100>;
+		status = "ok";
 	};
 
+	/* Check Done */
 	usb3: ssusb@a800000 {
 		compatible = "qcom,dwc-usb3-msm";
 		reg = <0x0a800000 0xfc100>,
@@ -187,6 +203,7 @@
 		resets = <&clock_gcc GCC_USB_30_BCR>;
 		reset-names = "core_reset";
 
+		/* Check Done */
 		dwc3@a800000 {
 			compatible = "snps,dwc3";
 			reg = <0x0a800000 0xc8d0>;
@@ -202,6 +219,7 @@
 			snps,hird-threshold = /bits/ 8 <0x0>;
 		};
 
+		/* Check Done */
 		qcom,usbbam@a904000 {
 			compatible = "qcom,usb-bam-msm";
 			reg = <0x0a904000 0x17000>;
@@ -218,6 +236,7 @@
 			qcom,usb-bam-max-mbps-superspeed = <3600>;
 			qcom,reset-bam-on-connect;
 
+			/* Check Done */
 			qcom,pipe0 {
 				label = "ssusb-ipa-out-0";
 				qcom,usb-bam-mem-type = <1>;
@@ -228,6 +247,7 @@
 				qcom,data-fifo-size = <0x8000>;
 				qcom,descriptor-fifo-size = <0x2000>;
 			};
+			/* Check Done */
 			qcom,pipe1 {
 				label = "ssusb-ipa-in-0";
 				qcom,usb-bam-mem-type = <1>;
@@ -238,6 +258,7 @@
 				qcom,data-fifo-size = <0x8000>;
 				qcom,descriptor-fifo-size = <0x2000>;
 			};
+			/* Check Done */
 			qcom,pipe2 {
 				label = "ssusb-qdss-in-0";
 				qcom,usb-bam-mem-type = <2>;
@@ -252,6 +273,7 @@
 				qcom,descriptor-fifo-offset = <0x1800>;
 				qcom,descriptor-fifo-size = <0x800>;
 			};
+			/* Check Done */
 			qcom,pipe3 {
 				label = "ssusb-dpl-ipa-in-1";
 				qcom,usb-bam-mem-type = <1>;
@@ -265,6 +287,7 @@
 		};
 	};
 
+	/* Check Done */
 	qusb_phy0: qusb@c012000 {
 		compatible = "qcom,qusb2phy";
 		reg = <0x0c012000 0x180>,
@@ -305,10 +328,7 @@
 		reset-names = "phy_reset";
 	};
 
-	usb_nop_phy: usb_nop_phy {
-		     compatible = "usb-nop-xceiv";
-	};
-
+	/* Check Done */
 	ssphy: ssphy@c010000 {
 		compatible = "qcom,usb-ssphy-qmp-v2";
 		reg = <0xc010000 0xe18>,
@@ -452,6 +472,7 @@
 		reset-names = "phy_reset", "phy_phy_reset";
 	};
 
+	/* Check Done */
 	usb_audio_qmi_dev {
 		compatible = "qcom,usb-audio-qmi-dev";
 		iommus = <&lpass_q6_smmu 6>;
@@ -459,12 +480,14 @@
 		qcom,usb-audio-intr-num = <2>;
 	};
 
+	/* Check Done */
 	dbm_1p5: dbm@a8f8000 {
 		compatible = "qcom,usb-dbm-1p5";
 		reg = <0xa8f8000 0x300>;
 		qcom,reset-ep-after-lpm-resume;
 	};
 
+		/* Check Done */
        usb2s: hsusb@c200000 {
 		compatible = "qcom,dwc-usb3-msm";
 		reg = <0x0c200000 0xfc000>,
@@ -499,6 +522,8 @@
 		reset-names = "core_reset";
 
 		status = "disabled";
+
+		/* Check Done */
 		dwc3@c200000 {
 			compatible = "snps,dwc3";
 			reg = <0x0c200000 0xc8d0>;
@@ -513,6 +538,7 @@
 		};
 	};
 
+	/* Check Done */
 	qusb_phy1: qusb@c014000 {
 		compatible = "qcom,qusb2phy";
 		reg = <0x0c014000 0x180>,
@@ -547,10 +573,12 @@
 		reset-names = "phy_reset";
 	};
 
+	/* Check Done */
 	usb_nop_phy: usb_nop_phy {
 		compatible = "usb-nop-xceiv";
 	};
 
+	/* Check Done */
 	sdhc_1: sdhci@c0c4000 {
 		compatible = "qcom,sdhci-msm-v5";
 		reg = <0xc0c4000 0x1000>, <0xc0c5000 0x1000>;
@@ -618,21 +646,29 @@
 		qcom,ice-clk-rates = <300000000 75000000>;
 
 		qcom,scaling-lower-bus-speed-mode = "DDR52";
-
-		status = "disabled";
+		vdd-supply = <&pm660l_l6>;
+		qcom,vdd-voltage-level = <0x2d0370 0x2d0370>;
+		qcom,vdd-current-level = <0xc8 0x8b290>;
+		vdd-io-supply = <&pm660_l8>;
+		qcom,vdd-io-always-on;
+		qcom,vdd-io-lpm-sup;
+		qcom,vdd-io-voltage-level = <0x1b7740 0x1b7740>;
+		qcom,vdd-io-current-level = <0xc8 0x4f588>;
+		pinctrl-names = "active","sleep";
+		pinctrl-0 = <&sdc1_clk_on &sdc1_cmd_on &sdc1_data_on &sdc1_rclk_on>;
+		pinctrl-1 = <&sdc1_clk_off &sdc1_cmd_off &sdc1_data_off &sdc1_rclk_off>;
+		status = "ok";
 	};
 
+	/* Check Done */
 	sdhc_2: sdhci@c084000 {
 		compatible = "qcom,sdhci-msm-v5";
 		reg = <0xc084000 0x1000>;
 		reg-names = "hc_mem";
-
-		interrupts = <0 125 0>, <0 221 0>;
-		interrupt-names = "hc_irq", "pwr_irq";
-
+		interrupts = <0 1 2>;
+		interrupt-names = "hc_irq", "pwr_irq", "status_irq";
 		qcom,bus-width = <4>;
 		qcom,large-address-bus;
-
 		qcom,msm-bus,name = "sdhc2";
 		qcom,msm-bus,num-cases = <8>;
 		qcom,msm-bus,num-paths = <2>;
@@ -662,23 +698,27 @@
 			<1 608 1338562 4096000>;
 		qcom,bus-bw-vectors-bps = <0 400000 20000000 25000000 50000000
 			100000000 200000000 4294967295>;
-
 		qcom,devfreq,freq-table = <50000000 200000000>;
-
 		qcom,pm-qos-irq-type = "affine_irq";
 		qcom,pm-qos-irq-latency = <43 518>;
 		qcom,pm-qos-cpu-groups = <0x0f 0xf0>;
 		qcom,pm-qos-legacy-latency-us = <43 518>, <40 518>;
-
 		clocks = <&clock_gcc GCC_SDCC2_AHB_CLK>,
 			<&clock_gcc GCC_SDCC2_APPS_CLK>;
 		clock-names = "iface_clk", "core_clk";
-
 		qcom,clk-rates = <400000 20000000 25000000 50000000 100000000
 								200000000>;
 		qcom,bus-speed-mode = "SDR12", "SDR25", "SDR50", "DDR50",
 								"SDR104";
-
-		status = "disabled";
+		vdd-supply = <&pm660l_l5>;
+		qcom,vdd-voltage-level = <0x2d0370 0x2d0370>;
+		qcom,vdd-current-level = <0x3a98 0xc3500>;
+		vdd-io-supply = <&pm660l_l2>;
+		qcom,vdd-io-voltage-level = <0x1b7740 0x2d0370>;
+		qcom,vdd-io-current-level = <0xc8 0x55f0>;
+		pinctrl-names = "active", "sleep";
+		pinctrl-0 = <&sdc2_clk_on &sdc2_cmd_on &sdc2_data_on &cd_on>;
+		pinctrl-1 = <&sdc2_clk_off &sdc2_cmd_off &sdc2_data_off &cd_off>;
+		status = "ok";
 	};
 };

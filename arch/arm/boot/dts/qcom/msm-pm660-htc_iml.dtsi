@@ -95,13 +95,23 @@
 			gpio@c200 {
 				reg = <0xc200 0x100>;
 				qcom,pin-num = <3>;
-				status = "disabled";
+				status = "ok";
+				qcom,mode = <0x01>;
+				qcom,pull = <0x04>;
+				qcom,vin-sel = <0x00>;
+				qcom,src-sel = <0x02>;
+				qcom,master-en = <0x01>;
+				qcom,out-strength = <0x02>;
 			};
 
 			gpio@c300 {
 				reg = <0xc300 0x100>;
 				qcom,pin-num = <4>;
-				status = "disabled";
+				status = "okay";
+				qcom,mode = <0x00>;
+				qcom,vin-sel = <0x01>;
+				qcom,src-sel = <0x00>;
+				qcom,master-en = <0x01>;
 			};
 
 			gpio@c400 {
@@ -143,7 +153,12 @@
 			gpio@ca00 {
 				reg = <0xca00 0x100>;
 				qcom,pin-num = <11>;
-				status = "disabled";
+				status = "okay";
+				qcom,mode = <0x00>;
+				qcom,pull = <0x00>;
+				qcom,vin-sel = <0x00>;
+				qcom,src-sel = <0x00>;
+				qcom,out-strength = <0x01>;
 			};
 
 			gpio@cb00 {
@@ -562,7 +577,7 @@
 					   "rradc_die_temp";
 			qcom,rradc-base = <0x4500>;
 			qcom,fg-chg-term-current = <150>;
-			qcom,fg-sys-term-current = <300>;
+			qcom,fg-sys-term-current = <0xfffffed4>;
 			qcom,fg-recharge-voltage = <4350>;
 			qcom,fg-esr-timer-awake = <96 96>;
 			qcom,fg-esr-timer-asleep = <256 256>;
@@ -662,7 +677,7 @@
 			qcom,int-pwm-freq-khz = <505>;
 			qcom,sc-deb-cycles = <8>;
 			qcom,en-brake;
-			qcom,brake-pattern = [03 03 00 00];
+			qcom,brake-pattern = <0x00>;
 			qcom,lra-high-z = "opt0";
 			qcom,lra-auto-res-mode = "qwd";
 			qcom,lra-calibrate-at-eop = <0>;

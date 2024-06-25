@@ -15,7 +15,7 @@
 / {
 	mtp_batterydata: qcom,battery-data {
 		qcom,batt-id-range-pct = <15>;
-		#include "fg-gen3-batterydata-l2052-3600mah.dtsi"
+		#include "fg-gen3-batterydata-l2052jiade-3600mah.dtsi"
 	};
 };
 
@@ -42,7 +42,6 @@
 	vccq2-max-microamp = <600000>;
 	qcom,vddp-ref-clk-supply = <&pm660_l1>;
 	qcom,vddp-ref-clk-max-microamp = <100>;
-
 	status = "ok";
 };
 
@@ -259,8 +258,17 @@
 		status = "okay";
 	};
 
-	hall_switch {
+	sunwave_fp {
+		status = "ok";
+		compatible = "sunwave,sunwave_fp";
+		interrupt-parent = <&tlmm>;
+		interrupt = <72 0x0>;
+		VDD-supply = <&pm660l_l3>;
+		sunwave,gpio_irq = <&tlmm 72 0x00>;
+		sunwave,gpio_reset = <&tlmm 20 0x00>;
+	};
 
+	hall_switch {
 		compatible = "hall-switch,bu52272";
 		pinctrl-names = "hall_active","hall_suspend";
 		pinctrl-0 = <&hall_int_active>;

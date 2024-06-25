@@ -11,9 +11,8 @@ menuconfig INPUT_TOUCHSCREEN
 
 if INPUT_TOUCHSCREEN
 
-source "drivers/input/touchscreen/ssl_ssd20xx/Kconfig"
-source "drivers/input/touchscreen/synaptics_dsx_v21/Kconfig"
 source "drivers/input/touchscreen/synaptics_dsx/Kconfig"
+source "drivers/input/touchscreen/nvt_touch/Kconfig"
 
 config OF_TOUCHSCREEN
 	def_tristate INPUT
@@ -1226,5 +1225,16 @@ config TOUCHSCREEN_ST
 	  If unsure, say N.
 
 source "drivers/input/touchscreen/st/Kconfig"
+
+config TOUCHSCREEN_SSD20xx
+	tristate "SSD20xx Touchscreen Driver"
+	depends on I2C
+	help
+	  Say Y here if you have a SSD20xx Touchscreen connected to your system.
+
+	  If unsure, say N.
+
+	  To compile this driver as a module, choose M here: the
+	  module will be called ssd20xx_ts.
 
 endif

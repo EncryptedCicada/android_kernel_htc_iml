@@ -19,7 +19,7 @@
 #include "synaptics-dsx-i2c.dtsi"
 
 / {
-	model = "Qualcomm Technologies, Inc. SDM 636 PM660 + PM660L MTP HTC_IML";
+	model = "Qualcomm Technologies, Inc. SDM 636 PM660 + PM660L MTP";
 	compatible = "qcom,sdm636-mtp", "qcom,sdm636", "qcom,mtp";
 	qcom,board-id = <0x08 0x00>;
 	qcom,pmic-id = <0x0001001b 0x0101011a 0x0 0x0>,
@@ -27,9 +27,11 @@
 };
 
 &tavil_snd {
+	status = "disabled";
 	qcom,msm-mbhc-moist-cfg = <0>, <0>, <3>;
 };
 
+/* Not declared in stock DT */
 &pm660l_l3 {
 	regulator-always-on;
 };
@@ -60,8 +62,27 @@
 };
 
 &soc {
-	hall_switch {
+	goodix_fp {
+		compatible = "goodix,fingerprint";
+		interrupt-parent = <&tlmm>;
+		interrupt = <72 0x0>;
+		vdd_ana-supply = <&pm660l_l3>;
+		fp-gpio-irq = <&tlmm 72 0x00>;
+		fp-gpio-reset = <&tlmm 20 0x00>;
+		status = "okay";
+	};
 
+	sunwave_fp {
+		status = "ok";
+		compatible = "sunwave,sunwave_fp";
+		interrupt-parent = <&tlmm>;
+		interrupt = <72 0x0>;
+		VDD-supply = <&pm660l_l3>;
+		sunwave,gpio_irq = <&tlmm 72 0x00>;
+		sunwave,gpio_reset = <&tlmm 20 0x00>;
+	};
+
+	hall_switch {
 		compatible = "hall-switch,bu52272";
 		pinctrl-names = "hall_active","hall_suspend";
 		pinctrl-0 = <&hall_int_active>;
