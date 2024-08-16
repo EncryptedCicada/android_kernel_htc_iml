@@ -1,0 +1,17 @@
+# HTC configuration options
+
+config MACH_HTC_SDM660
+	bool "HTC SDM660"
+	depends on ARCH_SDM660
+	help
+	  Support for SDM660 HTC variants
+
+menu "HTC board selection"
+
+config MACH_HTC_IML
+        bool "Iml board"
+        select MACH_HTC_SDM660
+        help
+          Support for HTC U12 Life
+
+endmenu
