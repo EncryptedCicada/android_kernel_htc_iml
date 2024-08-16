@@ -276,12 +276,7 @@
 		qcom,esd-check-enabled;
 		qcom,mdss-dsi-panel-status-command = [05 fd ab 41 04 fc ac ea];
 		qcom,mdss-dsi-panel-status-command-mode = "dsi_lp_mode";
-
-        /* Remove as there is no support for it in the source */
-		/* qcom,mdss-dsi-panel-status-check-mode = "TE_check_NT35596"; */
-
-        /* Replace with experimental alternative. Almost sure it won't work but meh :P */
-        qcom,mdss-dsi-panel-status-check-mode = "te_signal_check";
+            qcom,mdss-dsi-panel-status-check-mode = "TE_check_NT35596";
 		qcom,mdss-dsi-panel-status-read-length = <1>;
 		qcom,mdss-dsi-panel-status-value = <156>;
 		qcom,mdss-dsi-panel-max-error-count = <3>;
