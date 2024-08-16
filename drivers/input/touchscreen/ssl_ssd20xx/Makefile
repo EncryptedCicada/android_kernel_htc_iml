@@ -7,4 +7,4 @@
 obj-$(CONFIG_TOUCHSCREEN_SSD20xx) += ssd20xx.o
 
 # List all the object files that need to be linked for the ssd20xx module
-ssd20xx_ts-objs := ssl_ssd20xx.o ssd20xx_upgrade.o ssd20xx_mx25v100.o
+ssd20xx-objs := ssl_ssd20xx.o ssd20xx_upgrade.o ssd20xx_mx25v100.o
