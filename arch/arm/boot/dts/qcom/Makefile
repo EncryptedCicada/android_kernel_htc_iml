@@ -326,7 +326,7 @@ dtb-$(CONFIG_ARCH_SDM630) += sdm630-rumi.dtb \
 	sdm455-internal-codec-rcm.dtb
 
 # HTC sdm636 device dtbs
-dtb-$(CONFIG_ARCH_SDM660) += \
+dtb-$(CONFIG_MACH_HTC_IML) += \
 	sdm660-mtp-htc_iml.dtb \
 	sdm636-mtp-htc_iml.dtb
 
