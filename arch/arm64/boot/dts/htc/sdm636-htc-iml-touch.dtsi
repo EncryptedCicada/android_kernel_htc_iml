@@ -1,0 +1,34 @@
+/* Copyright (c) 2017, The Linux Foundation. All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 and
+ * only version 2 as published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ */
+
+&i2c_1 {
+	status = "okay";
+
+  solomon@53 {
+		compatible = "solomon,ssd20xx";
+		reg = <0x53>;
+		interrupt-parent = <&tlmm>;
+		interrupts = <67 0x2008>;
+		vcc-i2c-supply = <&pm660_l11>;
+		pinctrl-names = "pmx_ts_active","pmx_ts_suspend";
+		pinctrl-0 = <&ts_active>;
+		pinctrl-1 = <&ts_int_suspend &ts_reset_suspend>;
+		reset-gpios = <&tlmm 66 0x00>;
+		interrupt-gpios = <&tlmm 67 0x00>;
+		solomon,button-map = <139 172 158>;
+		solomon,panel-coords = <0 0 1080 2160>;
+		solomon,display-coords = <0 0 1080 2160>;
+		solomon,product-id = "ssd20xx";
+		solomon,fw_name = "str_fw.img";
+		solomon,i2c-pull-up;
+	};
+};
