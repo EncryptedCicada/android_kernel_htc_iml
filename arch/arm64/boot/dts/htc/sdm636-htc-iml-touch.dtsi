@@ -13,7 +13,7 @@
 &i2c_1 {
 	status = "okay";
 
-  solomon@53 {
+  	solomon@53 {
 		compatible = "solomon,ssd20xx";
 		reg = <0x53>;
 		interrupt-parent = <&tlmm>;
@@ -22,8 +22,11 @@
 		pinctrl-names = "pmx_ts_active","pmx_ts_suspend";
 		pinctrl-0 = <&ts_active>;
 		pinctrl-1 = <&ts_int_suspend &ts_reset_suspend>;
+		gpios = <&tlmm 66 0x00>, <&tlmm 67 0x00>; /* reset, interrupt custom DEBUG*/
+		/* DEBUG
 		reset-gpios = <&tlmm 66 0x00>;
 		interrupt-gpios = <&tlmm 67 0x00>;
+		*/
 		solomon,button-map = <139 172 158>;
 		solomon,panel-coords = <0 0 1080 2160>;
 		solomon,display-coords = <0 0 1080 2160>;
