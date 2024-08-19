@@ -183,7 +183,7 @@ endif
 
 dtb-$(CONFIG_ARCH_MSMHAMSTER) += msmhamster-rumi.dtb
 
-ifneq ($(CONFIG_ARCH_HTC_IML),y)
+ifneq ($(CONFIG_MACH_HTC_IML),y)
 dtb-$(CONFIG_ARCH_SDM660) += sdm660-sim.dtb \
 	sdm660-internal-codec-cdp.dtb \
 	sdm660-internal-codec-mtp.dtb \

@@ -1,5 +1,4 @@
 # Enable HTC IML board specific changes
-CONFIG_MACH_HTC_SDM660=y
 CONFIG_MACH_HTC_IML=y
 
 CONFIG_ANDROID=y
