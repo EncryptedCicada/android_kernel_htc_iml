@@ -4057,7 +4057,12 @@ static int solomon_probe(struct i2c_client *client,
 		goto i2c_check_failed;
 	}
 
+	SOLOMON_DEBUG("#### Checkpoint 1 ####"); // CUSTOM_DEBUG
+
+
 	ftdev = (struct solomon_device *)kzalloc(sizeof(struct solomon_device), GFP_KERNEL);
+
+	SOLOMON_DEBUG("#### Checkpoint 2 ####"); // CUSTOM_DEBUG
 
 	if (!ftdev) {
 		SOLOMON_WARNNING("Create solomon device failed");
@@ -4068,6 +4073,8 @@ static int solomon_probe(struct i2c_client *client,
 
 	ftdata = (struct solomon_data *)kzalloc(sizeof(struct solomon_data), GFP_KERNEL);
 
+	SOLOMON_DEBUG("#### Checkpoint 3 ####"); // CUSTOM_DEBUG
+	
 	if (!ftdata) {
 		SOLOMON_WARNNING("Create solomon data failed");
 		err = -ENOMEM;
