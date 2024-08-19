@@ -4112,14 +4112,9 @@ static int solomon_probe(struct i2c_client *client,
 	ftdev->ftdata = ftdata;
 	ftdev->input_dev = input;
 
-	SOLOMON_DEBUG("#### Checkpoint 1 ####"); // CUSTOM_DEBUG
-
 	ftdev->reset_pin = of_get_gpio(np, 0);
-	SOLOMON_DEBUG("#### Checkpoint 2 #### reset_pin: %d", ftdev->reset_pin); // CUSTOM_DEBUG
 	ftdev->int_pin = of_get_gpio(np, 1);
-	SOLOMON_DEBUG("#### Checkpoint 3 #### int_pin: %d", ftdev->int_pin); // CUSTOM_DEBUG
 	ftdev->irq = gpio_to_irq(ftdev->int_pin);
-	SOLOMON_DEBUG("#### Checkpoint 4 #### irq: %d", ftdev->irq); // CUSTOM_DEBUG
 	client->irq = ftdev->irq;
 
 	/* for I2C function */

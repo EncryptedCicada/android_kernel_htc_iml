@@ -22,8 +22,8 @@
 		pinctrl-names = "pmx_ts_active","pmx_ts_suspend";
 		pinctrl-0 = <&ts_active>;
 		pinctrl-1 = <&ts_int_suspend &ts_reset_suspend>;
-		gpios = <&tlmm 66 0x00 &tlmm 67 0x00>; /* reset, interrupt custom DEBUG*/
-		/* DEBUG
+		gpios = <&tlmm 66 0x00 &tlmm 67 0x00>; /* reset, interrupt */
+		/* REDUNDANT, DRIVER WILL USE THE "gpio" PROPERTY INSTEAD
 		reset-gpios = <&tlmm 66 0x00>;
 		interrupt-gpios = <&tlmm 67 0x00>;
 		*/
