@@ -13,7 +13,7 @@
 &mdss_mdp {
 	dsi_default_panel: qcom,mdss_dsi_ssd2092_truly_1080p_video {
 		qcom,mdss-dsi-panel-name = "truly ssd2092 1080p video mode dsi panel";
-    qcom,mdss-dsi-panel-controller = <&mdss_dsi0>;
+    	qcom,mdss-dsi-panel-controller = <&mdss_dsi0>;
 		qcom,mdss-dsi-panel-type = "dsi_video_mode";
 		qcom,mdss-dsi-panel-width = <1080>;
 		qcom,mdss-dsi-panel-height = <2160>;
@@ -69,12 +69,12 @@
 		qcom,mdss-dsi-bl-min-level = <1>;
 		qcom,mdss-dsi-bl-max-level = <4095>;
 		qcom,mdss-dsi-bl-pmic-control-type = "bl_ctrl_wled";
-/*  CEI additional  */
+		/*  CEI additional  */
 		qcom,mdss-dsi-off-command = [05 01 00 00 32 00 02 28 00 05 01 00 00 78 00 02 10 00];
 		qcom,mdss-dsi-reset-sequence = <0x01 0x05 0x00 0x0a 0x01 0x14>;
 
-    qcom,mdss-dsi-cabc-on-command = [15 01 00 00 00 00 02 ff 10 15 01 00 00 00 00 02 55 01];
-	  qcom,mdss-dsi-cabc-off-command = [15 01 00 00 00 00 02 ff 10 15 01 00 00 00 00 02 55 00];
+    	qcom,mdss-dsi-cabc-on-command = [15 01 00 00 00 00 02 ff 10 15 01 00 00 00 00 02 55 01];
+	  	qcom,mdss-dsi-cabc-off-command = [15 01 00 00 00 00 02 ff 10 15 01 00 00 00 00 02 55 00];
 		qcom,mdss-dsi-cabc-on-command-state = "dsi_hs_mode";
 		qcom,mdss-dsi-cabc-off-command-state = "dsi_hs_mode";
 		qcom,mdss-dsi-lane-map = "lane_map_0123";
