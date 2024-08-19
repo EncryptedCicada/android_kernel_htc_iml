@@ -201,7 +201,7 @@ ssize_t ssdDrvMainProcfsGestureWakeupModeWrite(struct file *pFile, const char __
  *	Debug msg
  *-----------------------------------------------------
  */
-#define solomon_debug 0
+#define solomon_debug 1
 #define solomon_warnning 1
 #define solomon_timecheck 0 /* only use check the boot time */
 
