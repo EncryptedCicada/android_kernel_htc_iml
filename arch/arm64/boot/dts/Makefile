@@ -10,8 +10,8 @@ dts-dirs += hisilicon
 dts-dirs += marvell
 dts-dirs += mediatek
 dts-dirs += qcom
-dts-dirs += htc
 dts-dirs += rockchip
+dts-dirs += htc
 dts-dirs += sprd
 dts-dirs += xilinx
 
