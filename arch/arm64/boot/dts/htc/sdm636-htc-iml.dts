@@ -25,12 +25,13 @@
 	qcom,board-id = <0x08 0x00>;
 	qcom,pmic-id = <0x1001b 0x101011a 0x00 0x00>,
       <0x1001b 0x201011a 0x00 0x00>;
-
-	reserved-memory {
-		/delete-node/ &dfps_data_mem;
-	};
 };
 
 &int_codec {
 	qcom,model = "sdm660-snd-card";
+};
+
+
+&dfps_data_mem {
+	status = "disabled";
 };
