@@ -1,13 +1,13 @@
 /* Copyright (c) 2017, The Linux Foundation. All rights reserved.
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2 and
- * only version 2 as published by the Free Software Foundation.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+*
+* This program is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Public License version 2 and
+* only version 2 as published by the Free Software Foundation.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
 */
 
 #include "charger-htc-common.dtsi"
@@ -16,14 +16,14 @@
 &soc {
 	mdss_dsi: qcom,mdss_dsi@0 {
 		mdss_dsi0: qcom,mdss_dsi_ctrl0@c994000 {
-      wqhd-vddio-supply = <&pm660_l11>;
+			wqhd-vddio-supply = <&pm660_l11>;
 		};
 	};
-
+	
 	dsi_panel_pwr_supply: dsi_panel_pwr_supply {
 		#address-cells = <1>;
 		#size-cells = <0>;
-
+		
 		qcom,panel-supply-entry@0 {
 			reg = <0>;
 			qcom,supply-name = "wqhd-vddio";
@@ -32,7 +32,7 @@
 			qcom,supply-enable-load = <0x7d00>;
 			qcom,supply-disable-load = <0x50>;
 		};
-
+		
 		qcom,panel-supply-entry@1 {
 			reg = <1>;
 			qcom,supply-name = "lab";
@@ -41,7 +41,7 @@
 			qcom,supply-enable-load = <0x186a0>;
 			qcom,supply-disable-load = <0x64>;
 		};
-
+		
 		qcom,panel-supply-entry@2 {
 			reg = <2>;
 			qcom,supply-name = "ibb";
@@ -52,44 +52,44 @@
 			qcom,supply-post-on-sleep = <0x0a>;
 		};
 	};
-
+	
 	int_codec: sound {
 		qcom,msm-micbias1-ext-cap;
 		qcom,msm-hs-micbias-type = "internal";
 		qcom,audio-routing =
-			"RX_BIAS", "INT_MCLK0",
-			"SPK_RX_BIAS", "INT_MCLK0",
-			"INT_LDO_H", "INT_MCLK0",
-			"RX_I2S_CLK", "INT_MCLK0",
-			"TX_I2S_CLK", "INT_MCLK0",
-			"MIC BIAS External", "Handset Mic",
-			"MIC BIAS Internal2", "Headset Mic",
-			"MIC BIAS External", "Secondary Mic",
-			"AMIC1", "MIC BIAS External",
-			"AMIC2", "MIC BIAS Internal2",
-			"AMIC3", "MIC BIAS External",
-			"DMIC1", "MIC BIAS External",
-			"MIC BIAS External", "Digital Mic1",
-			"DMIC2", "MIC BIAS External",
-			"MIC BIAS External", "Digital Mic2",
-			"DMIC3", "MIC BIAS External",
-			"MIC BIAS External", "Digital Mic3",
-			"DMIC4", "MIC BIAS External",
-			"MIC BIAS External", "Digital Mic4",
-			"SpkrLeft IN", "SPK1 OUT",
-			"SpkrRight IN", "SPK2 OUT",
-			"PDM_IN_RX1", "PDM_OUT_RX1",
-			"PDM_IN_RX2", "PDM_OUT_RX2",
-      "PDM_IN_RX3", "PDM_OUT_RX3",
-			"ADC1_IN", "ADC1_OUT",
-			"ADC2_IN", "ADC2_OUT",
-			"ADC3_IN", "ADC3_OUT";
-
+		"RX_BIAS", "INT_MCLK0",
+		"SPK_RX_BIAS", "INT_MCLK0",
+		"INT_LDO_H", "INT_MCLK0",
+		"RX_I2S_CLK", "INT_MCLK0",
+		"TX_I2S_CLK", "INT_MCLK0",
+		"MIC BIAS External", "Handset Mic",
+		"MIC BIAS Internal2", "Headset Mic",
+		"MIC BIAS External", "Secondary Mic",
+		"AMIC1", "MIC BIAS External",
+		"AMIC2", "MIC BIAS Internal2",
+		"AMIC3", "MIC BIAS External",
+		"DMIC1", "MIC BIAS External",
+		"MIC BIAS External", "Digital Mic1",
+		"DMIC2", "MIC BIAS External",
+		"MIC BIAS External", "Digital Mic2",
+		"DMIC3", "MIC BIAS External",
+		"MIC BIAS External", "Digital Mic3",
+		"DMIC4", "MIC BIAS External",
+		"MIC BIAS External", "Digital Mic4",
+		"SpkrLeft IN", "SPK1 OUT",
+		"SpkrRight IN", "SPK2 OUT",
+		"PDM_IN_RX1", "PDM_OUT_RX1",
+		"PDM_IN_RX2", "PDM_OUT_RX2",
+		"PDM_IN_RX3", "PDM_OUT_RX3",
+		"ADC1_IN", "ADC1_OUT",
+		"ADC2_IN", "ADC2_OUT",
+		"ADC3_IN", "ADC3_OUT";
+		
 		qcom,wsa-max-devs = <1>;
 		qcom,wsa-aux-dev-prefix = "SpkrLeft", "SpkrLeft",
-					  "SpkrLeft", "SpkrLeft";
+		"SpkrLeft", "SpkrLeft";
 	};
-
+	
 	gpio_keys {
 		/delete-node/vol_down;
 		vol_up {
@@ -124,19 +124,19 @@
 			pins = "gpio53";
 			function = "gpio";
 		};
-
+		
 		config {
 			pins = "gpio53";
 			drive-strength = <8>; /* 8 mA */
 			bias-disable = <0>; /* no pull */
-			};
 		};
+	};
 	mdss_dsi_suspend: mdss_dsi_suspend {
 		mux {
 			pins = "gpio53";
 			function = "gpio";
 		};
-
+		
 		config {
 			pins = "gpio53";
 			drive-strength = <2>; /* 2 mA */
@@ -150,7 +150,7 @@
 	qcom,pm660@0 {
 		qcom,power-on@800 {
 			qcom,pon_2 {
-			linux,code = <0x72>;
+				linux,code = <0x72>;
 			};
 		};
 	};
@@ -181,14 +181,14 @@
 				fsmgr_flags = "wait";
 				status = "ok";
 			};
-      android_system: system {
-        compatible = "android,system";
-        dev = "/dev/block/platform/soc/c0c4000.sdhci/by-name/system";
-        type = "ext4";
-        mnt_flags = "ro,barrier=1,discard";
-        fsmgr_flags = "wait";
-        status = "ok";
-      };
+			android_system: system {
+				compatible = "android,system";
+				dev = "/dev/block/platform/soc/c0c4000.sdhci/by-name/system";
+				type = "ext4";
+				mnt_flags = "ro,barrier=1,discard";
+				fsmgr_flags = "wait";
+				status = "ok";
+			};
 		};
 	};
 };
