@@ -427,3 +427,6 @@ obj-$(CONFIG_SND_SOC_MAX9877)	+= snd-soc-max9877.o
 obj-$(CONFIG_SND_SOC_TPA6130A2)	+= snd-soc-tpa6130a2.o
 obj-y += sdm660_cdc/
 obj-y += msm_sdw/
+
+# Add TAS2560s driver
+obj-$(CONFIG_SND_SOC_TAS2560_STEREO) += tas2560/
