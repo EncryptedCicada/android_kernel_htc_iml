@@ -664,7 +664,7 @@ config SND_SOC_TFA9879
 	tristate "NXP Semiconductors TFA9879 amplifier"
 	depends on I2C
 
-source "tas2560/Kconfig"
+source "sound/soc/codecs/tas2560/Kconfig"
 
 config SND_SOC_TLV320AIC23
 	tristate
