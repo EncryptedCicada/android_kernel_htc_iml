@@ -10,25 +10,4 @@
 * GNU General Public License for more details.
 */
 
-/* TODO: Everything below needs addressing */
-/*
-&i2c_6 {
-	/delete-node/nq@28;
-	nfc@28 {
-		compatible = "nxp,pn553";
-		reg = <0x28>;
-		interrupt-parent = <&tlmm>;
-		interrupts = <28 0>;
-		nxp,irq_gpio = <&tlmm 28 0x00>;
-		nxp,dwld_en = <&tlmm 30 0x00>;
-		nxp,ven = <&tlmm 29 0x00>;
-	};
-};
 
-
-&soc {
-	nfc,pm-ops {
-		compatible = "sony,pn553-pm-ops";
-	};
-};
-*/
