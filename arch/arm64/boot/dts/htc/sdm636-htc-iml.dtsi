@@ -15,6 +15,7 @@
 #include "sdm630-htc-iml-camera-sensor.dtsi"
 #include "sdm636-htc-iml-touch.dtsi"
 #include "charger-htc-iml.dtsi"
+#include "sdm636-htc-iml-codec.dtsi"
 /* TODO: Address this include */
 /* #include "sdm630-htc-nfc.dtsi" */
 /* #include "sdm630-htc-fingerprint.dtsi" */

@@ -1,0 +1,30 @@
+/* Copyright (c) 2015-2017, The Linux Foundation. All rights reserved.
+*
+* This program is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Public License version 2 and
+* only version 2 as published by the Free Software Foundation.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*/
+
+&i2c_6 {
+    tas2560s@4c {
+        compatible = "ti,tas2560s";
+        reg = <0x4c>;
+        ti,reset-gpio = <&tlmm 77 0>;
+        ti,irq-gpio1 = <&tlmm 56 0>;
+        ti,irq-gpio2 = <&tlmm 73 0>;
+        ti,left-channel = <0x4f>;
+        ti,right-channel = <0x4c>;
+        ti,pll = <1>; /* refer to tas2560.h for more details */
+        ti,asi-format = <1>; /* 0, i2S; 1, DSP;  */
+        ti,left-load = <0>; /* 0, 8Ohm; 1, 6Ohm; 2, 4Ohm */
+        ti,right-load = <1>; /* 0, 8Ohm; 1, 6Ohm; 2, 4Ohm */
+        ti,ppg = <0>; /* 0, 0dB default; 1， enable -2dB */
+        i2c-pull-up;
+        status = "ok";
+    };
+};
