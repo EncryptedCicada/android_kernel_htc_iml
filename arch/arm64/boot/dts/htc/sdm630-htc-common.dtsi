@@ -112,6 +112,8 @@
 		reg = <0x784138 0x4>, <0x78607c 0x4>;
 		reg-names = "sn-base", "fuse-state";
 	};
+
+	/delete-node/ qcom,qbt1000;
 };
 
 &pm660l_wled {
