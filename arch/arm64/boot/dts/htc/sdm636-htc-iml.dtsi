@@ -17,8 +17,7 @@
 #include "charger-htc-iml.dtsi"
 #include "sdm636-htc-iml-codec.dtsi"
 #include "sdm630-htc-nfc.dtsi"
-/* TODO: Address this include */
-/* #include "sdm630-htc-fingerprint.dtsi" */
+#include "sdm630-htc-sensors.dtsi"
 
 &soc {
 	int_codec: sound {

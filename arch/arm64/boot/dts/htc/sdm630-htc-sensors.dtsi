@@ -1,0 +1,31 @@
+&soc {
+    goodix_fp {
+        compatible = "goodix,fingerprint";
+        interrupt-parent = <&tlmm>;
+        interrupt = <72 0>;
+        vdd_ana-supply = <pm660_l3>;
+        fp-gpio-irq = <&tlmm 72 0>;
+        fp-gpio-reset = <&tlmm 20 0>;
+        status = "okay";
+    };
+    
+    sunwave_fp {
+        compatible = "sunwave,sunwave_fp";
+        interrupt-parent = <&tlmm>;
+        interrupt = <72 0>;
+        VDD-supply = <pm660_l3>;
+        sunwave,gpio_irq = <&tlmm 72 0>;
+        sunwave,gpio_reset = <&tlmm 20 0>;
+        status = "okay";
+    };
+    
+    hall_switch {
+        compatible = "hall-switch,bu52272";
+        pinctrl-names = "hall_active", "hall_suspend";
+        pinctrl-0 = <&hall_int_active>;
+        pinctrl-1 = <&hall_int_suspend>;
+        vdd-io-supply = <&pm660_l8>;
+        interrupt-names = "hall_irq";
+        hall,irq-gpio = <&tlmm 75 0>;
+    };
+};
