@@ -259,38 +259,38 @@
 			};
 		};
 	};
-};
 
-&i2c_1 {
-	/delete-node/ i2c_1_bitbang;
-};
+	i2c_1 {
+		/delete-node/ i2c_1_bitbang;
+	};
 
-&i2c_2 {
-	/delete-node/ i2c_2_bitbang;
-};
+	i2c_2 {
+		/delete-node/ i2c_2_bitbang;
+	};
 
-&i2c_3 {
-	/delete-node/ i2c_3_bitbang;
-};
+	i2c_3 {
+		/delete-node/ i2c_3_bitbang;
+	};
 
-&i2c_4 {
-	/delete-node/ i2c_4_bitbang;
-};
+	i2c_4 {
+		/delete-node/ i2c_4_bitbang;
+	};
 
-&i2c_5 {
-	/delete-node/ i2c_5_bitbang;
-};
+	i2c_5 {
+		/delete-node/ i2c_5_bitbang;
+	};
 
-&i2c_6 {
-	/delete-node/ i2c_6_bitbang;
-};
+	i2c_6 {
+		/delete-node/ i2c_6_bitbang;
+	};
 
-&i2c_7 {
-	/delete-node/ i2c_7_bitbang;
-};
+	i2c_7 {
+		/delete-node/ i2c_7_bitbang;
+	};
 
-&i2c_8 {
-	/delete-node/ i2c_8_bitbang;
+	i2c_8 {
+		/delete-node/ i2c_8_bitbang;
+	};
 };
 
 &i2c_1 {
