@@ -70,9 +70,111 @@
 		0x9f 0x1c
 		0x00 0x18>;
 	};
+
+	wdog: qcom,wdt@17817000 {
+		qcom,bark-time = <15000>;
+	};
+
+	clock_cpu: qcom,clk-cpu-660@179c0000 {
+		reg = <0x179c0000 0x4000>, <0x17916000 0x1000>,
+		      <0x17816000 0x1000>, <0x179d1000 0x1000>,
+		      <0x00784130 0x8>, <0x00784130 0x8>, 
+			  <0x17914800 0x800>;
+		reg-names = "osm", "pwrcl_pll", "perfcl_pll",
+				"apcs_common", "pwrcl_efuse",
+				"perfcl_efuse", "pwrcl_acd";
+		qcom,acdtd-val = <0xa111 0xa111>;
+		qcom,acdcr-val = <0x2c5ffd 0x2c5ffd>;
+		qcom,acdsscr-val = <0x901 0x901>;
+		qcom,acdextint0-val = <0x2cf9ae8 0x2cf9ae8>;
+		qcom,acdextint1-val = <0x2cf9afe 0x2cf9afe>;
+		qcom,acdautoxfer-val = <0x15 0x15>;
+		qcom,pc-override-index = <0x00 0x00>;
+	};
+
+	/delete-node/ qcom,rmtfs_sharedmem@0;
+
+	qcom,rmtfs_sharedmem@85e00000 {
+		compatible = "qcom,sharedmem-uio";
+		reg = <0x85e00000 0x200000>;
+		reg-names = "rmtfs";
+		qcom,client-id = <0x00000001>;
+	};
+
+	qcom,glink-smem-native-xprt-adsp@86000000 {
+		/delete-property/ cpu-affinity;
+	};
+
+	qcom,lpass@15700000 {
+		/delete-property/ reg-names;
+	};
+
+	pil_modem: qcom,mss@4080000 {
+		/delete-property/ qcom,complete-ramdump;
+	};
+
+	/* This is probably not needed now that we are building for a version
+	* after original kernel and this change was introduced later.
+	* Also our device is eMMC.
+	ufs1: ufshc@1da4000 {
+		/delete-property/ pinctrl-names;
+		/delete-property/ pinctrl-0;
+		/delete-property/ pinctrl-1;
+	};
+	*/
+	apc0_cpr: cprh-ctrl@179c8000 {
+		thread@0 {
+			apc0_pwrcl_vreg: regulator {
+				qcom,cpr-closed-loop-voltage-fuse-adjustment =
+					<(-32000) (-30000) (-29000) (-38000)
+					(-36000)>;
+			};
+		};
+	};
+
+	msm_gpu: qcom,kgsl-3d0@5000000 {
+		qcom,gpu-pwrlevel-bins {
+			qcom,gpu-pwrlevels-3 {
+				/* SVS_L1 */
+				qcom,gpu-pwrlevel@2 {
+					qcom,bus-freq = <10>;
+					qcom,bus-min = <9>;
+					qcom,bus-max = <11>;
+				};
+
+				/* SVS */
+				qcom,gpu-pwrlevel@3 {
+					qcom,bus-freq = <9>;
+					qcom,bus-min = <9>;
+					qcom,bus-max = <11>;
+				};
+
+				/* Low SVS */
+				qcom,gpu-pwrlevel@4 {
+					qcom,bus-freq = <4>;
+					qcom,bus-max = <8>;
+				};
+			};
+
+			/delete-node/ qcom,gpu-pwrlevels-6;
+		};
+	};
+
+	qcom,msm-dai-mi2s {
+		dai_mi2s0: qcom,msm-dai-q6-mi2s-prim {
+			qcom,msm-mi2s-rx-lines = <1>;
+			qcom,msm-mi2s-tx-lines = <2>;
+		};
+	};
 };
 
 &tlmm {
+	/* This is probably not needed now that we are building for a version
+	* after original kernel and this change was introduced later.
+	* Also our device is eMMC.
+	/delete-node/ ufs_dev_reset_assert;
+	*/	
+
 	msm_gpio_20: msm_gpio_20 {
 		mux{
 			pins="gpio20";
@@ -291,6 +393,208 @@
 	i2c_8 {
 		/delete-node/ i2c_8_bitbang;
 	};
+
+	spi_3 {
+		spi_3_active: spi_3_active {
+			mux {
+				/delete-property/ pins;
+			};
+
+			config {
+				/delete-property/ pins;
+			};
+		};
+
+		spi_3_sleep: spi_3_sleep {
+			mux {
+				/delete-property/ pins;
+			};
+
+			config {
+				/delete-property/ pins;
+			};
+		};
+	};
+
+	spi_6 {
+		spi_6_active: spi_6_active {
+			mux {
+				pins = "gpio22", "gpio23";
+			};
+
+			config {
+				pins = "gpio22", "gpio23";
+			};
+		};
+
+		spi_6_sleep: spi_6_sleep {
+			mux {
+				pins = "gpio22", "gpio23";
+			};
+
+			config {
+				pins = "gpio22", "gpio23";
+			};
+		};
+	};
+
+	wcd_usbc_analog_en2n {
+		wcd_usbc_analog_en2n_idle: wcd_usbc_ana_en2n_idle {
+			mux {
+				/delete-property/ pins;
+			};
+
+			config {
+				/delete-property/ pins;
+			};
+		};
+
+		wcd_usbc_analog_en2n_active: wcd_usbc_ana_en2n_active {
+			mux {
+				/delete-property/ pins;
+			};
+
+			config {
+				/delete-property/ pins;
+			};
+		};
+	};
+
+	spkr_1_sd_n {
+		spkr_1_sd_n_sleep: spkr_1_sd_n_sleep {
+			mux {
+				/delete-property/ pins;
+			};
+
+			config {
+				/delete-property/ pins;
+			};
+		};
+
+		spkr_1_sd_n_active: spkr_1_sd_n_active {
+			mux {
+				/delete-property/ pins;
+			};
+
+			config {
+				/delete-property/ pins;
+			};
+		};
+	};
+
+	spkr_2_sd_n {
+		spkr_2_sd_n_sleep: spkr_2_sd_n_sleep {
+			mux {
+				/delete-property/ pins;
+			};
+
+			config {
+				/delete-property/ pins;
+			};
+		};
+
+		spkr_2_sd_n_active: spkr_2_sd_n_active {
+			mux {
+				/delete-property/ pins;
+			};
+
+			config {
+				/delete-property/ pins;
+			};
+		};
+	};
+
+	/* DIFF: MALFORMED IN STOCK DTS. DEFINED FOR FUTURE OVERRIDES. IF USING THIS NODE, THEN REMOVE DELETE NODE DIRECTIVE BELOW */
+	trigout_a: trigout_a {
+		mux {
+			pins = "gpio49";
+			function = "qdss_cti0_a";
+		};
+
+		config {
+			pins = "gpio49";
+			drive-strength = <16>;
+			bias-disable;
+			output-low;
+		};
+	};
+
+	/* DIFF: MALFORMED IN STOCK DTS. PROBABLY UNUSED NODES */
+	/delete-node/ trigout_a;
+	/delete-node/ cam_actuator_vaf_active;
+	/delete-node/ cam_actuator_vaf_suspend;
+	/delete-node/ cam_tof_active;
+	/delete-node/ cam_tof_suspend;
+	/delete-node/ cam_sensor_mclk2_active;
+	/delete-node/ cam_sensor_mclk2_suspend;
+	/delete-node/ cam_sensor_front_iris_active;
+	/delete-node/ cam_sensor_front_iris_suspend;
+
+	cam_sensor_rear_active: cam_sensor_rear_active {
+		mux {
+			pins = "gpio48";
+		};
+
+		config {
+			pins = "gpio48";
+		};
+	};
+
+	cam_sensor_rear_suspend: cam_sensor_rear_suspend {
+		mux {
+			pins = "gpio48";
+		};
+
+		config {
+			pins = "gpio48";
+		};
+	};
+
+	cam_sensor_rear2_active: cam_sensor_rear2_active {
+		/* RESET, STANDBY */
+		mux {
+			pins = "gpio52", "gpio49";
+		};
+
+		config {
+			pins = "gpio52", "gpio49";
+		};
+	};
+
+	cam_sensor_rear2_suspend: cam_sensor_rear2_suspend {
+		/* RESET, STANDBY */
+		mux {
+			pins = "gpio52", "gpio49";
+		};
+		config {
+			pins = "gpio52", "gpio49";
+		};
+	};
+
+	cam_sensor_front_active: cam_sensor_front_active {
+		mux {
+			pins = "gpio47";
+		};
+
+		config {
+			pins = "gpio47";
+		};
+	};
+
+	cam_sensor_front_suspend: cam_sensor_front_suspend {
+		mux {
+			pins = "gpio47";
+		};
+
+		config {
+			pins = "gpio47";
+		};
+	};
+};
+
+&cci {
+	/delete-node/ ois0: qcom,ois@0;
+	/delete-node/ tof0: qcom,tof@29;
 };
 
 &i2c_1 {
@@ -333,6 +637,32 @@
 	pinctrl-names = "i2c_active", "i2c_sleep";
 };
 
+&i2c_6 {
+	/delete-node/ nq@28;
+};
+
+&i2c_7 {
+	status = "okay";
+	nq@28 {
+		compatible = "qcom,nq-nci";
+		reg = <0x28>;
+		qcom,nq-irq = <&tlmm 28 0x00>;
+		qcom,nq-ven = <&tlmm 29 0x00>;
+		qcom,nq-firm = <&tlmm 30 0x00>;
+		qcom,nq-clkreq = <&pm660_gpios 4 0x00>;
+		qcom,nq-esepwr = <&tlmm 31 0x00>;
+		interrupt-parent = <&tlmm>;
+		qcom,clk-src = "BBCLK3";
+		interrupts = <28 0>;
+		interrupt-names = "nfc_irq";
+		pinctrl-names = "nfc_active", "nfc_suspend";
+		pinctrl-0 = <&nfc_int_active &nfc_enable_active>;
+		pinctrl-1 = <&nfc_int_suspend &nfc_enable_suspend>;
+		clocks = <&clock_rpmcc RPM_LN_BB_CLK3_PIN>;
+		clock-names = "ref_clk";
+	};
+};
+
 &hostless {
 	audio_test_mod {
 		compatible = "qcom,audio-test-mod";
@@ -340,10 +670,67 @@
 };
 
 &spmi_bus {
+	qcom,pm660@0 {
+		qcom,power-on@800 {
+			qcom,pon_1 {
+				qcom,support-reset = <1>;
+				qcom,s1-timer = <4480>;
+				qcom,s2-timer = <2000>;
+				qcom,s2-type = <7>;
+			};
+		};
+
+		pm660_charger: qcom,qpnp-smb2 {
+			qcom,usb-icl-ua = <2150000>;
+			qcom,dc-icl-ua = <2150000>;
+			qcom,fcc-max-ua = <2150000>;
+			qcom,fv-max-uv = <4400000>;
+			qcom,sw-jeita-enable;
+			qcom,thermal-mitigation
+					= <2000000 1500000 1000000 800000
+						500000 200000>;
+		};
+
+		pm660_fg: qpnp,fg {
+			qcom,fg-jeita-thresholds = <0x03 0x0a 0x2d 0x32>;
+			qcom,fg-chg-term-current = <150>;
+			qcom,fg-sys-term-current = <0xfffffed4>;
+			qcom,fg-jeita-hyst-temp = <3>;
+			qcom,fg-recharge-voltage = <4350>;
+		};
+	};
+
 	qcom,pm660@1 {
 		pm660_haptics: qcom,haptic@c000 {
 			qcom,actuator-type = "erm";
 			qcom,vmax-mv = <3000>;
+			qcom,brake-pattern = <0x00>;
+		};
+	};
+
+	pm660l_3: qcom,pm660l@3 {
+		qcom,leds@d000 {
+			red_led: qcom,rgb_0 {
+				qcom,idx-len = <100>;
+				qcom,duty-pcts = [64 00 00 00 00 00 00 00 00 00 00];
+			};
+
+			green_led: qcom,rgb_1 {
+				qcom,start-idx = <0>;
+				qcom,idx-len = <100>;
+				qcom,duty-pcts = [64 00 00 00 00 00 00 00 00 00 00>];
+				qcom,use-blink;
+			};
+			
+			blue_led: qcom,rgb_2 {
+				qcom,idx-len = <100>;
+				qcom,duty-pcts = <64 00 00 00 00 00 00 00 00 00 00>;
+				qcom,use-blink;
+			};
+
+			pm660l_wled: qcom,leds@d800 {
+				qcom,ovp-mv = <31100>;
+			};
 		};
 	};
 };
