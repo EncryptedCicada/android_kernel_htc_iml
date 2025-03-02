@@ -11,7 +11,7 @@
 */
 
 #include "sdm630-htc-common.dtsi"
-#include "dsi-panel-iml.dtsi"
+#include "dsi-panel-htc-iml.dtsi"
 #include "sdm630-htc-iml-camera-sensor.dtsi"
 #include "sdm636-htc-iml-touch.dtsi"
 #include "charger-htc-iml.dtsi"
