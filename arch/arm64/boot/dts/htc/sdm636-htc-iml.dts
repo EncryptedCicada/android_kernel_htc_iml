@@ -27,6 +27,9 @@
 	<0x1001b 0x201011a 0x00 0x00>;
 };
 
+/* DEBUG */
+#include "sdm636-htc-iml-ramoops.dtsi"
+
 &dfps_data_mem {
 	status = "okay";
 };
