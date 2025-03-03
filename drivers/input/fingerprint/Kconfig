@@ -1,0 +1,8 @@
+menu "Fingerprint Drivers"
+
+config FINGERPRINT_GF3208
+	tristate "goodix gf3208 fingerprint drvier support"
+	help
+	  say y here to enable goodix gf3208 fingerprint driver support!
+
+endmenu
