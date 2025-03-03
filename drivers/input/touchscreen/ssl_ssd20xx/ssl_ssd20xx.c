@@ -223,17 +223,17 @@ static int esd_checksum(u8 *data, int length, u8 *xor, u8 *sum)
 	int i = 0;
 
 	if (data == NULL) {
-		SOLOMON_WARNNING("data is null!!!");
+		SOLOMON_WARNING("data is null!!!");
 		goto out;
 	}
 
 	if (length < 1) {
-		SOLOMON_WARNNING("length(%d) is smaller than 1!!", length);
+		SOLOMON_WARNING("length(%d) is smaller than 1!!", length);
 		goto out;
 	}
 
 	if (xor == NULL || sum == NULL) {
-		SOLOMON_WARNNING(" xor or sum is null!!");
+		SOLOMON_WARNING(" xor or sum is null!!");
 		goto out;
 	}
 
@@ -259,7 +259,7 @@ int ts_read_data(struct i2c_client *client, u16 reg, u8 *values, u16 length)
 	/* select register*/
 	ret = i2c_master_send(client, (u8 *)&reg, 2);
 	if (ret < 0) {
-		SOLOMON_WARNNING("I2C READ CMD FAIL");
+		SOLOMON_WARNING("I2C READ CMD FAIL");
 		return ret;
 	}
 
@@ -268,7 +268,7 @@ int ts_read_data(struct i2c_client *client, u16 reg, u8 *values, u16 length)
 	ret = i2c_master_recv(client, values, length);
 
 	if (ret < 0) {
-		SOLOMON_WARNNING("I2C READ DATA FAIL (%d) (0x%04X)", ret, reg);
+		SOLOMON_WARNING("I2C READ DATA FAIL (%d) (0x%04X)", ret, reg);
 		return ret;
 	}
 
@@ -286,7 +286,7 @@ int ts_read_data_ex(struct i2c_client *client, u8 *reg, u16 regLen,
 	/* select register */
 	ret = i2c_master_send(client, reg, regLen);
 	if (ret < 0) {
-		SOLOMON_WARNNING("I2C READ CMD FAIL");
+		SOLOMON_WARNING("I2C READ CMD FAIL");
 		return ret;
 	}
 
@@ -295,7 +295,7 @@ int ts_read_data_ex(struct i2c_client *client, u8 *reg, u16 regLen,
 	ret = i2c_master_recv(client, values, length);
 
 	if (ret < 0) {
-		SOLOMON_WARNNING("I2C READ DATA FAIL (%d)", ret);
+		SOLOMON_WARNING("I2C READ DATA FAIL (%d)", ret);
 		return ret;
 	}
 
@@ -319,7 +319,7 @@ int ts_write_data(struct i2c_client *client, u16 reg, u8 *values, u16 length)
 again:
 	ret = i2c_master_send(client, pkt, length + 2);
 	if (ret < 0) {
-		SOLOMON_WARNNING("I2C WRITE FAIL : 0x%x", reg);
+		SOLOMON_WARNING("I2C WRITE FAIL : 0x%x", reg);
 		if ((retry--) > 0)
 			goto again;
 
@@ -339,7 +339,7 @@ static inline s32 ts_read_tmc_i2c(struct i2c_client *client, u16 *i2c_len)
 	err = ts_read_data(client, SOLOMON_TMC_I2C_LENGTH, (u8 *)(i2c_len), 2);
 
 	if (err < 0) {
-		SOLOMON_WARNNING("error : read TMC I2C Length");
+		SOLOMON_WARNING("error : read TMC I2C Length");
 		return -EAGAIN;
 	}
 
@@ -355,7 +355,7 @@ static inline s32 ts_write_tmc_i2c(struct i2c_client *client, u16 i2c_len)
 			(u8 *)(&i2c_len), 2);
 
 	if (err < 0) {
-		SOLOMON_WARNNING("error : write TMC I2C Length");
+		SOLOMON_WARNING("error : write TMC I2C Length");
 		return -EAGAIN;
 	}
 
@@ -432,7 +432,7 @@ static inline s32 ts_read_gesture(struct i2c_client *client,
 			SOLOMON_GET_GESTURE, (u8 *)(gesture), length);
 
 	if (err < 0) {
-		SOLOMON_WARNNING("error : read Gesture");
+		SOLOMON_WARNING("error : read Gesture");
 		return -EAGAIN;
 	}
 
@@ -452,7 +452,7 @@ static int solomon_read_gesture_coordinate(struct i2c_client *client,
 			SOLOMON_GET_GESTURE_COORDINATE, (u8 *)(coordinate), length);
 
 	if (err < 0) {
-		SOLOMON_WARNNING("error : read Gesture coordinate!!");
+		SOLOMON_WARNING("error : read Gesture coordinate!!");
 		return -EAGAIN;
 	}
 
@@ -468,7 +468,7 @@ static inline s32 ts_read_keydata(struct i2c_client *client, u8 *keydata)
 	err = ts_read_data(client, SOLOMON_GET_KEYDATA, (u8 *)(keydata), 2);
 
 	if (err < 0) {
-		SOLOMON_WARNNING("error : read key data");
+		SOLOMON_WARNING("error : read key data");
 		return -EAGAIN;
 	}
 
@@ -545,7 +545,7 @@ int solomon_gesture_init(struct solomon_device *ftdev)
 
 void solomon_gesture_report(struct solomon_device *ftdev, int gesture_code)
 {
-	SOLOMON_WARNNING("---> gesture_code = 0x%x", gesture_code);
+	SOLOMON_WARNING("---> gesture_code = 0x%x", gesture_code);
 
 	switch(gesture_code)
 	{
@@ -555,7 +555,7 @@ void solomon_gesture_report(struct solomon_device *ftdev, int gesture_code)
 			input_sync(ftdev->input_dev);
 			input_report_key(ftdev->input_dev, KEY_GESTURE_UP, 0);
 			input_sync(ftdev->input_dev);
-			SOLOMON_WARNNING("---> reporting KEY_GESTURE_UP");
+			SOLOMON_WARNING("---> reporting KEY_GESTURE_UP");
 			break;
 #endif	/* KEY_GESTURE_UP */
 #ifdef KEY_GESTURE_DOWN
@@ -564,7 +564,7 @@ void solomon_gesture_report(struct solomon_device *ftdev, int gesture_code)
 			input_sync(ftdev->input_dev);
 			input_report_key(ftdev->input_dev, KEY_GESTURE_DOWN, 0);
 			input_sync(ftdev->input_dev);
-			SOLOMON_WARNNING("---> reporting KEY_GESTURE_DOWN");
+			SOLOMON_WARNING("---> reporting KEY_GESTURE_DOWN");
 			break;
 #endif	/* KEY_GESTURE_DOWN */
 #ifdef KEY_GESTURE_LEFT
@@ -573,7 +573,7 @@ void solomon_gesture_report(struct solomon_device *ftdev, int gesture_code)
 			input_sync(ftdev->input_dev);
 			input_report_key(ftdev->input_dev, KEY_GESTURE_LEFT, 0);
 			input_sync(ftdev->input_dev);
-			SOLOMON_WARNNING("---> reporting KEY_GESTURE_LEFT");
+			SOLOMON_WARNING("---> reporting KEY_GESTURE_LEFT");
 			break;
 #endif	/* KEY_GESTURE_LEFT */
 #ifdef KEY_GESTURE_RIGHT
@@ -582,7 +582,7 @@ void solomon_gesture_report(struct solomon_device *ftdev, int gesture_code)
 			input_sync(ftdev->input_dev);
 			input_report_key(ftdev->input_dev, KEY_GESTURE_RIGHT, 0);
 			input_sync(ftdev->input_dev);
-			SOLOMON_WARNNING("---> reporting KEY_GESTURE_RIGHT");
+			SOLOMON_WARNING("---> reporting KEY_GESTURE_RIGHT");
 			break;
 #endif	/* KEY_GESTURE_RIGHT */
 #ifdef KEY_GESTURE_DOUBLECLICK
@@ -591,7 +591,7 @@ void solomon_gesture_report(struct solomon_device *ftdev, int gesture_code)
 			input_sync(ftdev->input_dev);
 			input_report_key(ftdev->input_dev, KEY_GESTURE_DOUBLECLICK, 0);
 			input_sync(ftdev->input_dev);
-			SOLOMON_WARNNING("---> reporting KEY_GESTURE_DOUBLECLICK");
+			SOLOMON_WARNING("---> reporting KEY_GESTURE_DOUBLECLICK");
 			break;
 #endif	/* KEY_GESTURE_DOUBLECLICK */
 #ifdef KEY_GESTURE_O
@@ -600,7 +600,7 @@ void solomon_gesture_report(struct solomon_device *ftdev, int gesture_code)
 			input_sync(ftdev->input_dev);
 			input_report_key(ftdev->input_dev, KEY_GESTURE_O, 0);
 			input_sync(ftdev->input_dev);
-			SOLOMON_WARNNING("---> reporting KEY_GESTURE_O");
+			SOLOMON_WARNING("---> reporting KEY_GESTURE_O");
 			break;
 #endif	/* KEY_GESTURE_O */
 #ifdef KEY_GESTURE_W
@@ -609,7 +609,7 @@ void solomon_gesture_report(struct solomon_device *ftdev, int gesture_code)
 			input_sync(ftdev->input_dev);
 			input_report_key(ftdev->input_dev, KEY_GESTURE_W, 0);
 			input_sync(ftdev->input_dev);
-			SOLOMON_WARNNING("---> reporting KEY_GESTURE_W");
+			SOLOMON_WARNING("---> reporting KEY_GESTURE_W");
 			break;
 #endif	/* KEY_GESTURE_W */
 #ifdef KEY_GESTURE_M
@@ -618,7 +618,7 @@ void solomon_gesture_report(struct solomon_device *ftdev, int gesture_code)
 			input_sync(ftdev->input_dev);
 			input_report_key(ftdev->input_dev, KEY_GESTURE_M, 0);
 			input_sync(ftdev->input_dev);
-			SOLOMON_WARNNING("---> reporting KEY_GESTURE_M");
+			SOLOMON_WARNING("---> reporting KEY_GESTURE_M");
 			break;
 #endif	/* KEY_GESTURE_M */
 #ifdef KEY_GESTURE_E
@@ -627,7 +627,7 @@ void solomon_gesture_report(struct solomon_device *ftdev, int gesture_code)
 			input_sync(ftdev->input_dev);
 			input_report_key(ftdev->input_dev, KEY_GESTURE_E, 0);
 			input_sync(ftdev->input_dev);
-			SOLOMON_WARNNING("---> reporting KEY_GESTURE_E");
+			SOLOMON_WARNING("---> reporting KEY_GESTURE_E");
 			break;
 #endif	/* KEY_GESTURE_E */
 #ifdef KEY_GESTURE_S
@@ -636,7 +636,7 @@ void solomon_gesture_report(struct solomon_device *ftdev, int gesture_code)
 			input_sync(ftdev->input_dev);
 			input_report_key(ftdev->input_dev, KEY_GESTURE_S, 0);
 			input_sync(ftdev->input_dev);
-			SOLOMON_WARNNING("---> reporting KEY_GESTURE_S");
+			SOLOMON_WARNING("---> reporting KEY_GESTURE_S");
 			break;
 #endif	/* KEY_GESTURE_S */
 #ifdef KEY_GESTURE_Z
@@ -645,7 +645,7 @@ void solomon_gesture_report(struct solomon_device *ftdev, int gesture_code)
 			input_sync(ftdev->input_dev);
 			input_report_key(ftdev->input_dev, KEY_GESTURE_Z, 0);
 			input_sync(ftdev->input_dev);
-			SOLOMON_WARNNING("---> reporting KEY_GESTURE_Z");
+			SOLOMON_WARNING("---> reporting KEY_GESTURE_Z");
 			break;
 #endif	/* KEY_GESTURE_Z */
 #ifdef KEY_GESTURE_C
@@ -654,7 +654,7 @@ void solomon_gesture_report(struct solomon_device *ftdev, int gesture_code)
 			input_sync(ftdev->input_dev);
 			input_report_key(ftdev->input_dev, KEY_GESTURE_C, 0);
 			input_sync(ftdev->input_dev);
-			SOLOMON_WARNNING("---> reporting KEY_GESTURE_C");
+			SOLOMON_WARNING("---> reporting KEY_GESTURE_C");
 			break;
 #endif	/* KEY_GESTURE_C */
 #ifdef KEY_GESTURE_U
@@ -663,7 +663,7 @@ void solomon_gesture_report(struct solomon_device *ftdev, int gesture_code)
 			input_sync(ftdev->input_dev);
 			input_report_key(ftdev->input_dev, KEY_GESTURE_U, 0);
 			input_sync(ftdev->input_dev);
-			SOLOMON_WARNNING("---> reporting KEY_GESTURE_U");
+			SOLOMON_WARNING("---> reporting KEY_GESTURE_U");
 			break;
 #endif	/* KEY_GESTURE_U */
 #ifdef KEY_GESTURE_U_DOWN
@@ -672,7 +672,7 @@ void solomon_gesture_report(struct solomon_device *ftdev, int gesture_code)
 			input_sync(ftdev->input_dev);
 			input_report_key(ftdev->input_dev, KEY_GESTURE_U_DOWN, 0);
 			input_sync(ftdev->input_dev);
-			SOLOMON_WARNNING("---> reporting KEY_GESTURE_U_DOWN");
+			SOLOMON_WARNING("---> reporting KEY_GESTURE_U_DOWN");
 			break;
 #endif	/* KEY_GESTURE_U_DOWN */
 #ifdef KEY_GESTURE_U_RIGHT
@@ -681,7 +681,7 @@ void solomon_gesture_report(struct solomon_device *ftdev, int gesture_code)
 			input_sync(ftdev->input_dev);
 			input_report_key(ftdev->input_dev, KEY_GESTURE_U_RIGHT, 0);
 			input_sync(ftdev->input_dev);
-			SOLOMON_WARNNING("---> reporting KEY_GESTURE_U_RIGHT");
+			SOLOMON_WARNING("---> reporting KEY_GESTURE_U_RIGHT");
 			break;
 #endif	/* KEY_GESTURE_U_RIGHT */
 		default:
@@ -759,18 +759,18 @@ static void touch_esd_tmr_work(struct work_struct *work)
 
 	SOLOMON_DEBUG("tmr queue work ++");
 	if (ftdev == NULL) {
-		SOLOMON_WARNNING("touch dev == NULL ?");
+		SOLOMON_WARNING("touch dev == NULL ?");
 		goto fail_time_out_init;
 	}
 
 	if (down_trylock(&ftdev->work_procedure_lock)) {
-		SOLOMON_WARNNING("fail to occupy sema");
+		SOLOMON_WARNING("fail to occupy sema");
 		esd_timer_start(SOLOMON_CHECK_ESD_TIMER, ftdev);
 		return;
 	}
 
 	if (ftdev->work_procedure != TS_NO_WORK) {
-		SOLOMON_WARNNING("other process occupied (%d)",
+		SOLOMON_WARNING("other process occupied (%d)",
 				ftdev->work_procedure);
 		up(&ftdev->work_procedure_lock);
 		return;
@@ -779,15 +779,15 @@ static void touch_esd_tmr_work(struct work_struct *work)
 	ts_disable_irq();
 	ftdev->work_procedure = TS_ESD_TIMER_WORK;
 
-	SOLOMON_WARNNING("ESD TIMER(%d) %lu - %lu = %lu", HZ, jiffies,
+	SOLOMON_WARNING("ESD TIMER(%d) %lu - %lu = %lu", HZ, jiffies,
 			ftdev->esd_check_time, jiffies-ftdev->esd_check_time);
 
 	if ((jiffies - ftdev->esd_check_time) > HZ * SOLOMON_CHECK_ESD_TIMER) {
-		SOLOMON_WARNNING("ESD Timer expired");
+		SOLOMON_WARNING("ESD Timer expired");
 
 		solomon_report_release(ftdev);
 		ssd20xx_tp_report_panel_dead = 1;
-		SOLOMON_WARNNING("TP report panel dead, request recovery");
+		SOLOMON_WARNING("TP report panel dead, request recovery");
 	}
 
 	ftdev->work_procedure = TS_NO_WORK;
@@ -826,10 +826,10 @@ static inline s32 ts_read_TCI1_Fail_reason(struct solomon_device *dev)
 
 	tmp = (u8 *)buff;
 	fail_count = tmp[0];
-	SOLOMON_WARNNING("Fail Count : %d", fail_count);
+	SOLOMON_WARNING("Fail Count : %d", fail_count);
 
 	for (i = 0; i < fail_count; i++)
-		SOLOMON_WARNNING("[%d] %d", i, tmp[i+1]);
+		SOLOMON_WARNING("[%d] %d", i, tmp[i+1]);
 
 	return err;
 }
@@ -852,10 +852,10 @@ static inline s32 ts_read_TCI2_Fail_reason(struct solomon_device *dev)
 
 	tmp = (u8 *)buff;
 	fail_count = tmp[0];
-	SOLOMON_WARNNING("Fail Count : %d", fail_count);
+	SOLOMON_WARNING("Fail Count : %d", fail_count);
 
 	for (i = 0; i < fail_count; i++)
-		SOLOMON_WARNNING("[%d] %d", i, tmp[i+1]);
+		SOLOMON_WARNING("[%d] %d", i, tmp[i+1]);
 
 	return err;
 }
@@ -983,12 +983,12 @@ static ssize_t ssl_esd_time(struct device *dev, struct device_attribute *attr,
 	if (count > 0) {
 		if (buf[0] == '0') {
 			if (ftdev->use_esd_tmr) {
-				SOLOMON_WARNNING("esd timer stop");
+				SOLOMON_WARNING("esd timer stop");
 				esd_timer_stop(ftdev);
 				ftdev->use_esd_tmr = 0;
 			}
 		} else {
-			SOLOMON_WARNNING("esd timer start");
+			SOLOMON_WARNING("esd timer start");
 			ftdev->use_esd_tmr = 1;
 			esd_checktime_init(ftdev);
 			esd_timer_start(SOLOMON_CHECK_ESD_TIMER, ftdev);
@@ -1008,14 +1008,14 @@ static inline s32 ts_read_node(struct i2c_client *client, u8 *node_x,
 	err = ts_read_data(client, SOLOMON_TOTAL_X_NODE, node_x, 2);
 
 	if (err < 0) {
-		SOLOMON_WARNNING("error : read x node");
+		SOLOMON_WARNING("error : read x node");
 		return -EAGAIN;
 	}
 	SOLOMON_DEBUG("x node : %d", *node_x);
 
 	err = ts_read_data(client, SOLOMON_TOTAL_Y_NODE, node_y, 2);
 	if (err < 0) {
-		SOLOMON_WARNNING("error : read y node");
+		SOLOMON_WARNING("error : read y node");
 		return -EAGAIN;
 	}
 	SOLOMON_DEBUG("y node : %d", *node_y);
@@ -1032,14 +1032,14 @@ static inline s32 ts_write_resolution(struct i2c_client *client, u16 resol_x,
 	err = ts_write_data(client, SOLOMON_X_RESOLUTION, (u8 *)&(resol_x), 2);
 
 	if (err < 0) {
-		SOLOMON_WARNNING("error : write x resolution!!");
+		SOLOMON_WARNING("error : write x resolution!!");
 		return -EAGAIN;
 	}
 
 	err = ts_write_data(client, SOLOMON_Y_RESOLUTION, (u8 *)&(resol_y), 2);
 
 	if (err < 0) {
-		SOLOMON_WARNNING("error : write y resolution!!");
+		SOLOMON_WARNING("error : write y resolution!!");
 		return -EAGAIN;
 	}
 
@@ -1055,7 +1055,7 @@ static inline s32 ts_write_point_num(struct i2c_client *client, u16 point)
 			(u8 *)&(point), 2);
 
 	if (err < 0) {
-		SOLOMON_WARNNING("error : write point num!!");
+		SOLOMON_WARNING("error : write point num!!");
 		return -EAGAIN;
 	}
 
@@ -1076,7 +1076,7 @@ int ds_read_boot_st(struct i2c_client *client, u16 *value)
 	ret = ts_read_data_ex(client, wd, 4, rd, 2);
 
 	if (ret < 0) {
-		SOLOMON_WARNNING("read boot st i2c read fail(1)!!");
+		SOLOMON_WARNING("read boot st i2c read fail(1)!!");
 		return ret;
 	}
 
@@ -1096,7 +1096,7 @@ int ds_clear_int(struct i2c_client *client)
 	ret = ts_write_data(client, DS_CLEAR_INT, wd, 2);
 
 	if (ret < 0) {
-		SOLOMON_WARNNING("0x%04X i2c write fail(2)!!", DS_CLEAR_INT);
+		SOLOMON_WARNING("0x%04X i2c write fail(2)!!", DS_CLEAR_INT);
 		return ret;
 	}
 
@@ -1116,7 +1116,7 @@ int ds_eflash_write(struct i2c_client *client, int addr, u16 data)
 	ret = ts_write_data(client, DS_EFLASH_WRITE, wd, 4);
 
 	if (ret < 0) {
-		SOLOMON_WARNNING("0x%04X i2c read fail(2)!!", DS_COMMAND_01);
+		SOLOMON_WARNING("0x%04X i2c read fail(2)!!", DS_COMMAND_01);
 		return ret;
 	}
 
@@ -1136,7 +1136,7 @@ int ds_eflash_read(struct i2c_client *client, int addr, u8 *rd, int rLen)
 	ret = ts_read_data_ex(client, wd, 4, rd, rLen);
 
 	if (ret < 0) {
-		SOLOMON_WARNNING("0x%04X i2c read fail(1)!!", addr);
+		SOLOMON_WARNING("0x%04X i2c read fail(1)!!", addr);
 		return ret;
 	}
 
@@ -1158,7 +1158,7 @@ static int ds_read_version(struct solomon_device *ftdev, u8 *version, int len)
 	ret = ts_read_data_ex(ftdev->client, wd, 4, version, len);
 
 	if (ret < 0) {
-		SOLOMON_WARNNING("DS read version fail!!");
+		SOLOMON_WARNING("DS read version fail!!");
 		return ret;
 	}
 
@@ -1175,11 +1175,11 @@ static int ds_process_version(struct solomon_device *ftdev)
 	if (ret < 0)
 		return ret;
 
-	SOLOMON_WARNNING("[0] 0x%04x", version[0]);
-	SOLOMON_WARNNING("[1] 0x%04x", version[1]);
-	SOLOMON_WARNNING("[2] 0x%04x", version[2]);
-	SOLOMON_WARNNING("[3] 0x%04x", version[3]);
-	SOLOMON_WARNNING("[4] 0x%04x", version[4]);
+	SOLOMON_WARNING("[0] 0x%04x", version[0]);
+	SOLOMON_WARNING("[1] 0x%04x", version[1]);
+	SOLOMON_WARNING("[2] 0x%04x", version[2]);
+	SOLOMON_WARNING("[3] 0x%04x", version[3]);
+	SOLOMON_WARNING("[4] 0x%04x", version[4]);
 	/* SSD20XX ES1 */
 	if (version[0] == 0x055D && version[1] == 0x2098 &&
 		version[2] == 0x0001 && version[3] == 0x2015 &&
@@ -1192,7 +1192,7 @@ static int ds_process_version(struct solomon_device *ftdev)
 	else
 		ftdev->es_version = DS_VERSION_ES1;
 
-	SOLOMON_WARNNING("ES Version : %d", ftdev->es_version);
+	SOLOMON_WARNING("ES Version : %d", ftdev->es_version);
 	return 0;
 }
 #endif
@@ -1223,7 +1223,7 @@ static int sint_unstall(struct i2c_client *client)
 	ret = ts_write_data(client, DS_CUP_CONTROL, (u8 *)&temp_flag, 2);
 
 	if (ret < 0) {
-		SOLOMON_WARNNING("0x%04X i2c write fail!!", DS_CUP_CONTROL);
+		SOLOMON_WARNING("0x%04X i2c write fail!!", DS_CUP_CONTROL);
 		return ret;
 	}
 
@@ -1269,13 +1269,13 @@ static s32 solomon_set_esdtime(struct solomon_device *ftdev, u16 value)
 {
 	int err;
 
-	SOLOMON_WARNNING("ESD Time : %d", value);
+	SOLOMON_WARNING("ESD Time : %d", value);
 
 	err = ts_write_data(ftdev->client,
 			 SOLOMON_ESD_TIME, (u8 *)&(value), 2);
 
 	if (err < 0)
-		SOLOMON_WARNNING("Fail to set ESD Time.");
+		SOLOMON_WARNING("Fail to set ESD Time.");
 
 	return err;
 }
@@ -1285,19 +1285,19 @@ static s32 solomon_set_AFE_limit(struct solomon_device *ftdev, u16 max_value, u1
 {
         int err;
 
-        SOLOMON_WARNNING("AFE limit : %d to %d", min_value, max_value);
+        SOLOMON_WARNING("AFE limit : %d to %d", min_value, max_value);
 
         err = ts_write_data(ftdev->client,
                         SOLOMON_AFE_MAX_LIMIT, (u8 *)&(max_value), 2);
 
         if (err < 0)
-                SOLOMON_WARNNING("Fail to set AFE Max limit.");
+                SOLOMON_WARNING("Fail to set AFE Max limit.");
 
         err = ts_write_data(ftdev->client,
                         SOLOMON_AFE_MIN_LIMIT, (u8 *)&(min_value), 2);
 
         if (err < 0)
-                SOLOMON_WARNNING("Fail to set AFE Min limit.");
+                SOLOMON_WARNING("Fail to set AFE Min limit.");
 
         return err;
 }
@@ -1314,9 +1314,9 @@ again:
 			(u8 *)&temp_flag, 2);
 
 	if (ret < 0)
-		SOLOMON_WARNNING("0x%04X i2c write fail!!", DS_CUP_CONTROL);
+		SOLOMON_WARNING("0x%04X i2c write fail!!", DS_CUP_CONTROL);
 
-	SOLOMON_WARNNING("retry = %d \t ret : 0x%04x", retry1, ret);
+	SOLOMON_WARNING("retry = %d \t ret : 0x%04x", retry1, ret);
 
 	retry1--;
 
@@ -1344,10 +1344,10 @@ static inline s32 lpm_end2(struct solomon_device *ftdev)
 	int retry = 5;
 
 again:
-	SOLOMON_WARNNING("lpm end2");
+	SOLOMON_WARNING("lpm end2");
 	ret = ts_write_data(ftdev->client, DS_CUP_CONTROL, (u8 *)&temp_flag, 2);
 	if (ret < 0)
-		SOLOMON_WARNNING("0x%04X i2c write fail!!", DS_CUP_CONTROL);
+		SOLOMON_WARNING("0x%04X i2c write fail!!", DS_CUP_CONTROL);
 
 	mdelay(1);
 
@@ -1355,7 +1355,7 @@ again:
 			(u8 *)&temp_flag, 2);
 
 	if (ret < 0)
-		SOLOMON_WARNNING("0x%04X i2c write fail!!", DS_CUP_CONTROL);
+		SOLOMON_WARNING("0x%04X i2c write fail!!", DS_CUP_CONTROL);
 
 	retry--;
 
@@ -1372,7 +1372,7 @@ static s32 solomon_set_mptest(struct solomon_device *ftdev, u16 value)
 	err = ts_write_data(ftdev->client,
 			 SOLOMON_MP_TEST, (u8 *)&(value), 2);
 	if (err < 0)
-		SOLOMON_WARNNING("Fail to set MP_TEST %d."
+		SOLOMON_WARNING("Fail to set MP_TEST %d."
 			, ftdev->mptest_mode);
 
 	ftdev->mptest_mode = value;
@@ -1382,7 +1382,7 @@ static s32 solomon_set_mptest(struct solomon_device *ftdev, u16 value)
 	err = ts_read_data(ftdev->client,
 			 SOLOMON_MP_TEST, (u8 *)&(ftdev->mptest_mode), 2);
 	if (err < 0)
-		SOLOMON_WARNNING("err : read MP_TEST");
+		SOLOMON_WARNING("err : read MP_TEST");
 
 	SOLOMON_DEBUG("touch mode %d %d", value, ftdev->mptest_mode);
 #endif
@@ -1428,7 +1428,7 @@ static ssize_t ssl_mptest(struct device *dev, struct device_attribute *attr,
 	if (count > 0) {
 		mode = buf[0] - '0';
 
-		SOLOMON_WARNNING("MODE : %d", mode);
+		SOLOMON_WARNING("MODE : %d", mode);
 
 		if (mode == 0) {
 			ftdev->mptest_mode = (ftdev->mptest_mode |
@@ -1470,7 +1470,7 @@ static s32 solomon_set_touchmode(u16 value)
 	down(&misc_dev->work_procedure_lock);
 
 	if (misc_dev->work_procedure != TS_NO_WORK) {
-		SOLOMON_WARNNING("other process occupied.. (%d)\n",
+		SOLOMON_WARNING("other process occupied.. (%d)\n",
 				misc_dev->work_procedure);
 		ts_enable_irq();
 		up(&misc_dev->work_procedure_lock);
@@ -1482,19 +1482,19 @@ retry:
 	err = ts_write_data(misc_dev->client,
 			SOLOMON_TOUCH_MODE, (u8 *)&(value), 2);
 	if (err < 0)
-		SOLOMON_WARNNING("Fail to set TOUCH_MODE %d."
+		SOLOMON_WARNING("Fail to set TOUCH_MODE %d."
 				, misc_dev->touch_mode);
 
 	err = ts_read_data(misc_dev->client,
 			SOLOMON_TOUCH_MODE, (u8 *)&(misc_dev->touch_mode), 2);
 	if (err < 0)
-		SOLOMON_WARNNING("err : read touch_mode");
+		SOLOMON_WARNING("err : read touch_mode");
 
 	SOLOMON_DEBUG("touch mode %d %d", value, misc_dev->touch_mode);
 	if (value != misc_dev->touch_mode) {
-		SOLOMON_WARNNING("touch mode set fail!!!");
+		SOLOMON_WARNING("touch mode set fail!!!");
 		if ((retry--) > 0) {
-			SOLOMON_WARNNING("retry!!");
+			SOLOMON_WARNING("retry!!");
 			goto retry;
 		}
 	}
@@ -1519,7 +1519,7 @@ static ssize_t ssl_touchmode(struct device *dev, struct device_attribute *attr,
 		for (i = 0; i < count-1; i++)
 			t = t*10 + buf[i] - '0';
 
-		SOLOMON_WARNNING("\ntouch mode : %d", t);
+		SOLOMON_WARNING("\ntouch mode : %d", t);
 		ftdev->ftdata->queue_front = 0;
 		ftdev->ftdata->queue_rear = 0;
 
@@ -1547,7 +1547,7 @@ static s32 solomon_set_sleepin(struct solomon_device *ftdev)
 		if (err >= 0)
 			break;
 
-		SOLOMON_WARNNING("Fail to set SOLOMON_SLEEP_IN.");
+		SOLOMON_WARNING("Fail to set SOLOMON_SLEEP_IN.");
 		mdelay(1);
 	} while ((retry--) > 0);
 #endif
@@ -1568,7 +1568,7 @@ static s32 solomon_set_sleepout(struct solomon_device *ftdev)
 		if (err >= 0)
 			break;
 
-		SOLOMON_WARNNING("Fail to set SOLOMON_SLEEP_OUT.");
+		SOLOMON_WARNING("Fail to set SOLOMON_SLEEP_OUT.");
 		mdelay(1);
 	} while ((retry--) > 0);
 #endif
@@ -1614,7 +1614,7 @@ static long ts_misc_fops_ioctl(struct file *filp,
 #ifdef SUPPORT_GESTURE_DEMO
 		case TOUCH_IOCTL_GET_GESTURE:
 		ret = m_gesture_value;
-			SOLOMON_WARNNING("(IOCTL) GESTURE VAL : 0x%02x",
+			SOLOMON_WARNING("(IOCTL) GESTURE VAL : 0x%02x",
 			m_gesture_value);
 			if (copy_to_user(argp, &ret, sizeof(ret)))
 				return -1;
@@ -1654,18 +1654,18 @@ static long ts_misc_fops_ioctl(struct file *filp,
 		case TOUCH_IOCTL_SET_TOUCH_MODE:
 			if (copy_from_user(&nval, argp, 2))
 				return -1;
-		SOLOMON_WARNNING("Touch Mode : %d", nval);
+		SOLOMON_WARNING("Touch Mode : %d", nval);
 			return solomon_set_touchmode((u16)nval);
 
 	case TOUCH_IOCTL_SW_RESET:
 		sint_unstall(misc_dev->client);	/* TMC sw reset */
-		SOLOMON_WARNNING("SW reset");
+		SOLOMON_WARNING("SW reset");
 		break;
 
 	case TOUCH_IOCTL_HW_RESET:
 		/* TMC hw reset */
 		solomon_power_control(misc_dev, POWER_RESET);
-		SOLOMON_WARNNING("HW reset");
+		SOLOMON_WARNING("HW reset");
 		break;
 
 	case TOUCH_IOCTL_MP_TEST:
@@ -1676,13 +1676,13 @@ static long ts_misc_fops_ioctl(struct file *filp,
 			argp, sizeof(struct _mp_ioctl)))
 			return -1;
 
-		SOLOMON_WARNNING("MP TEST Mode : %d", mp_ioctl.mode);
-		SOLOMON_WARNNING("MP TEST Count : %d", mp_ioctl.count);
-		SOLOMON_WARNNING("MP TEST delay : %d", mp_ioctl.calldelay);
-		SOLOMON_WARNNING("MP TEST needback : %d", mp_ioctl.needback);
+		SOLOMON_WARNING("MP TEST Mode : %d", mp_ioctl.mode);
+		SOLOMON_WARNING("MP TEST Count : %d", mp_ioctl.count);
+		SOLOMON_WARNING("MP TEST delay : %d", mp_ioctl.calldelay);
+		SOLOMON_WARNING("MP TEST needback : %d", mp_ioctl.needback);
 
 		if (mp_ioctl.mode == 0) {
-			SOLOMON_WARNNING("----------------- Stop mp mode");
+			SOLOMON_WARNING("----------------- Stop mp mode");
 
 			/* change MP mode */
 			if (misc_dev->mptest_mode != MPTEST_STOP)
@@ -1709,10 +1709,10 @@ static long ts_misc_fops_ioctl(struct file *filp,
 			sint_unstall(misc_dev->client);
 			mdelay(m_mp_calldealy);
 
-			SOLOMON_WARNNING("MP1 Mode:%d", misc_dev->mptest_mode);
-			SOLOMON_WARNNING("MP1 Count : %d", m_mp_total_count);
-			SOLOMON_WARNNING("MP1 delay : %d", m_mp_calldealy);
-			SOLOMON_WARNNING("MP1 needback : %d", m_mp_needback);
+			SOLOMON_WARNING("MP1 Mode:%d", misc_dev->mptest_mode);
+			SOLOMON_WARNING("MP1 Count : %d", m_mp_total_count);
+			SOLOMON_WARNING("MP1 delay : %d", m_mp_calldealy);
+			SOLOMON_WARNING("MP1 needback : %d", m_mp_needback);
 		}
 
 		misc_dev->work_procedure = TS_NO_WORK;
@@ -1734,7 +1734,7 @@ static long ts_misc_fops_ioctl(struct file *filp,
 						argp, sizeof(struct _reg_ioctl))) {
 				misc_dev->work_procedure = TS_NO_WORK;
 				up(&misc_dev->work_procedure_lock);
-				SOLOMON_WARNNING("error : copy_from_user\n");
+				SOLOMON_WARNING("error : copy_from_user\n");
 				return -1;
 			}
 
@@ -1748,7 +1748,7 @@ static long ts_misc_fops_ioctl(struct file *filp,
 			if (copy_to_user(reg_ioctl.val, (u8 *)&nval, sizeof(nval))) {
 				misc_dev->work_procedure = TS_NO_WORK;
 				up(&misc_dev->work_procedure_lock);
-				SOLOMON_WARNNING("error : copy_to_user\n");
+				SOLOMON_WARNING("error : copy_to_user\n");
 				return -1;
 			}
 
@@ -1761,7 +1761,7 @@ static long ts_misc_fops_ioctl(struct file *filp,
 		case TOUCH_IOCTL_SET_REG:
 			down(&misc_dev->work_procedure_lock);
 			if (misc_dev->work_procedure != TS_NO_WORK) {
-				SOLOMON_WARNNING("other process occupied.. (%d)\n",
+				SOLOMON_WARNING("other process occupied.. (%d)\n",
 						misc_dev->work_procedure);
 				up(&misc_dev->work_procedure_lock);
 				return -1;
@@ -1773,14 +1773,14 @@ static long ts_misc_fops_ioctl(struct file *filp,
 						argp, sizeof(struct _reg_ioctl))) {
 				misc_dev->work_procedure = TS_NO_WORK;
 				up(&misc_dev->work_procedure_lock);
-				SOLOMON_WARNNING("error : copy_from_user\n");
+				SOLOMON_WARNING("error : copy_from_user\n");
 				return -1;
 			}
 
 			if (copy_from_user(&val, reg_ioctl.val, 2)) {
 				misc_dev->work_procedure = TS_NO_WORK;
 				up(&misc_dev->work_procedure_lock);
-				SOLOMON_WARNNING("error : copy_from_user\n");
+				SOLOMON_WARNING("error : copy_from_user\n");
 				return -1;
 			}
 
@@ -1798,7 +1798,7 @@ static long ts_misc_fops_ioctl(struct file *filp,
 		case TOUCH_IOCTL_GET_GRAPH_DATA:
 			down(&misc_dev->work_procedure_lock);
 			if (misc_dev->work_procedure != TS_NO_WORK) {
-				SOLOMON_WARNNING("other process occupied.. (%d)\n",
+				SOLOMON_WARNING("other process occupied.. (%d)\n",
 						misc_dev->work_procedure);
 				up(&misc_dev->work_procedure_lock);
 				return -1;
@@ -1808,7 +1808,7 @@ static long ts_misc_fops_ioctl(struct file *filp,
 
 			if (copy_from_user(&reg_ioctl,
 						argp, sizeof(struct _reg_ioctl))) {
-				SOLOMON_WARNNING("error : copy_from_user\n");
+				SOLOMON_WARNING("error : copy_from_user\n");
 				ret = -1;
 				goto out_graph;
 			}
@@ -1821,7 +1821,7 @@ static long ts_misc_fops_ioctl(struct file *filp,
 			}
 
 			if (copy_to_user(reg_ioctl.val, (u8 *)&data, 64)) {
-				SOLOMON_WARNNING("error : copy_to_user\n");
+				SOLOMON_WARNING("error : copy_to_user\n");
 				ret = -1;
 			}
 
@@ -1834,7 +1834,7 @@ out_graph:
 		case TOUCH_IOCTL_QUEUE_CLEAR:
 			misc_dev->ftdata->queue_front = 0;
 			misc_dev->ftdata->queue_rear = 0;
-			SOLOMON_WARNNING("Rawdata queue clear!!!\n");
+			SOLOMON_WARNING("Rawdata queue clear!!!\n");
 			return ret;
 
 		case TOUCH_IOCTL_GET_RAW_DATA:
@@ -1844,20 +1844,20 @@ out_graph:
 
 			if (copy_from_user(&raw_ioctl,
 						argp, sizeof(raw_ioctl))) {
-				SOLOMON_WARNNING("error : copy_from_user");
+				SOLOMON_WARNING("error : copy_from_user");
 				return -1;
 			}
 
 			u8Data = get_front_queue_buff(misc_dev->ftdata);
 
 			if (u8Data == NULL) {
-				SOLOMON_WARNNING("rawdata queue is empty");
+				SOLOMON_WARNING("rawdata queue is empty");
 				return -3;
 			}
 
 			if (copy_to_user(raw_ioctl.buf,
 						u8Data, raw_ioctl.sz)) {
-				SOLOMON_WARNNING("error : copy_to_user");
+				SOLOMON_WARNING("error : copy_to_user");
 				return -1;
 			}
 			get_queue(misc_dev->ftdata);
@@ -1881,7 +1881,7 @@ out_graph:
 				misc_dev->work_procedure = TS_NO_WORK;
 				up(&misc_dev->work_procedure_lock);
 				ts_enable_irq();
-				SOLOMON_WARNNING("error : copy_from_user\n");
+				SOLOMON_WARNING("error : copy_from_user\n");
 				return -1;
 			}
 
@@ -1890,18 +1890,18 @@ out_graph:
 				misc_dev->work_procedure = TS_NO_WORK;
 				up(&misc_dev->work_procedure_lock);
 				ts_enable_irq();
-				SOLOMON_WARNNING("error : copy_from_user\n");
+				SOLOMON_WARNING("error : copy_from_user\n");
 				return -1;
 			}
 
-			SOLOMON_WARNNING("NAME : %s", down_ioctl.file);
-			SOLOMON_WARNNING("SIZE : %d", down_ioctl.sz);
+			SOLOMON_WARNING("NAME : %s", down_ioctl.file);
+			SOLOMON_WARNING("SIZE : %d", down_ioctl.sz);
 
 			ret = solomon_firmware_update_byfile(misc_dev,
 					down_ioctl.file);
 
 			if (ret < 0)
-				SOLOMON_WARNNING("firmware update by file failed");
+				SOLOMON_WARNING("firmware update by file failed");
 
 		/* solomon_reset(); */
 		solomon_power_control(misc_dev, POWER_RESET);
@@ -1909,7 +1909,7 @@ out_graph:
 			if (misc_dev->use_esd_tmr) {
 				esd_checktime_init(misc_dev);
 				esd_timer_start(SOLOMON_CHECK_ESD_TIMER, misc_dev);
-				SOLOMON_WARNNING("esd timer start");
+				SOLOMON_WARNING("esd timer start");
 			}
 #endif	/* ESD_TIMER_ENABLE */
 			misc_dev->work_procedure = TS_NO_WORK;
@@ -1987,7 +1987,7 @@ int solomon_read_hw_info(struct i2c_client *client, u16 *info)
 	err = ts_read_data(client, SOLOMON_HW_CAL_INFO, (u8 *)(info), 2);
 
 	if (err < 0)
-		SOLOMON_WARNNING("error read HW cal info using i2c.-");
+		SOLOMON_WARNING("error read HW cal info using i2c.-");
 
 	return err;
 }
@@ -2001,7 +2001,7 @@ int solomon_write_hw_cal(struct i2c_client *client)
 	err = ts_write_data(client, SOLOMON_HW_CALIBRATION, (u8 *)&(info), 2);
 
 	if (err < 0)
-		SOLOMON_WARNNING("error HW cal info write (0x%04x)!!", info);
+		SOLOMON_WARNING("error HW cal info write (0x%04x)!!", info);
 
 	return err;
 }
@@ -2016,7 +2016,7 @@ int solomon_hw_check(struct solomon_device *ftdev)
 	err = solomon_read_hw_info(ftdev->client, &info);
 
 	if (err >= 0) {
-		SOLOMON_WARNNING("HW Cal info = %d", info);
+		SOLOMON_WARNING("HW Cal info = %d", info);
 
 		if (info == 0) {
 			do {
@@ -2037,9 +2037,9 @@ int solomon_hw_check(struct solomon_device *ftdev)
 			} while (info == 0 && retry1-- > 0);
 
 			if (info == 1)
-				SOLOMON_WARNNING("HW Cal Success!!");
+				SOLOMON_WARNING("HW Cal Success!!");
 			else
-				SOLOMON_WARNNING("HW Cal Fail!!");
+				SOLOMON_WARNING("HW Cal Fail!!");
 		}
 	}
 
@@ -2063,7 +2063,7 @@ static int solomon_pre_init(struct solomon_device *ftdev)
 #if 0//dragonboard 410c
 	wait_labibb_reset = 0;
 #endif
-	SOLOMON_WARNNING("read boot st read(2) : 0x%04x", ftdev->boot_flag);
+	SOLOMON_WARNING("read boot st read(2) : 0x%04x", ftdev->boot_flag);
 
 	if (ds_init_code(ftdev->client) < 0)
 		return -1;
@@ -2079,7 +2079,7 @@ static int solomon_pre_init(struct solomon_device *ftdev)
 			solomon_fw_update_controller);
 		if (err)
 		{
-			SOLOMON_WARNNING("failed to schedule firmware update\n");
+			SOLOMON_WARNING("failed to schedule firmware update\n");
 			return -1;
 		}
 #else
@@ -2121,13 +2121,13 @@ static int solomon_init(struct solomon_device *ftdev)
 	ret = solomon_pre_init(ftdev);
 
 	if (ret < 0) {
-		SOLOMON_WARNNING("Pre init failed");
+		SOLOMON_WARNING("Pre init failed");
 		return ret;
 	}
 
 	ret = solomon_init_config(ftdev);
 	if (ret < 0) {
-		SOLOMON_WARNNING("Read config failed");
+		SOLOMON_WARNING("Read config failed");
 		return ret;
 	}
 
@@ -2248,7 +2248,7 @@ static int solomon_get_rawdata_by_queue(struct solomon_device *ftdev)
 	buffer = get_rear_queue_buff(data);
 
 	if (buffer == NULL) {
-		SOLOMON_WARNNING("rawdata queue is full");
+		SOLOMON_WARNING("rawdata queue is full");
 		err = -EAGAIN;
 		goto out;
 	}
@@ -2270,7 +2270,7 @@ static int solomon_read_mptest(struct solomon_device *ftdev)
 	solomon_get_rawdata_by_queue(ftdev);
 
 	if (m_mp_skip_count > 0) {
-		SOLOMON_WARNNING("rawdata skip!!");
+		SOLOMON_WARNING("rawdata skip!!");
 		get_queue(ftdev->ftdata);
 		if (m_mp_skip_count == 1) {
 			ftdev->ftdata->queue_front = 0;
@@ -2283,12 +2283,12 @@ static int solomon_read_mptest(struct solomon_device *ftdev)
 	//m_mp_cur_count--;
 
 	if ((ftdev->mptest_mode & MPTEST_READY_STOP) == MPTEST_READY_STOP) {
-		SOLOMON_WARNNING("STOP MPTEST");
+		SOLOMON_WARNING("STOP MPTEST");
 		solomon_set_mptest(ftdev, MPTEST_STOP);	/* change MP mode */
 		sint_unstall(ftdev->client);	/* TMC sw reset */
 	} else {
 		if (m_mp_cur_count == 0) {
-			SOLOMON_WARNNING("UP key (count:%d)", m_mp_cur_count);
+			SOLOMON_WARNING("UP key (count:%d)", m_mp_cur_count);
 			if (m_mp_needback > 0) {
 				/* wake up AP */
 				solomon_send_key_du(ftdev->input_dev,
@@ -2319,12 +2319,12 @@ static int solomon_read_mpdata(struct solomon_device *ftdev,
 
 	if (gpio_get_value(ftdev->int_pin)) {
 		/*interrupt pin is high, not valid data.*/
-		SOLOMON_WARNNING("read rawdata... inturrpt pin is high");
+		SOLOMON_WARNING("read rawdata... inturrpt pin is high");
 		return 0;
 	}
 
 	if (down_trylock(&ftdev->raw_data_lock)) {
-		SOLOMON_WARNNING("fail to occupy sema(%s)", __func__);
+		SOLOMON_WARNING("fail to occupy sema(%s)", __func__);
 		goto out_2;
 	}
 
@@ -2339,7 +2339,7 @@ static int solomon_read_mpdata(struct solomon_device *ftdev,
 		SOLOMON_STATUS_LENGTH, (u8 *)(&data->point_info), 2);
 
 	if (err < 0) {
-		SOLOMON_WARNNING("error read mpdata info using i2c.-");
+		SOLOMON_WARNING("error read mpdata info using i2c.-");
 		goto out_2;
 	}
 
@@ -2402,7 +2402,7 @@ static int solomon_read_rawdata(struct solomon_device *ftdev,
 	}
 
 	if (down_trylock(&ftdev->raw_data_lock)) {
-		SOLOMON_WARNNING("fail to occupy sema(%s)", __func__);
+		SOLOMON_WARNING("fail to occupy sema(%s)", __func__);
 		goto out_2;
 	}
 
@@ -2417,14 +2417,14 @@ static int solomon_read_rawdata(struct solomon_device *ftdev,
 			SOLOMON_STATUS_LENGTH, (u8 *)(&data->point_info), 2);
 
 	if (err < 0) {
-		SOLOMON_WARNNING("error read point info using i2c.-");
+		SOLOMON_WARNING("error read point info using i2c.-");
 		goto out_2;
 	}
 
 	buffer = get_rear_queue_buff(data);
 
 	if (buffer == NULL) {
-		SOLOMON_WARNNING("rawdata queue is full");
+		SOLOMON_WARNING("rawdata queue is full");
 		goto out;
 	}
 
@@ -2442,7 +2442,7 @@ static int solomon_read_rawdata(struct solomon_device *ftdev,
 				SOLOMON_RAW_DATA, buffer, len);
 
 		if (err < 0) {
-			SOLOMON_WARNNING("error : read raw data");
+			SOLOMON_WARNING("error : read raw data");
 			goto out;
 		}
 
@@ -2509,14 +2509,14 @@ static int ssd20xx_send_key(struct solomon_device *ftdev, u16 keydown,
 	data = ftdev->ftdata;
 	input = ftdev->input_dev;
 
-	SOLOMON_WARNNING("KEYDOWN : 0x%04x, KEYUP : 0x%04x", keydown, keyup);
+	SOLOMON_WARNING("KEYDOWN : 0x%04x, KEYUP : 0x%04x", keydown, keyup);
 
 	/* key down */
 	key = keydown;
 
 	for (i = 0; i < MAX_DEVICE_KEYMAP_SIZE; i++) {
 		if ((key & 0x01)) {
-			SOLOMON_WARNNING("down key = 0x%02x", m_key_map[i]);
+			SOLOMON_WARNING("down key = 0x%02x", m_key_map[i]);
 			solomon_send_key(input, m_key_map[i], 1);
 			data->keydata |= (key << i);
 		}
@@ -2530,10 +2530,10 @@ static int ssd20xx_send_key(struct solomon_device *ftdev, u16 keydown,
 	for (i = 0; i < MAX_DEVICE_KEYMAP_SIZE; i++) {
 		if ((key & 0x01)) {
 			if ((data->keydata&(key << i)) == 0)
-				SOLOMON_WARNNING("up[0x%02x] error!",
+				SOLOMON_WARNING("up[0x%02x] error!",
 					m_key_map[i]);
 			else {
-				SOLOMON_WARNNING("up[0x%02x]", m_key_map[i]);
+				SOLOMON_WARNING("up[0x%02x]", m_key_map[i]);
 				solomon_send_key(input, m_key_map[i], 0);
 				data->keydata &= ~(key << i);
 			}
@@ -2550,14 +2550,14 @@ static int solomon_read_keydata_android(struct solomon_device *ftdev)
 	int err = 0;
 	u16 keydata = 0x00;
 
-	SOLOMON_WARNNING("key start");
+	SOLOMON_WARNING("key start");
 	if (!ftdev || !ftdev->ftdata)
 		return -EFAULT;
 
 	err = ts_read_keydata(ftdev->client, (u8 *)(&keydata));
 
 	if (err < 0) {
-		SOLOMON_WARNNING("Fail read keydata!!");
+		SOLOMON_WARNING("Fail read keydata!!");
 		return err;
 	}
 
@@ -2608,7 +2608,7 @@ static int ssd20xx_read_gesture_coord(struct solomon_device *ftdev,
 			sz, temp);
 
 		if (err < 0) {
-			SOLOMON_WARNNING("error : gesture");
+			SOLOMON_WARNING("error : gesture");
 			return -2;
 		}
 
@@ -2651,13 +2651,13 @@ static int ssd20xx_gesture(struct solomon_device *ftdev, u16 gesture,
 
 		ssd20xx_read_gesture_coord(ftdev, length, arrCoords);
 #if 0
-			SOLOMON_WARNNING("= Gesture Coordinate =");
+			SOLOMON_WARNING("= Gesture Coordinate =");
 		for (i = 0; i < length/4; i++)
-				SOLOMON_WARNNING("X : %d \t Y : %d",
+				SOLOMON_WARNING("X : %d \t Y : %d",
 				arrCoords[i * 2 + 0],
 				arrCoords[i * 2 + 1]);
 
-			SOLOMON_WARNNING("==========\n\n");
+			SOLOMON_WARNING("==========\n\n");
 #endif
 #endif	/* SUPPORT_GESTURE_COORDINATE */
 	} else if ((gesture & GESTURE_STATUS_PALM_REJECT) > 0) {
@@ -2730,7 +2730,7 @@ static int solomon_read_aux(struct i2c_client *client, u16 *aux)
 
 	err = ts_read_data(client, SOLOMON_AUX, (u8 *)(aux), 2);
 	if (err < 0)
-		SOLOMON_WARNNING("error read AUX info using i2c.-");
+		SOLOMON_WARNING("error read AUX info using i2c.-");
 
 	SOLOMON_DEBUG("Read AUX info : 0x%04x", *aux);
 
@@ -2748,7 +2748,7 @@ static int solomon_check_skiptime(unsigned long msecs)
 		jiffies_to_msecs(jiffies - m_point_skip_time));
 
 	if (jiffies_to_msecs(jiffies - m_point_skip_time) < msecs) {
-		SOLOMON_WARNNING("point1 data skip time(%lu)",
+		SOLOMON_WARNING("point1 data skip time(%lu)",
 			m_point_skip_time);
 		m_point_skip_time = 0;
 		err = -1;
@@ -2813,10 +2813,10 @@ static int ssd20xx_send_axis(struct solomon_device *ftdev, ssd_data axis)
 
 	/* force part */
 	if ((axis.point.forceDeviceID & PASS_DATA_FORCE_DOWN_MASK))
-		SOLOMON_WARNNING("Force down");
+		SOLOMON_WARNING("Force down");
 
 	if ((axis.point.forceDeviceID & PASS_DATA_FORCE_UP_MASK))
-		SOLOMON_WARNNING("Force up");
+		SOLOMON_WARNING("Force up");
 
 	if (w) {
 		solomon_touch_down_up(id, x, y, w, 1);
@@ -2848,7 +2848,7 @@ static int solomon_report(struct solomon_device *ftdev)
 	points = ftdev->ftdata->points;
 
 	if (points == NULL) {
-		SOLOMON_WARNNING("data for parse is null");
+		SOLOMON_WARNING("data for parse is null");
 		return -1;
 	}
 
@@ -2884,9 +2884,9 @@ static int solomon_report(struct solomon_device *ftdev)
 			axisCnt++;
 		} else if (points[i].aux.id == PASS_DATA_ID_AUX) {
 			/* data ID is AUX. It doesn't support yet. */
-			SOLOMON_WARNNING("AUX ID detected!!");
+			SOLOMON_WARNING("AUX ID detected!!");
 		} else {
-			SOLOMON_WARNNING("%d doesn't supported ID(0x%02x)",
+			SOLOMON_WARNING("%d doesn't supported ID(0x%02x)",
 			(points[i].point.forceDeviceID &
 			PASS_DATA_DEVICEID_MASK),
 			points[i].point.id);
@@ -3035,7 +3035,7 @@ retry_snl:
 		SOLOMON_STATUS_LENGTH, (u8 *)(esd_snl), 4);
 
 	if (esd_snl[0] == 0x0AF0) {
-		SOLOMON_WARNNING("SNL read again use 0x00F0!!");
+		SOLOMON_WARNING("SNL read again use 0x00F0!!");
 		err = ts_read_data(ftdev->client,
 		0x00F0, (u8 *)(esd_snl), 4);
 	}
@@ -3044,14 +3044,14 @@ retry_snl:
 			SOLOMON_STATUS_LENGTH, (u8 *)(&data->point_info), 2);
 	/* for test */
 	if (data->point_info == 0x0AF0) {
-		SOLOMON_WARNNING("SNL read again use 0x00F0!!");
+		SOLOMON_WARNING("SNL read again use 0x00F0!!");
 		err = ts_read_data(ftdev->client,
 				0x00F0, (u8 *)(&data->point_info), 2);
 	}
 #endif	/* SUPPORT_ESD_CHECKSUM */
 
 	if (err < 0) {
-		SOLOMON_WARNNING("error read point info using i2c.-");
+		SOLOMON_WARNING("error read point info using i2c.-");
 		goto out;
 	}
 
@@ -3063,14 +3063,14 @@ retry_snl:
 	esd_checksum((u8 *)(esd_snl), 2, &xor, &sum);
 
 		if (xor != ((esd_snl[1] >> 8) & 0xFF)) {
-			SOLOMON_WARNNING("S&L CS XOR[0x%02x : 0x%02x] fail!!",
+			SOLOMON_WARNING("S&L CS XOR[0x%02x : 0x%02x] fail!!",
 				xor, ((esd_snl[1]>>8)&0xFF));
 
 		goto retry_snl;
 	}
 
 		if (sum != ((esd_snl[1]) & 0xFF)) {
-			SOLOMON_WARNNING("S&L CS SUM[0x%02x : 0x%02x] fail!!",
+			SOLOMON_WARNING("S&L CS SUM[0x%02x : 0x%02x] fail!!",
 				sum, ((esd_snl[1])&0xFF));
 
 			goto retry_snl;
@@ -3107,7 +3107,7 @@ retry_snl:
 	SOLOMON_DEBUG("MAX points size: %d", sum);
 
 	if (length > sum) {
-		SOLOMON_WARNNING("state:0x%02x length(%d) over the MAX(%d)!!",
+		SOLOMON_WARNING("state:0x%02x length(%d) over the MAX(%d)!!",
 			status, length, sum);
 		if (m_point_skip_time > 0) {
 			err = solomon_check_skiptime(32);
@@ -3143,7 +3143,7 @@ retry_snl:
 				else if (ftdev->es_version == DS_VERSION_ES1) {
 #endif
 				/* TMC reseted. Need TMC init; */
-				SOLOMON_WARNNING("Auxbit reseted");
+				SOLOMON_WARNING("Auxbit reseted");
 				solomon_report_release(ftdev);
 				err = solomon_pre_init(ftdev);
 
@@ -3151,14 +3151,14 @@ retry_snl:
 					goto checksum;
 
 				if (err < 0)
-					SOLOMON_WARNNING("Pre init failed");
+					SOLOMON_WARNING("Pre init failed");
 #ifdef SUPPORT_ES2
 				}
 #endif
 				return err;
 #ifdef SUPPORT_ES2
 			} else if (aux == AUX_BOOTUP_RESET) {
-				SOLOMON_WARNNING("Aux bootup reset");
+				SOLOMON_WARNING("Aux bootup reset");
 				solomon_report_release(ftdev);
 				err = solomon_pre_init(ftdev);
 
@@ -3172,30 +3172,30 @@ retry_snl:
 #endif
 			} else if (aux == AUX_NEED_C1_TMC_RESET) {
 				/* Need TMC reset */
-				SOLOMON_WARNNING("Need TMC reset");
+				SOLOMON_WARNING("Need TMC reset");
 				goto out_reset;
 			} else if (aux == AUX_NEED_C2_DIC_RESET) {
 				/* TODO : for D-IC Reset */
-				SOLOMON_WARNNING("Need D-IC Reset");
+				SOLOMON_WARNING("Need D-IC Reset");
 				ssd20xx_tp_report_panel_dead = 1;
-				SOLOMON_WARNNING("TP report panel dead, request recovery");
+				SOLOMON_WARNING("TP report panel dead, request recovery");
 			} else if (aux == AUX_NEED_C3_DIC_POWER) {
 				/* TODO : for D-IC Power ON/OFF */
-				SOLOMON_WARNNING("Need D-IC Power On/Off");
+				SOLOMON_WARNING("Need D-IC Power On/Off");
 				ssd20xx_tp_report_panel_dead = 1;
-				SOLOMON_WARNNING("TP report panel dead, request recovery");
+				SOLOMON_WARNING("TP report panel dead, request recovery");
 			} else if (aux == AUX_NEED_C4_DSV_POWER_RESET) {
 				/* TODO : for DSV power & reset */
-				SOLOMON_WARNNING("Need DSV power & reset");
+				SOLOMON_WARNING("Need DSV power & reset");
 				ssd20xx_tp_report_panel_dead = 1;
-				SOLOMON_WARNNING("TP report panel dead, request recovery");
+				SOLOMON_WARNING("TP report panel dead, request recovery");
 			} else if ((aux & AUX_ESD_DETECT) == AUX_ESD_DETECT) {
 				/* need ESD process */
 				/* ftdev->checksum_flag = aux; */
 				goto out_reset;
 			} else if ((aux & AUX_CS_ERROR) == AUX_CS_ERROR) {
 				/* cs error. same ESD process */
-				SOLOMON_WARNNING("Aux CS error");
+				SOLOMON_WARNING("Aux CS error");
 				ftdev->checksum_flag = aux;
 				goto checksum;
 			}
@@ -3212,12 +3212,12 @@ retry_snl:
 
 #ifdef STATUS_CHECK_BOOT_ST
 	if ((status & STATUS_CHECK_BOOT_ST) == STATUS_CHECK_BOOT_ST) {
-		SOLOMON_WARNNING("Need TMC config initialize.");
+		SOLOMON_WARNING("Need TMC config initialize.");
 		solomon_report_release(ftdev);
 		err = solomon_init_config(ftdev);
 
 		if (err < 0)
-			SOLOMON_WARNNING("TMC config initialize failed");
+			SOLOMON_WARNING("TMC config initialize failed");
 		else
 		{
 			if(init_tmc_flag == 1)
@@ -3230,7 +3230,7 @@ retry_snl:
 				err = input_register_device(ftdev->input_dev);
 				if (err)
 				{
-					SOLOMON_WARNNING("Register input failed");
+					SOLOMON_WARNING("Register input failed");
 					err = -1;
 				}
 				init_tmc_flag = 0;
@@ -3259,7 +3259,7 @@ retry_point:
 				SOLOMON_POINT_DATA, (u8 *)(&data->points), length);
 #endif	/* SUPPORT_ESD_CHECKSUM */
 		if (err < 0) {
-			SOLOMON_WARNNING("error read point info using i2c.\n");
+			SOLOMON_WARNING("error read point info using i2c.\n");
 			goto out;
 		}
 #ifdef SUPPORT_ESD_CHECKSUM
@@ -3270,13 +3270,13 @@ retry_point:
 				sum, ((esd_snl[length / 2]) & 0xFF));
 
 		if (xor != ((esd_snl[length / 2] >> 8) & 0xFF)) {
-			SOLOMON_WARNNING("Check Sum XOR[0x%02x:0x%02x] fail!",
+			SOLOMON_WARNING("Check Sum XOR[0x%02x:0x%02x] fail!",
 					xor, ((esd_snl[length/2]>>8)&0xFF));
 			goto retry_point;
 		}
 
 		if (sum != (esd_snl[length / 2] & 0xFF)) {
-			SOLOMON_WARNNING("Check Sum SUM[0x%02x:0x%02x] fail!",
+			SOLOMON_WARNING("Check Sum SUM[0x%02x:0x%02x] fail!",
 					sum, (esd_snl[length/2]&0xFF));
 			goto retry_point;
 		}
@@ -3314,7 +3314,7 @@ out_go:
 #if defined(SUPPORT_ESD_CHECKSUM) || defined(SUPPORT_AUX)
 	/* checksum fail */
 checksum:
-	SOLOMON_WARNNING("Fail. So, TMC boot up check!!");
+	SOLOMON_WARNING("Fail. So, TMC boot up check!!");
 	solomon_report_release(ftdev);	/* all points release */
 	/* implement update */
 	if (ftdev->work_procedure == TS_IN_INITIALIZE)
@@ -3349,7 +3349,7 @@ static int solomon_init_config(struct solomon_device *ftdev)
 
 	SOLOMON_TIME("ic s");
 	if (!client || !ftconfig) {
-		SOLOMON_WARNNING("error : I2C client fail!!!");
+		SOLOMON_WARNING("error : I2C client fail!!!");
 		return -EINVAL;
 	}
 
@@ -3365,7 +3365,7 @@ static int solomon_init_config(struct solomon_device *ftdev)
 			(u8 *)&(val), 2);
 
 	if (err < 0)
-		SOLOMON_WARNNING("Fail to set TOUCH_MODE %d.", val);
+		SOLOMON_WARNING("Fail to set TOUCH_MODE %d.", val);
 
 	solomon_get_version(ftdev, ftconfig->fw_ver);
 
@@ -3373,7 +3373,7 @@ static int solomon_init_config(struct solomon_device *ftdev)
 			(u8 *)&ftconfig->y_node);
 
 	if (err < 0) {
-		SOLOMON_WARNNING("Get node x/y failed");
+		SOLOMON_WARNING("Get node x/y failed");
 		goto init_config_failed;
 	}
 
@@ -3464,7 +3464,7 @@ static void solomon_work(struct work_struct *work)
 
 	//ts_disable_irq();
 	if (down_trylock(&ftdevice->work_procedure_lock)) {
-		SOLOMON_WARNNING("fail to occupy sema");
+		SOLOMON_WARNING("fail to occupy sema");
 		do {
 			udelay(10);
 		} while (down_trylock(&ftdevice->work_procedure_lock));
@@ -3667,7 +3667,7 @@ static ssize_t solomon_set_ssdtouch_attr(struct device *dev, struct device_attri
 		err = ts_write_data(misc_dev->client, send_reg, (unsigned char *)&(send_data), 2);
 
 		if (err < 0) {
-			SOLOMON_WARNNING("error : read x node");
+			SOLOMON_WARNING("error : read x node");
 			return -EAGAIN;
 		}
 
@@ -3690,7 +3690,7 @@ static ssize_t solomon_set_ssdtouch_attr(struct device *dev, struct device_attri
 		err = ts_read_data(misc_dev->client, send_reg, (unsigned char *)&(send_data), 2);
 
 		if (err < 0) {
-			SOLOMON_WARNNING("error : read x node");
+			SOLOMON_WARNING("error : read x node");
 			return -EAGAIN;
 		}
 
@@ -3839,14 +3839,14 @@ static int solomon_boot_sequence(struct solomon_device *ftdev)
 	err = solomon_power_control(ftdev, POWER_ON_SEQUENCE);
 
 	if (err < 0) {
-		SOLOMON_WARNNING("Reset Fail!!");
+		SOLOMON_WARNING("Reset Fail!!");
 		goto out;
 	}
 #ifdef SUPPORT_ES2
 	err = ds_process_version(ftdev);
 
 	if (err < 0) {
-		SOLOMON_WARNNING("process version failed");
+		SOLOMON_WARNING("process version failed");
 		goto out;
 	}
 #endif
@@ -3860,7 +3860,7 @@ static int solomon_boot_sequence(struct solomon_device *ftdev)
 	err = solomon_read_points(ftdev, ftdev->ftdata);
 
 	if (err < 0) {
-		SOLOMON_WARNNING("DS init failed");
+		SOLOMON_WARNING("DS init failed");
 		goto out;
 	}
 
@@ -3880,14 +3880,14 @@ static int solomon_fw_update(struct solomon_device *ftdev)
 
 	if (request_firmware(&fw, fw_name, &ftdev->client->dev) != 0) {
 		SOLOMON_TIME("H");
-		SOLOMON_WARNNING("Going to update using Header file.");
+		SOLOMON_WARNING("Going to update using Header file.");
 		solomon_firmware_pre_boot_up_check_head(ftdev);
 	} else {
 		SOLOMON_TIME("B");
-		SOLOMON_WARNNING("Update using bin file(%s)", fw_name);
+		SOLOMON_WARNING("Update using bin file(%s)", fw_name);
 		solomon_firmware_pre_boot_up_check_bin(ftdev, fw->data,
 				fw->size);
-		SOLOMON_WARNNING("size : %lu Pre update end", (long unsigned int)fw->size);
+		SOLOMON_WARNING("size : %lu Pre update end", (long unsigned int)fw->size);
 		release_firmware(fw);
 	}
 	solomon_power_control(ftdev, POWER_RESET);
@@ -3902,7 +3902,7 @@ static void solomon_repeat_fw_update_controller(const struct firmware *fw,
 	struct solomon_device *dev = context;
 	int err = 0;
 
-	SOLOMON_WARNNING("Pre update start [repeat] >>>>> ");
+	SOLOMON_WARNING("Pre update start [repeat] >>>>> ");
 	SOLOMON_TIME("S");
 
 	if (dev != NULL && misc_dev != NULL) {
@@ -3911,19 +3911,19 @@ static void solomon_repeat_fw_update_controller(const struct firmware *fw,
 		if (!fw) {
 #if defined(SUPPORT_BOOTUP_FW_UPGRADE_HEADER)
 			SOLOMON_TIME("H");
-			SOLOMON_WARNNING("Going to update using Header file. [repeat]");
+			SOLOMON_WARNING("Going to update using Header file. [repeat]");
 			err = solomon_firmware_pre_boot_up_check_head(dev);
 #endif
 		} else {
 			SOLOMON_TIME("B");
-			SOLOMON_WARNNING("Update using bin file [repeat]");
+			SOLOMON_WARNING("Update using bin file [repeat]");
 			err = solomon_firmware_pre_boot_up_check_bin(dev,
 					fw->data, fw->size);
-			SOLOMON_WARNNING("size : %lu Pre update end [repeat]", (long unsigned int)fw->size);
+			SOLOMON_WARNING("size : %lu Pre update end [repeat]", (long unsigned int)fw->size);
 			release_firmware(fw);
 		}
 		if (err > 0) {
-			SOLOMON_WARNNING("F/W updated. initialize sequence [repeat]");
+			SOLOMON_WARNING("F/W updated. initialize sequence [repeat]");
 		}
 
 		if (ds_clear_int(misc_dev->client) < 0)
@@ -3940,9 +3940,9 @@ static void solomon_repeat_fw_update_controller(const struct firmware *fw,
 
 		ts_enable_irq();
 	} else {
-		SOLOMON_WARNNING("solomon device is null [repeat]");
+		SOLOMON_WARNING("solomon device is null [repeat]");
 	}
-	SOLOMON_WARNNING("Update routine closed!! [repeat]");
+	SOLOMON_WARNING("Update routine closed!! [repeat]");
 	SOLOMON_TIME("E");
 }
 #endif
@@ -3956,7 +3956,7 @@ static void solomon_fw_update_controller(const struct firmware *fw,
 	const char *fw_name = FW_FULL_PATH;
 #endif
 
-	SOLOMON_WARNNING("Pre update start >>>>> ");
+	SOLOMON_WARNING("Pre update start >>>>> ");
 	SOLOMON_TIME("S");
 
 	if (dev != NULL && misc_dev != NULL) {
@@ -3973,13 +3973,13 @@ static void solomon_fw_update_controller(const struct firmware *fw,
 				solomon_repeat_fw_update_controller);
 			if (err)
 			{
-				SOLOMON_WARNNING("failed to schedule another firmware update\n");
+				SOLOMON_WARNING("failed to schedule another firmware update\n");
 				return;
 			}
 			return;
 #elif defined(SUPPORT_BOOTUP_FW_UPGRADE_HEADER)
 			SOLOMON_TIME("H");
-			SOLOMON_WARNNING("Going to update using Header file.");
+			SOLOMON_WARNING("Going to update using Header file.");
 			err = solomon_firmware_pre_boot_up_check_head(dev);
 #endif
 		} else {
@@ -3987,14 +3987,14 @@ static void solomon_fw_update_controller(const struct firmware *fw,
 			found_force_bin_file = 1;
 #endif
 			SOLOMON_TIME("B");
-			SOLOMON_WARNNING("Update using bin file");
+			SOLOMON_WARNING("Update using bin file");
 			err = solomon_firmware_pre_boot_up_check_bin(dev,
 					fw->data, fw->size);
-			SOLOMON_WARNNING("size : %lu Pre update end", (long unsigned int)fw->size);
+			SOLOMON_WARNING("size : %lu Pre update end", (long unsigned int)fw->size);
 			release_firmware(fw);
 		}
 		if (err > 0) {
-			SOLOMON_WARNNING("F/W updated. initialize sequence");
+			SOLOMON_WARNING("F/W updated. initialize sequence");
 		}
 
 		if (ds_clear_int(misc_dev->client) < 0)
@@ -4011,9 +4011,9 @@ static void solomon_fw_update_controller(const struct firmware *fw,
 
 		ts_enable_irq();
 	} else {
-		SOLOMON_WARNNING("solomon device is null");
+		SOLOMON_WARNING("solomon device is null");
 	}
-	SOLOMON_WARNNING("Update routine closed!!");
+	SOLOMON_WARNING("Update routine closed!!");
 	SOLOMON_TIME("E");
 }
 #endif
@@ -4053,14 +4053,14 @@ static int solomon_probe(struct i2c_client *client,
 	SOLOMON_TIME("s");
 
 	if (!i2c_check_functionality(client->adapter, I2C_FUNC_SMBUS_BYTE_DATA)) {
-		SOLOMON_WARNNING("I2C check functionality failed.");
+		SOLOMON_WARNING("I2C check functionality failed.");
 		goto i2c_check_failed;
 	}
 
 	ftdev = (struct solomon_device *)kzalloc(sizeof(struct solomon_device), GFP_KERNEL);
 
 	if (!ftdev) {
-		SOLOMON_WARNNING("Create solomon device failed");
+		SOLOMON_WARNING("Create solomon device failed");
 		err = -ENOMEM;
 		goto create_solomon_failed;
 	}
@@ -4069,7 +4069,7 @@ static int solomon_probe(struct i2c_client *client,
 	ftdata = (struct solomon_data *)kzalloc(sizeof(struct solomon_data), GFP_KERNEL);
 
 	if (!ftdata) {
-		SOLOMON_WARNNING("Create solomon data failed");
+		SOLOMON_WARNING("Create solomon data failed");
 		err = -ENOMEM;
 		goto create_data_failed;
 	}
@@ -4083,14 +4083,14 @@ static int solomon_probe(struct i2c_client *client,
 	ftconfig = (struct solomon_config *)kzalloc(sizeof(struct solomon_config), GFP_KERNEL);
 
 	if (!ftconfig) {
-		SOLOMON_WARNNING("Create solomon config failed");
+		SOLOMON_WARNING("Create solomon config failed");
 		err = -ENOMEM;
 		goto create_config_failed;
 	}
 
 	input = input_allocate_device();
 	if (!input) {
-		SOLOMON_WARNNING("Create input device failed");
+		SOLOMON_WARNING("Create input device failed");
 		err = -ENOMEM;
 		goto create_input_failed;
 	}
@@ -4098,7 +4098,7 @@ static int solomon_probe(struct i2c_client *client,
 	wq = create_singlethread_workqueue("solomon_touch");
 
 	if (!wq) {
-		SOLOMON_WARNNING("Create workqueue failed");
+		SOLOMON_WARNING("Create workqueue failed");
 		err = -ENOMEM;
 		goto create_workqueue_failed;
 	}
@@ -4214,7 +4214,7 @@ static int solomon_probe(struct i2c_client *client,
 	err = misc_register(&touch_misc_dev);
 	if (err)
 	{
-		SOLOMON_WARNNING("Fail to register touch misc device.");
+		SOLOMON_WARNING("Fail to register touch misc device.");
 		goto misc_register_failed;
 	}
 
@@ -4325,7 +4325,7 @@ static int solomon_remove(struct i2c_client *client)
 			err = ts_write_data(client,
 					SOLOMON_ESD_INT_INTERVAL, (u8 *)&val, 2);
 			if (err < 0) {
-				SOLOMON_WARNNING("error : read x node");
+				SOLOMON_WARNING("error : read x node");
 				return -EAGAIN;
 			}
 
@@ -4365,7 +4365,7 @@ static int solomon_suspend(struct device *dev)
 	ftdev = misc_dev;
 	if(ftdev == NULL)
 	{
-		SOLOMON_WARNNING("ftdev is NULL, exit\n");
+		SOLOMON_WARNING("ftdev is NULL, exit\n");
 		return 0;
 	}
 
@@ -4380,11 +4380,11 @@ static int solomon_suspend(struct device *dev)
 	if (ftdev->use_esd_tmr) {
 		flush_work(&ftdev->tmr_work);
 		esd_timer_stop(ftdev);
-		SOLOMON_WARNNING("esd timer stop");
+		SOLOMON_WARNING("esd timer stop");
 		ftdev->use_esd_tmr = 0;
 
 		err = solomon_set_esdtime(ftdev, 0);
-		SOLOMON_WARNNING("set esd timer interval to 0");
+		SOLOMON_WARNING("set esd timer interval to 0");
 	}
 #endif	/* ESD_TIMER_ENABLE */
 
@@ -4413,7 +4413,7 @@ static int solomon_resume(struct device *dev)
 	else
 		ftdev = misc_dev;
 
-	SOLOMON_WARNNING(">>>> %s solomon resume start!!!", __func__);
+	SOLOMON_WARNING(">>>> %s solomon resume start!!!", __func__);
 	ssd20xx_tp_report_panel_dead = 0;
 
 	solomon_set_sleepout(ftdev);
@@ -4423,7 +4423,7 @@ static int solomon_resume(struct device *dev)
 
 		if (err < 0) {
 			err = -EAGAIN;
-			SOLOMON_WARNNING("fail to write reset command");
+			SOLOMON_WARNING("fail to write reset command");
 		}
 	}
 	m_power_status = LPM_RESUME;
@@ -4439,7 +4439,7 @@ static int solomon_resume(struct device *dev)
 	if (ftdev->use_esd_tmr) {
 		esd_checktime_init(ftdev);
 		esd_timer_start(SOLOMON_CHECK_ESD_TIMER, ftdev);
-		SOLOMON_WARNNING("esd timer start");
+		SOLOMON_WARNING("esd timer start");
 	}
 #endif	/* ESD_TIMER_ENABLE */
 
@@ -4516,7 +4516,7 @@ int solomon_resume_ex(void)
 
 int solomon_pre_on(void)
 {
-	SOLOMON_WARNNING("m_power_status=0x%04x!!", m_power_status);
+	SOLOMON_WARNING("m_power_status=0x%04x!!", m_power_status);
 #ifdef SUPPORT_LPM
 	if (m_power_status == LPM_SUSPEND) {
 		if (lpm_end2(misc_dev) >= 0)
@@ -4577,7 +4577,7 @@ static int touch_solomon_init(void)
 	err = i2c_add_driver(&solomon_driver);
 
 	if (err) {
-		SOLOMON_WARNNING("add i2c driver failed");
+		SOLOMON_WARNING("add i2c driver failed");
 		goto out;
 	}
 out:

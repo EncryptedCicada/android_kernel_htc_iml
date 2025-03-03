@@ -202,7 +202,7 @@ ssize_t ssdDrvMainProcfsGestureWakeupModeWrite(struct file *pFile, const char __
  *-----------------------------------------------------
  */
 #define solomon_debug 0
-#define solomon_warnning 1
+#define solomon_warning 1
 #define solomon_timecheck 0 /* only use check the boot time */
 
 #if solomon_debug
@@ -216,12 +216,12 @@ ssize_t ssdDrvMainProcfsGestureWakeupModeWrite(struct file *pFile, const char __
     } while (0)
 #endif
 
-#if solomon_warnning
-#define SOLOMON_WARNNING(fmt, args...)          \
+#if solomon_warning
+#define SOLOMON_WARNING(fmt, args...)          \
     pr_info("[SOLOMON-WARN : %-18s] " fmt "\n", \
             __func__, ##args)
 #else
-#define SOLOMON_WARNNING(fmt, args...) \
+#define SOLOMON_WARNING(fmt, args...) \
     do                                 \
     {                                  \
     } while (0)

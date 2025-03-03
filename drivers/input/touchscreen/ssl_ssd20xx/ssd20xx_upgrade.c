@@ -63,31 +63,31 @@ void view_section(struct solomon_fw fw)
 
 	len = fw.byte_cnt;
 
-	SOLOMON_WARNNING("\n\n");
-	SOLOMON_WARNNING("\t address : 0x%08x", fw.address);
-	SOLOMON_WARNNING("\t byte_cnt : 0x%08x", fw.byte_cnt);
-	SOLOMON_WARNNING("\t erase_page_cnt : 0x%08x", fw.erase_page_cnt);
-	SOLOMON_WARNNING("\t version : 0x%08x", fw.version);
-	SOLOMON_WARNNING("\t checksum : 0x%08x", fw.checksum);
-	SOLOMON_WARNNING("\t reserved_01 : 0x%08x", fw.reserved_01);
-	SOLOMON_WARNNING("\t reserved_02 : 0x%08x", fw.reserved_02);
-	SOLOMON_WARNNING("\t reserved_03 : 0x%08x", fw.reserved_03);
+	SOLOMON_WARNING("\n\n");
+	SOLOMON_WARNING("\t address : 0x%08x", fw.address);
+	SOLOMON_WARNING("\t byte_cnt : 0x%08x", fw.byte_cnt);
+	SOLOMON_WARNING("\t erase_page_cnt : 0x%08x", fw.erase_page_cnt);
+	SOLOMON_WARNING("\t version : 0x%08x", fw.version);
+	SOLOMON_WARNING("\t checksum : 0x%08x", fw.checksum);
+	SOLOMON_WARNING("\t reserved_01 : 0x%08x", fw.reserved_01);
+	SOLOMON_WARNING("\t reserved_02 : 0x%08x", fw.reserved_02);
+	SOLOMON_WARNING("\t reserved_03 : 0x%08x", fw.reserved_03);
 
 	tmpContent = (unsigned short *)fw.content;
 
 	if (fw.content != NULL) {
 		for (i = 0; i < 40; i += 4) {
-			SOLOMON_WARNNING("\t0x%02x%02x%02x%02x \t 0x%04x%04x",
+			SOLOMON_WARNING("\t0x%02x%02x%02x%02x \t 0x%04x%04x",
 					fw.content[i], fw.content[i+1],
 					fw.content[i+2], fw.content[i+3],
 					tmpContent[i/2], tmpContent[i/2+1]);
 		}
-		SOLOMON_WARNNING("\t.");
-		SOLOMON_WARNNING("\t.");
-		SOLOMON_WARNNING("\t.");
-		SOLOMON_WARNNING("\t.");
+		SOLOMON_WARNING("\t.");
+		SOLOMON_WARNING("\t.");
+		SOLOMON_WARNING("\t.");
+		SOLOMON_WARNING("\t.");
 		for (i = len - 40; i < len; i += 4) {
-			SOLOMON_WARNNING("\t0x%02x%02x%02x%02x \t 0x%04x%04x",
+			SOLOMON_WARNING("\t0x%02x%02x%02x%02x \t 0x%04x%04x",
 					fw.content[i], fw.content[i+1],
 					fw.content[i+2], fw.content[i+3],
 					tmpContent[i/2], tmpContent[i/2+1]);
@@ -155,9 +155,9 @@ int fw_calc_checksum(int len, unsigned short *tmpContent,
 	if (tmpContent == NULL)
 		return ERROR_PARSING_CHECKSUM_FAIL;
 
-	SOLOMON_WARNNING("\n");
-	SOLOMON_WARNNING("0x%04x 0x%04x\n", tmpContent[0], tmpContent[1]);
-	SOLOMON_WARNNING("\n");
+	SOLOMON_WARNING("\n");
+	SOLOMON_WARNING("0x%04x 0x%04x\n", tmpContent[0], tmpContent[1]);
+	SOLOMON_WARNING("\n");
 
 	for (i = 0; i < len; i++)
 	{
@@ -167,7 +167,7 @@ int fw_calc_checksum(int len, unsigned short *tmpContent,
 
 	*checksum = (xor << 16) | sum;
 
-	SOLOMON_WARNNING(">>>> sum:0x%04x, xor:0x%04x, checksum:0x%08x\n",
+	SOLOMON_WARNING(">>>> sum:0x%04x, xor:0x%04x, checksum:0x%08x\n",
 					 sum, xor, *checksum);
 
 	return ret;
@@ -215,58 +215,58 @@ int fw_checksum(struct solomon_fw sec)
 void view_error_msg(int errnum)
 {
 	if ((errnum & ERROR_TYPE_PARSING) == ERROR_TYPE_PARSING)
-		SOLOMON_WARNNING("[parsing");
+		SOLOMON_WARNING("[parsing");
 	else if ((errnum & ERROR_TYPE_PARSING) == ERROR_TYPE_UPDATE)
-		SOLOMON_WARNNING("[update]");
+		SOLOMON_WARNING("[update]");
 
-	SOLOMON_WARNNING("errnum : 0x%08x", errnum);
+	SOLOMON_WARNING("errnum : 0x%08x", errnum);
 
 	if (errnum == ERROR_SUCCESS)
-		SOLOMON_WARNNING("SUCCESS!!");
+		SOLOMON_WARNING("SUCCESS!!");
 	else if (errnum == ERROR_PARSING_FILENAME_IS_NULL)
-		SOLOMON_WARNNING("File nmae is fail!!");
+		SOLOMON_WARNING("File nmae is fail!!");
 	else if (errnum == ERROR_PARSING_FILE_OPEN_FAIL)
-		SOLOMON_WARNNING("File open error!!");
+		SOLOMON_WARNING("File open error!!");
 	else if (errnum == ERROR_PARSING_FORMAT_INVALID)
-		SOLOMON_WARNNING("Merge file format error!!");
+		SOLOMON_WARNING("Merge file format error!!");
 	else if (errnum == ERROR_PARSING_CHECKSUM_FAIL)
-		SOLOMON_WARNNING("Checksum fail!!");
+		SOLOMON_WARNING("Checksum fail!!");
 	else if (errnum == ERROR_PARSING_MALLOC_FAIL)
-		SOLOMON_WARNNING("Malloc fail!!");
+		SOLOMON_WARNING("Malloc fail!!");
 	else if (errnum == ERROR_PARSING_CONTENT_SIZE_FAIL)
-		SOLOMON_WARNNING("Content size fail!!");
+		SOLOMON_WARNING("Content size fail!!");
 	else if (errnum == ERROR_PARSING_DATA_CNT_FAIL)
-		SOLOMON_WARNNING("Data count fail!!");
+		SOLOMON_WARNING("Data count fail!!");
 	else if (errnum == ERROR_PARSING_HEADER_DATA_INVALID_LENGTH)
-		SOLOMON_WARNNING("The header data length invalid!!");
+		SOLOMON_WARNING("The header data length invalid!!");
 	else if (errnum == ERROR_PARSING_INVALID_DATATYPE)
-		SOLOMON_WARNNING("The merge file have invalid data type!!");
+		SOLOMON_WARNING("The merge file have invalid data type!!");
 	else if (errnum == ERROR_UPDATE_INIT_FAIL)
-		SOLOMON_WARNNING("Update init fail!!");
+		SOLOMON_WARNING("Update init fail!!");
 	else if (errnum == ERROR_UPDATE_ERASE_FAIL)
-		SOLOMON_WARNNING("Update erase fail!!");
+		SOLOMON_WARNING("Update erase fail!!");
 	else if (errnum == ERROR_UPDATE_WRITE_FAIL)
-		SOLOMON_WARNNING("Update write fail!!");
+		SOLOMON_WARNING("Update write fail!!");
 	else if (errnum == ERROR_UPDATE_READ_FAIL)
-		SOLOMON_WARNNING("Update read fail!!");
+		SOLOMON_WARNING("Update read fail!!");
 	else if (errnum == ERROR_UPDATE_VERIFY_FAIL)
-		SOLOMON_WARNNING("Update verify fail!!");
+		SOLOMON_WARNING("Update verify fail!!");
 	else if (errnum == ERROR_EFLAH_ERASE_FAIL)
-		SOLOMON_WARNNING("Eflash erase fail!!");
+		SOLOMON_WARNING("Eflash erase fail!!");
 	else if (errnum == ERROR_EFLAH_WRITE_FAIL)
-		SOLOMON_WARNNING("Eflash write fail!!");
+		SOLOMON_WARNING("Eflash write fail!!");
 	else if (errnum == ERROR_EFLAH_READ_FAIL)
-		SOLOMON_WARNNING("Eflash read fail!!");
+		SOLOMON_WARNING("Eflash read fail!!");
 	else if (errnum == ERROR_EFLAH_VERIFY_FAIL)
-		SOLOMON_WARNNING("Eflash verify fail!!");
+		SOLOMON_WARNING("Eflash verify fail!!");
 	else if (errnum == ERROR_SYSTEM_FAIL)
-		SOLOMON_WARNNING("Syste fail!!");
+		SOLOMON_WARNING("Syste fail!!");
 	else if (errnum == ERROR_VERSION_CHECK_FAIL)
-		SOLOMON_WARNNING("Version check fail!!");
+		SOLOMON_WARNING("Version check fail!!");
 	else if (errnum == ERROR_VERIFY_VERIFY_FAIL)
-		SOLOMON_WARNNING("The Verify verify fail!!");
+		SOLOMON_WARNING("The Verify verify fail!!");
 	else
-		SOLOMON_WARNNING("Unknown error!!");
+		SOLOMON_WARNING("Unknown error!!");
 }
 #endif
 
@@ -388,7 +388,7 @@ static struct solomon_fw_group *parse_uchar2int_arr(const u8 *data,
 					break;
 
 				fw_header->fw_version.display_version = iRet;
-				SOLOMON_WARNNING("display version : 0x%08x",
+				SOLOMON_WARNING("display version : 0x%08x",
 								 iRet);
 			}
 			else if (dollar_cnt == 2)
@@ -400,7 +400,7 @@ static struct solomon_fw_group *parse_uchar2int_arr(const u8 *data,
 					break;
 
 				fw_header->fw_version.hidden_version = iRet;
-				SOLOMON_WARNNING("hidden version : 0x%08x",
+				SOLOMON_WARNING("hidden version : 0x%08x",
 								 iRet);
 			}
 			else if (dollar_cnt == 3)
@@ -412,7 +412,7 @@ static struct solomon_fw_group *parse_uchar2int_arr(const u8 *data,
 					break;
 
 				fw_header->fw_version.productID01 = iRet;
-				SOLOMON_WARNNING("productID01 : 0x%08x", iRet);
+				SOLOMON_WARNING("productID01 : 0x%08x", iRet);
 			}
 			else if (dollar_cnt == 4)
 			{
@@ -423,7 +423,7 @@ static struct solomon_fw_group *parse_uchar2int_arr(const u8 *data,
 					break;
 
 				fw_header->fw_version.productID02 = iRet;
-				SOLOMON_WARNNING("productID02 : 0x%08x", iRet);
+				SOLOMON_WARNING("productID02 : 0x%08x", iRet);
 			}
 			else if (dollar_cnt == 5)
 			{
@@ -434,7 +434,7 @@ static struct solomon_fw_group *parse_uchar2int_arr(const u8 *data,
 					break;
 
 				fw_header->fw_version.ICName01 = iRet;
-				SOLOMON_WARNNING("ICName01 : 0x%08x", iRet);
+				SOLOMON_WARNING("ICName01 : 0x%08x", iRet);
 			}
 			else if (dollar_cnt == 6)
 			{
@@ -445,7 +445,7 @@ static struct solomon_fw_group *parse_uchar2int_arr(const u8 *data,
 					break;
 
 				fw_header->fw_version.ICName02 = iRet;
-				SOLOMON_WARNNING("ICName02 : 0x%08x", iRet);
+				SOLOMON_WARNING("ICName02 : 0x%08x", iRet);
 			}
 			if (dollar_level == LEVEL_DOLLAR_NONE &&
 				dollar_cnt == 9)
@@ -456,7 +456,7 @@ static struct solomon_fw_group *parse_uchar2int_arr(const u8 *data,
 					break;
 
 				*all = iRet;
-				SOLOMON_WARNNING("ALL Update flag : %d", *all);
+				SOLOMON_WARNING("ALL Update flag : %d", *all);
 				dollar_level = LEVEL_DOLLAR_ERASE_TYPE;
 			}
 			continue;
@@ -494,7 +494,7 @@ static struct solomon_fw_group *parse_uchar2int_arr(const u8 *data,
 				break;
 
 			ptr->section.address = iRet;
-			SOLOMON_WARNNING("address : 0x%08x\n",
+			SOLOMON_WARNING("address : 0x%08x\n",
 							 ptr->section.address);
 
 			if (head == NULL)
@@ -535,7 +535,7 @@ static struct solomon_fw_group *parse_uchar2int_arr(const u8 *data,
 					break;
 				}
 				ptr->section.byte_cnt = iRet;
-				SOLOMON_WARNNING("byte_cnt : 0x%08x\n",
+				SOLOMON_WARNING("byte_cnt : 0x%08x\n",
 								 ptr->section.byte_cnt);
 
 				level = LEVEL_LENGTH;
@@ -549,45 +549,45 @@ static struct solomon_fw_group *parse_uchar2int_arr(const u8 *data,
 				 * }
 				 */
 				ptr->section.erase_page_cnt = iRet;
-				SOLOMON_WARNNING("erase_page_cnt : 0x%08x\n",
+				SOLOMON_WARNING("erase_page_cnt : 0x%08x\n",
 								 ptr->section.erase_page_cnt);
 				level = LEVEL_ERASE_SIZE;
 			}
 			else if (level == LEVEL_ERASE_SIZE)
 			{
 				ptr->section.version = iRet;
-				SOLOMON_WARNNING(">>> version : 0x%08x\n",
+				SOLOMON_WARNING(">>> version : 0x%08x\n",
 								 ptr->section.version);
 				level = LEVEL_VERSION;
 			}
 			else if (level == LEVEL_VERSION)
 			{
-				SOLOMON_WARNNING("%s", buff);
-				SOLOMON_WARNNING("checksum before : 0x%08x",
+				SOLOMON_WARNING("%s", buff);
+				SOLOMON_WARNING("checksum before : 0x%08x",
 								 iRet);
 				ptr->section.checksum = (unsigned int)iRet;
-				SOLOMON_WARNNING("checksum : 0x%08x\n",
+				SOLOMON_WARNING("checksum : 0x%08x\n",
 								 ptr->section.checksum);
 				level = LEVEL_CHECKSUM;
 			}
 			else if (level == LEVEL_CHECKSUM)
 			{
 				ptr->section.reserved_01 = iRet;
-				SOLOMON_WARNNING("reserved_01 : 0x%08x\n",
+				SOLOMON_WARNING("reserved_01 : 0x%08x\n",
 								 ptr->section.reserved_01);
 				level = LEVEL_RESERVE_01;
 			}
 			else if (level == LEVEL_RESERVE_01)
 			{
 				ptr->section.reserved_02 = iRet;
-				SOLOMON_WARNNING("reserved_02 : 0x%08x\n",
+				SOLOMON_WARNING("reserved_02 : 0x%08x\n",
 								 ptr->section.reserved_03);
 				level = LEVEL_RESERVE_02;
 			}
 			else if (level == LEVEL_RESERVE_02)
 			{
 				ptr->section.reserved_03 = iRet;
-				SOLOMON_WARNNING(">>> reserved_03 : 0x%08x\n",
+				SOLOMON_WARNING(">>> reserved_03 : 0x%08x\n",
 								 ptr->section.reserved_03);
 				ptr->section.content =
 					kmalloc(ptr->section.byte_cnt,
@@ -604,7 +604,7 @@ static struct solomon_fw_group *parse_uchar2int_arr(const u8 *data,
 
 				data_idx += ptr->section.byte_cnt;
 
-				SOLOMON_WARNNING("SIZE %d %d\n",
+				SOLOMON_WARNING("SIZE %d %d\n",
 								 ptr->section.byte_cnt, ret);
 				/*if (ret != ptr->section.byte_cnt) {
 				 *	ret = ERROR_PARSING_CONTENT_SIZE_FAIL;
@@ -650,19 +650,19 @@ static int solomon_make_checksum_link(struct solomon_device *dev,
 	struct solomon_fw_group *head = NULL, *chkHead = NULL, *chkTail = NULL;
 
 	len = sizeof(elseChecksum) / sizeof(int);
-	SOLOMON_WARNNING("size of else checksum : %d", len);
+	SOLOMON_WARNING("size of else checksum : %d", len);
 
 	head = fw_header->fw_group;
 
 	while (head)
 	{
-		SOLOMON_WARNNING("address : 0x%08x", head->section.address);
+		SOLOMON_WARNING("address : 0x%08x", head->section.address);
 		check = 0;
 		for (i = 0; i < len; i++)
 		{
 			if (head->section.address == elseChecksum[i])
 			{
-				SOLOMON_WARNNING("except address");
+				SOLOMON_WARNING("except address");
 				check = 1;
 				break;
 			}
@@ -670,7 +670,7 @@ static int solomon_make_checksum_link(struct solomon_device *dev,
 
 		if (check == 0)
 		{
-			SOLOMON_WARNNING("add address");
+			SOLOMON_WARNING("add address");
 			err = solomon_fw_make_link(&chkHead, &chkTail,
 									   &head->section);
 
@@ -799,7 +799,7 @@ static int fw_solomon_init(struct solomon_device *dev)
 {
 	int ret = 0;
 
-	SOLOMON_WARNNING("initialize start >>>>>>>>>>>>>>>");
+	SOLOMON_WARNING("initialize start >>>>>>>>>>>>>>>");
 
 	ret = ds_eflash_write(dev->client, 0xE003, 0x0007);
 
@@ -811,7 +811,7 @@ static int fw_solomon_init(struct solomon_device *dev)
 	if (ret < 0)
 		return ERROR_SYSTEM_FAIL;
 
-	SOLOMON_WARNNING("<<<<<<<<<<<< initialize end(%d)", ret);
+	SOLOMON_WARNING("<<<<<<<<<<<< initialize end(%d)", ret);
 	return ret;
 }
 
@@ -836,23 +836,23 @@ int solomon_free_header(struct solomon_device *dev)
 static int solomon_firmware_version_check(struct solomon_device *dev,
 										  struct solomon_fw_group_header *fw_header)
 {
-	SOLOMON_WARNNING("PRODUCT ID E:0x%08x 0x%08x / H:0x%08x 0x%08x",
+	SOLOMON_WARNING("PRODUCT ID E:0x%08x 0x%08x / H:0x%08x 0x%08x",
 					 dev->fw_version.productID01,
 					 dev->fw_version.productID02,
 					 fw_header->fw_version.productID01,
 					 fw_header->fw_version.productID02);
 
-	SOLOMON_WARNNING("ICNAME E:0x%08x 0x%08x / H:0x%08x 0x%08x",
+	SOLOMON_WARNING("ICNAME E:0x%08x 0x%08x / H:0x%08x 0x%08x",
 					 dev->fw_version.ICName01,
 					 dev->fw_version.ICName02,
 					 fw_header->fw_version.ICName01,
 					 fw_header->fw_version.ICName02);
 
-	SOLOMON_WARNNING("DISPLAY VERSION  EFLASH : 0x%08x\t0x%08x",
+	SOLOMON_WARNING("DISPLAY VERSION  EFLASH : 0x%08x\t0x%08x",
 					 dev->fw_version.display_version,
 					 fw_header->fw_version.display_version);
 
-	SOLOMON_WARNNING("HIDDEN VERSION  EFLASH : 0x%08x\tHEADER : 0x%08x",
+	SOLOMON_WARNING("HIDDEN VERSION  EFLASH : 0x%08x\tHEADER : 0x%08x",
 					 dev->fw_version.hidden_version,
 					 fw_header->fw_version.hidden_version);
 
@@ -868,7 +868,7 @@ static int solomon_firmware_version_check(struct solomon_device *dev,
 		(fw_header->fw_version.hidden_version !=
 		 HIDDEN_VERSION_FACTORY))
 	{
-		SOLOMON_WARNNING("SEEPROM has the factory version in HV");
+		SOLOMON_WARNING("SEEPROM has the factory version in HV");
 		goto update;
 	}
 	if ((dev->fw_version.hidden_version !=
@@ -876,7 +876,7 @@ static int solomon_firmware_version_check(struct solomon_device *dev,
 		(fw_header->fw_version.hidden_version ==
 		 HIDDEN_VERSION_FACTORY))
 	{
-		SOLOMON_WARNNING("Header has the factory version in HV.");
+		SOLOMON_WARNING("Header has the factory version in HV.");
 		goto update;
 	}
 
@@ -886,7 +886,7 @@ static int solomon_firmware_version_check(struct solomon_device *dev,
 	if (dev->fw_version.display_version == 0x00 &&
 		fw_header->fw_version.display_version != 0x00)
 	{
-		SOLOMON_WARNNING("SEEPROM display version is 0. upgrade.");
+		SOLOMON_WARNING("SEEPROM display version is 0. upgrade.");
 		goto update;
 	}
 
@@ -895,7 +895,7 @@ static int solomon_firmware_version_check(struct solomon_device *dev,
 		dev->fw_version.productID02 !=
 			fw_header->fw_version.productID02)
 	{
-		SOLOMON_WARNNING("Produect ID mismatch!!!");
+		SOLOMON_WARNING("Produect ID mismatch!!!");
 		goto out;
 	}
 
@@ -904,14 +904,14 @@ static int solomon_firmware_version_check(struct solomon_device *dev,
 		dev->fw_version.ICName02 !=
 			fw_header->fw_version.ICName02)
 	{
-		SOLOMON_WARNNING("IC Name mismatch!!!");
+		SOLOMON_WARNING("IC Name mismatch!!!");
 		goto out;
 	}
 
 	if (dev->fw_version.display_version <
 		fw_header->fw_version.display_version)
 	{
-		SOLOMON_WARNNING("Detect new display version!!");
+		SOLOMON_WARNING("Detect new display version!!");
 		goto update;
 	}
 	else if (dev->fw_version.display_version ==
@@ -920,7 +920,7 @@ static int solomon_firmware_version_check(struct solomon_device *dev,
 		if (dev->fw_version.hidden_version <
 			fw_header->fw_version.hidden_version)
 		{
-			SOLOMON_WARNNING("Detect new hidden version!!");
+			SOLOMON_WARNING("Detect new hidden version!!");
 			goto update;
 		}
 	}
@@ -956,7 +956,7 @@ int solomon_firmware_update_byfile(struct solomon_device *dev, char *filename)
 	src = filp_open(filename, O_RDONLY, S_IRUSR | S_IRGRP | S_IROTH);
 	if (IS_ERR(src))
 	{
-		SOLOMON_WARNNING("[%s] file open error!!", filename);
+		SOLOMON_WARNING("[%s] file open error!!", filename);
 		return ERROR_PARSING_FILE_OPEN_FAIL;
 	}
 
@@ -968,11 +968,11 @@ int solomon_firmware_update_byfile(struct solomon_device *dev, char *filename)
 		read_size = vfs_read(src, (char __user *)fw_data, fw_size,
 							 &src->f_pos);
 
-		SOLOMON_WARNNING("file path %s, size %lu Bytes\n",
+		SOLOMON_WARNING("file path %s, size %lu Bytes\n",
 						 filename, (long unsigned int)fw_size);
 		if (read_size != fw_size)
 		{
-			SOLOMON_WARNNING("File copy error (size : %lu : %lu)",
+			SOLOMON_WARNING("File copy error (size : %lu : %lu)",
 							 (long unsigned int)fw_size, (long unsigned int)read_size);
 			errnum = ERROR_PARSING_FILE_OPEN_FAIL;
 		}
@@ -1034,19 +1034,19 @@ int solomon_firmware_pre_boot_up_check(struct solomon_device *dev)
 
 	if ((dev->boot_flag & BOOT_STATUS_ERR_CPUCFG_ALL) > 0)
 	{
-		SOLOMON_WARNNING("Solomon DS16 CPU CFG error!! update");
+		SOLOMON_WARNING("Solomon DS16 CPU CFG error!! update");
 		goto update;
 	}
 
 	if ((dev->boot_flag & BOOT_STATUS_ERR_SYS_CFG_FAIL) > 0)
 	{
-		SOLOMON_WARNNING("Solomon DS16 SYS CFG error!!update");
+		SOLOMON_WARNING("Solomon DS16 SYS CFG error!!update");
 		goto update;
 	}
 
 	if (dev->checksum_flag > 0)
 	{
-		SOLOMON_WARNNING("Checksum(0x%04x) fail!! update",
+		SOLOMON_WARNING("Checksum(0x%04x) fail!! update",
 						 dev->checksum_flag);
 		dev->checksum_flag = 0;
 		goto update;
@@ -1121,7 +1121,7 @@ int solomon_firmware_check(struct solomon_device *dev, char *filename)
 
 	if (filename == NULL)
 	{
-		SOLOMON_WARNNING("Bin filename is null!!");
+		SOLOMON_WARNING("Bin filename is null!!");
 		goto header;
 	}
 
@@ -1131,7 +1131,7 @@ int solomon_firmware_check(struct solomon_device *dev, char *filename)
 	src = filp_open(filename, O_RDONLY, S_IRUSR | S_IRGRP | S_IROTH);
 	if (IS_ERR(src))
 	{
-		SOLOMON_WARNNING("[%s] file open error!!", filename);
+		SOLOMON_WARNING("[%s] file open error!!", filename);
 		set_fs(oldfs);
 		goto header;
 	}
@@ -1143,11 +1143,11 @@ int solomon_firmware_check(struct solomon_device *dev, char *filename)
 		read_size = vfs_read(src, (char __user *)fw_data, fw_size,
 							 &src->f_pos);
 
-		SOLOMON_WARNNING("file path %s, size %lu Bytes\n", filename,
+		SOLOMON_WARNING("file path %s, size %lu Bytes\n", filename,
 						 (long unsigned int)fw_size);
 		if (read_size != fw_size)
 		{
-			SOLOMON_WARNNING("File copy error!!!(size : %lu : %lu)",
+			SOLOMON_WARNING("File copy error!!!(size : %lu : %lu)",
 							 (long unsigned int)fw_size, (long unsigned int)read_size);
 			errnum = ERROR_PARSING_FILE_OPEN_FAIL;
 			set_fs(oldfs);
@@ -1160,7 +1160,7 @@ int solomon_firmware_check(struct solomon_device *dev, char *filename)
 
 	goto out;
 header:
-	SOLOMON_WARNNING("Header file update");
+	SOLOMON_WARNING("Header file update");
 	errnum = solomon_firmware_pre_boot_up_check_head(dev);
 out:
 	return errnum;

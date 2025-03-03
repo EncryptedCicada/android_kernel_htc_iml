@@ -53,9 +53,9 @@ int ds16_seeprom_fw_calc_checksum(int len, unsigned short *tmpContent,
 	if (tmpContent == NULL)
 		return ERROR_PARSING_CHECKSUM_FAIL;
 
-	SOLOMON_WARNNING("\n\n");
-	SOLOMON_WARNNING("0x%04x 0x%04x", tmpContent[0], tmpContent[1]);
-	SOLOMON_WARNNING("\n\n");
+	SOLOMON_WARNING("\n\n");
+	SOLOMON_WARNING("0x%04x 0x%04x", tmpContent[0], tmpContent[1]);
+	SOLOMON_WARNING("\n\n");
 
 	for (i = 0; i < len; i++) {
 		sum += tmpContent[i];
@@ -64,7 +64,7 @@ int ds16_seeprom_fw_calc_checksum(int len, unsigned short *tmpContent,
 
 	*checksum = (xor<<16)|sum;
 
-	SOLOMON_WARNNING(">>>> sum:0x%04x, xor:0x%04x, checksum:0x%08x\n",
+	SOLOMON_WARNING(">>>> sum:0x%04x, xor:0x%04x, checksum:0x%08x\n",
 			sum, xor, *checksum);
 	return err;
 }
@@ -109,7 +109,7 @@ int ds16_seeprom_general_ucmd_write(struct solomon_device *dev, u8 *dbuf,
 	err = i2c_master_send(dev->client, ws_wd, ws_wd_nbyte);
 
 	if (err < 0) {
-		SOLOMON_WARNNING("I2C write fail(0x%04x)!!", err);
+		SOLOMON_WARNING("I2C write fail(0x%04x)!!", err);
 		return err;
 	}
 
@@ -163,7 +163,7 @@ int ds16_seeprom_general_ucmd_read(struct solomon_device *dev, u8 *Wbuf,
 	err = i2c_master_send(dev->client, ws_wd, ws_wd_nbyte);
 
 	if (err < 0) {
-		SOLOMON_WARNNING("I2C READ CMD FAIL");
+		SOLOMON_WARNING("I2C READ CMD FAIL");
 		return err;
 	}
 
@@ -173,7 +173,7 @@ int ds16_seeprom_general_ucmd_read(struct solomon_device *dev, u8 *Wbuf,
 	err = i2c_master_recv(dev->client, Rbuf, RnByte);
 
 	if (err < 0) {
-		SOLOMON_WARNNING("I2C READ DATA FAIL (%d)", err);
+		SOLOMON_WARNING("I2C READ DATA FAIL (%d)", err);
 		return err;
 	}
 
@@ -205,7 +205,7 @@ int ds16_seeprom_readid(struct solomon_device *dev, int *id)
 	*id |= (int)((rs_wd[1] & 0xFF) << 8);
 	*id |= (int)((rs_wd[2] & 0xFF) << 0);
 
-	SOLOMON_WARNNING("SEEPROM ID = 0x%04x", *id);
+	SOLOMON_WARNING("SEEPROM ID = 0x%04x", *id);
 
 	return err;
 }
@@ -484,7 +484,7 @@ int ds16_seeprom_erase_chip_mx25v1001e(struct solomon_device *dev)
 {
 	int err = 0;
 
-	SOLOMON_WARNNING("Erase chip MX25V1001E");
+	SOLOMON_WARNING("Erase chip MX25V1001E");
 
 	err = ds16_seeprom_wren(dev);
 
@@ -512,7 +512,7 @@ int ds16_seeprom_erase_chip_mx25v1006e(struct solomon_device *dev)
 {
 	int err = 0;
 
-	SOLOMON_WARNNING("Erase chip MX25V1006E");
+	SOLOMON_WARNING("Erase chip MX25V1006E");
 
 	err = ds16_seeprom_wren(dev);
 
@@ -568,7 +568,7 @@ int ds16_seeprom_enable_protect(struct solomon_device *dev)
 	int err = 0;
 	unsigned int rd;
 
-	SOLOMON_WARNNING("ENABLE WRITE PROTECT. Can't write.");
+	SOLOMON_WARNING("ENABLE WRITE PROTECT. Can't write.");
 
 	err = ds16_seeprom_wren(dev);
 
@@ -601,7 +601,7 @@ int ds16_seeprom_disable_protect(struct solomon_device *dev)
 	int err = 0;
 	unsigned int rd;
 
-	SOLOMON_WARNNING("DISABLE WRITE PROTECT. Can write.");
+	SOLOMON_WARNING("DISABLE WRITE PROTECT. Can write.");
 
 	err = ds16_seeprom_wren(dev);
 
@@ -639,7 +639,7 @@ int ds16_seeprom_read_nbyte(struct solomon_device *dev, u32 st, u8 *data_buf,
 	int read_length = 0;
 	int add_index = 0;
 
-	SOLOMON_WARNNING("read nbyte");
+	SOLOMON_WARNING("read nbyte");
 	data_length = nbyte;
 
 	for (data_length = nbyte; data_length > 0;
@@ -688,7 +688,7 @@ int ds16_seeprom_write_nbyte_mx25v1001e(struct solomon_device *dev, u32 st,
 	 * 256-192 = 64. So, the first write data count is 64.
 	 */
 	data_length = nbyte;
-	SOLOMON_WARNNING("(st : 0x%04x, m_SEEPROM_WriteMax_Length = %d)", st,
+	SOLOMON_WARNING("(st : 0x%04x, m_SEEPROM_WriteMax_Length = %d)", st,
 			m_SEEPROM_WriteMax_Length);
 
 	first_send_length = st%m_SEEPROM_WriteMax_Length;
@@ -775,7 +775,7 @@ int ds16_seeprom_write_nbyte_mx25v1006e(struct solomon_device *dev,
 	 * 256-192 = 64. So, the first write data count is 64.
 	 */
 	data_length = nbyte;
-	SOLOMON_WARNNING("write nbyte MX25V1006E");
+	SOLOMON_WARNING("write nbyte MX25V1006E");
 	first_send_length = st%m_SEEPROM_WriteMax_Length;
 
 	if (first_send_length != 0) {
@@ -849,15 +849,15 @@ int ds16_seeprom_verify(struct solomon_device *dev, struct solomon_fw *fw)
 	u8 *verify_data = NULL;
 
 	if (fw == NULL) {
-		SOLOMON_WARNNING("pointer for verify is NULL!!");
+		SOLOMON_WARNING("pointer for verify is NULL!!");
 		return -1;
 	}
-	SOLOMON_WARNNING("START VERIFY (address : 0x%08x) >>>>", fw->address);
+	SOLOMON_WARNING("START VERIFY (address : 0x%08x) >>>>", fw->address);
 
 	verify_data = kmalloc(fw->byte_cnt+2, GFP_KERNEL);
 
 	if (verify_data == NULL) {
-		SOLOMON_WARNNING("malloc pointer for verify fail!!");
+		SOLOMON_WARNING("malloc pointer for verify fail!!");
 		err = -2;
 		goto out;
 	}
@@ -866,14 +866,14 @@ int ds16_seeprom_verify(struct solomon_device *dev, struct solomon_fw *fw)
 			fw->byte_cnt);
 
 	if (err != 0) {
-		SOLOMON_WARNNING("Read fail for Verify");
+		SOLOMON_WARNING("Read fail for Verify");
 		goto out;
 	}
 
 	for (i = 0; i < fw->byte_cnt; i++) {
 		if (fw->content[i] != verify_data[i]) {
-			SOLOMON_WARNNING("Download Fail!");
-			SOLOMON_WARNNING("miss match %04d W:0x%02x R:0x%02x!",
+			SOLOMON_WARNING("Download Fail!");
+			SOLOMON_WARNING("miss match %04d W:0x%02x R:0x%02x!",
 					i, fw->content[i], verify_data[i]);
 			err = -3;
 			goto out;
@@ -882,7 +882,7 @@ int ds16_seeprom_verify(struct solomon_device *dev, struct solomon_fw *fw)
 
 out:
 	kfree(verify_data);
-	SOLOMON_WARNNING("END VERIFY >>>>");
+	SOLOMON_WARNING("END VERIFY >>>>");
 	return err;
 }
 
@@ -902,10 +902,10 @@ int ds16_seeprom_firmware_update_by_section(struct solomon_device *dev,
 	int retry = FW_MAX_RETRY_COUNT;
 	int retry2 = FW_MAX_RETRY_COUNT;
 
-	SOLOMON_WARNNING("\n");
-	SOLOMON_WARNNING("FLASH ADDRESS : 0x%04x", section->address);
-	SOLOMON_WARNNING("FLASH ERASE PAGE : 0x%04x", section->erase_page_cnt);
-	SOLOMON_WARNNING("FLASH DATA COUNT : 0x%04x", section->byte_cnt);
+	SOLOMON_WARNING("\n");
+	SOLOMON_WARNING("FLASH ADDRESS : 0x%04x", section->address);
+	SOLOMON_WARNING("FLASH ERASE PAGE : 0x%04x", section->erase_page_cnt);
+	SOLOMON_WARNING("FLASH DATA COUNT : 0x%04x", section->byte_cnt);
 
 	if (section->byte_cnt > 0 && section->content != NULL) {
 		if (all != BOOT_UPDATE_ALL && section->erase_page_cnt > 0) {
@@ -957,7 +957,7 @@ int ds16_seeprom_firmware_update(struct solomon_device *dev,
 	struct solomon_fw *ptr = NULL;
 
 retry_all:
-	SOLOMON_WARNNING("update start(retry:%d >>>", retry1);
+	SOLOMON_WARNING("update start(retry:%d >>>", retry1);
 	if ((retry1--) > 0) {
 		if (all == BOOT_UPDATE_ALL) {
 			retry2 = FW_MAX_RETRY_COUNT;
@@ -990,7 +990,7 @@ retry_all:
 			goto retry_all;
 	}
 out:
-	SOLOMON_WARNNING("<<<<<<<<<<<< update end err=0x%08x", err);
+	SOLOMON_WARNING("<<<<<<<<<<<< update end err=0x%08x", err);
 
 	return err;
 }
@@ -1045,7 +1045,7 @@ static int ds16_seeprom_fw_ds_read_version(struct solomon_device *dev,
 			break;
 	} while ((retry--) > 0);
 
-	SOLOMON_WARNNING("err : 0x%08x \t VERSION : 0x%08x", err, *version);
+	SOLOMON_WARNING("err : 0x%08x \t VERSION : 0x%08x", err, *version);
 
 	return err;
 }
@@ -1081,25 +1081,25 @@ static int ds16_seeprom_fw_verify_checksum(struct solomon_device *dev,
 		goto out;
 	}
 
-	SOLOMON_WARNNING("READ eFlash Header(12bytes) : 0x%08x 0x%08x 0x%08x",
+	SOLOMON_WARNING("READ eFlash Header(12bytes) : 0x%08x 0x%08x 0x%08x",
 			header[0], header[1], header[2]);
 	tByte_cnt = byte_cnt = header[1];
 	hChecksum = header[2];
-	SOLOMON_WARNNING("Converted byte_cnt = %d(0x%08x), checksum : 0x%08x",
+	SOLOMON_WARNING("Converted byte_cnt = %d(0x%08x), checksum : 0x%08x",
 			byte_cnt, byte_cnt, hChecksum);
 
 	nBlock_cnt = byte_cnt/FW_MAX_I2C_DATA_COUNT;
 	verify_data = kmalloc(byte_cnt+2, GFP_KERNEL);
 	if (verify_data == NULL) {
-		SOLOMON_WARNNING("malloc fail!!");
+		SOLOMON_WARNING("malloc fail!!");
 		err = -1;
 	} else {
 		tAddress = address + CONTENT_HEADER_SIZE;
-		SOLOMON_WARNNING("CHECKSUM Address : 0x%08x", tAddress);
-		SOLOMON_WARNNING("CHECKSUM READ START ");
+		SOLOMON_WARNING("CHECKSUM Address : 0x%08x", tAddress);
+		SOLOMON_WARNING("CHECKSUM READ START ");
 		err = ds16_seeprom_read_nbyte(dev, tAddress, verify_data,
 				byte_cnt);
-		SOLOMON_WARNNING("CHECKSUM READ END\n");
+		SOLOMON_WARNING("CHECKSUM READ END\n");
 		if (err == 0) {
 			len = byte_cnt/2+(byte_cnt&0x01);
 			tmpContent = (unsigned short *)verify_data;
@@ -1116,9 +1116,9 @@ static int ds16_seeprom_fw_verify_checksum(struct solomon_device *dev,
 	}
 out:
 	if (err >= 0)
-		SOLOMON_WARNNING("CHECKSUM SUCCESS ");
+		SOLOMON_WARNING("CHECKSUM SUCCESS ");
 	else
-		SOLOMON_WARNNING("CHECKSUM FAIL ");
+		SOLOMON_WARNING("CHECKSUM FAIL ");
 
 	return err;
 }
@@ -1193,7 +1193,7 @@ int seeprom_download_initialize(struct solomon_device *dev)
 
 	switch (m_SEEPROM_ID) {
 		case SEEPROM_ID_MX25V1006E:
-			SOLOMON_WARNNING("-SEEPROM Name : MX25V1006E");
+			SOLOMON_WARNING("-SEEPROM Name : MX25V1006E");
 			m_SEEPROM_ReadMax_Length = 1024;
 			m_SEEPROM_WriteMax_Length = 256;
 			m_SEEPROM_Align_Sector = 4096;
@@ -1205,7 +1205,7 @@ int seeprom_download_initialize(struct solomon_device *dev)
 			break;
 
 		case SEEPROM_ID_MX25U1001E:
-			SOLOMON_WARNNING("-SEEPROM Name : MX25U1001E");
+			SOLOMON_WARNING("-SEEPROM Name : MX25U1001E");
 			m_SEEPROM_ReadMax_Length = 1024;
 			m_SEEPROM_WriteMax_Length = 32;
 			m_SEEPROM_Align_Sector = 4096;
@@ -1217,7 +1217,7 @@ int seeprom_download_initialize(struct solomon_device *dev)
 			break;
 
 		default:
-			SOLOMON_WARNNING("-SEEPROM Name : None");
+			SOLOMON_WARNING("-SEEPROM Name : None");
 			m_SEEPROM_ReadMax_Length = 1024;
 			m_SEEPROM_WriteMax_Length = 256;
 			m_SEEPROM_Align_Sector = 4096;
@@ -1246,12 +1246,12 @@ int seeprom_firmware_update(struct solomon_device *dev,
 {
 	int err = 0;
 
-	SOLOMON_WARNNING("update start >>>>>>>>>>>>>>>");
+	SOLOMON_WARNING("update start >>>>>>>>>>>>>>>");
 
 	err = seeprom_download_initialize(dev);
 
 	if (err < 0) {
-		SOLOMON_WARNNING("initialize fail!!");
+		SOLOMON_WARNING("initialize fail!!");
 		return err;
 	}
 
@@ -1261,7 +1261,7 @@ int seeprom_firmware_update(struct solomon_device *dev,
 		return err;	/* Disalbe write protect */
 
 	err = ds16_seeprom_firmware_update(dev, fw_group, all);
-	SOLOMON_WARNNING("<<<<<<<<<<<< update end err=0x%08x", err);
+	SOLOMON_WARNING("<<<<<<<<<<<< update end err=0x%08x", err);
 
 	ds16_seeprom_enable_protect(dev);	/* enalbe write protect */
 
@@ -1282,12 +1282,12 @@ int seeprom_firmware_pre_boot_up_check(struct solomon_device *dev,
 {
 	int err = 0;
 
-	SOLOMON_WARNNING("boot-up check start >>>>>>>>>>>>>>>");
+	SOLOMON_WARNING("boot-up check start >>>>>>>>>>>>>>>");
 
 	err = seeprom_download_initialize(dev);
 
 	if (err < 0) {
-		SOLOMON_WARNNING("initialize fail!!");
+		SOLOMON_WARNING("initialize fail!!");
 		return err;
 	}
 
@@ -1299,7 +1299,7 @@ int seeprom_firmware_pre_boot_up_check(struct solomon_device *dev,
 	err = ds16_seeprom_fw_update_by_header_all(dev, fw_header);
 
 	ds16_seeprom_enable_protect(dev);	/* enalbe write protect	*/
-	SOLOMON_WARNNING("<<<<<<<<<<<< boot-up check end err=0x%08x", err);
+	SOLOMON_WARNING("<<<<<<<<<<<< boot-up check end err=0x%08x", err);
 	return err;
 }
 
