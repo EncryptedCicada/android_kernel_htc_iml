@@ -13,23 +13,53 @@
 
 &soc {
 	cam_avdd_gpio_regulator: cam_avdd_fixed_regulator {
-		regulator-min-microvolt = <0x2ab980>;
-		regulator-max-microvolt = <0x2ab980>;
+		regulator-min-microvolt = <2800000>;
+		regulator-max-microvolt = <2800000>;
 		gpio = <&tlmm 46 0>;
 	};
 	cam_rear_avdd_gpio_regulator: cam_rear_avdd_fixed_regulator {
 		compatible = "regulator-fixed";
 		regulator-name = "cam_rear_avdd_gpio_regulator";
-		regulator-min-microvolt = <0x2ab980>;
-		regulator-max-microvolt = <0x2ab980>;
+		regulator-min-microvolt = <2800000>;
+		regulator-max-microvolt = <2800000>;
 		enable-active-high;
-		gpio = <&tlmm 0x33 0x00>;
+		gpio = <&tlmm 51 0>;
+		vin-supply = <&pm660l_bob>;
+	};
+
+	cam_actuator_regulator: cam_actuator_fixed_regulator {
+		compatible = "regulator-fixed";
+		regulator-name = "cam_actuator_regulator";
+		regulator-min-microvolt = <2800000>;
+		regulator-max-microvolt = <2800000>;
+		enable-active-high;
+		gpio = <&tlmm 50 0>;
+		vin-supply = <&pm660l_bob>;
+	};
+
+	cam_dvdd_gpio_regulator: cam_dvdd_fixed_regulator {
+		compatible = "regulator-fixed";
+		regulator-name = "cam_dvdd_gpio_regulator";
+		regulator-min-microvolt = <1200000>;
+		regulator-max-microvolt = <1200000>;
+		enable-active-high;
+		gpio = <&tlmm 45 0>;
+		vin-supply = <&pm660l_bob>;
+	};
+
+	cam_rear_dvdd_gpio_regulator: cam_rear_dvdd_fixed_regulator {
+		compatible = "regulator-fixed";
+		regulator-name = "cam_rear_dvdd_gpio_regulator";
+		regulator-min-microvolt = <1200000>;
+		regulator-max-microvolt = <1200000>;
+		enable-active-high;
+		gpio = <&pm660l_gpios 4 0>;
 		vin-supply = <&pm660l_bob>;
 	};
 };
 
 &cci {
-	/* Only adding stuff that overwrites or extends the base SDM660 camera DT */
+	/* Only adding stuff that overwrites or extends the base SDM660 camera DTS */
 	eeprom0: qcom,eeprom@0 {
 		qcom,eeprom-name = "htc_ov16b10_truly_back1_i";
 		qcom,slave-addr = <0xa0>;
@@ -55,6 +85,7 @@
 		qcom,cam-power-seq-delay = <0x05 0x00 0x05 0x05 0x05 0x05>;
 		cam_vana-supply = <&cam_rear_avdd_gpio_regulator>;
 		qcom,i2c-freq-mode = <0x01>;
+		/delete-property/ qcom,gpio-vaf;
 	};
 	
 	eeprom1: qcom,eeprom@1 {
@@ -141,6 +172,8 @@
 	
 	/delete-node/ qcom,actuator@1;
 	/delete-node/ qcom,actuator@2;
+	/delete-node/ qcom,ois@0;
+	/delete-node/ qcom,tof@29;
 	
 	qcom,camera@0 {
 		qcom,mount-angle = <90>;
@@ -149,6 +182,7 @@
 		cam_vana-supply = <&cam_rear_avdd_gpio_regulator>;
 		gpios = <&tlmm 0x20 0x00>,
 		<&tlmm 0x30 0x00>;
+		qcom,cci-master = <0x01>;
 	};
 	
 	qcom,camera@1 {

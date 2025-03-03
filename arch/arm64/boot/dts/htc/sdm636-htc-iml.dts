@@ -27,11 +27,6 @@
 	<0x1001b 0x201011a 0x00 0x00>;
 };
 
-&int_codec {
-	qcom,model = "sdm660-snd-card";
-};
-
-
 &dfps_data_mem {
-	status = "disabled";
+	status = "okay";
 };

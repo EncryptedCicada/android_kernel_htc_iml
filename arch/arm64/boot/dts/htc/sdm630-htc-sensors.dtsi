@@ -6,7 +6,6 @@
         vdd_ana-supply = <&pm660_l3>;
         fp-gpio-irq = <&tlmm 72 0>;
         fp-gpio-reset = <&tlmm 20 0>;
-        status = "okay";
     };
     
     sunwave_fp {
@@ -16,7 +15,6 @@
         VDD-supply = <&pm660_l3>;
         sunwave,gpio_irq = <&tlmm 72 0>;
         sunwave,gpio_reset = <&tlmm 20 0>;
-        status = "okay";
     };
     
     hall_switch {

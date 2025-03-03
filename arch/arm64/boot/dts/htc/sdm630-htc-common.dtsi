@@ -114,6 +114,16 @@
 	};
 
 	/delete-node/ qcom,qbt1000;
+	
+	ant_check_h {
+		compatible = "ant_check_h";
+		ant_check_gpio1 = <&tlmm 74 0>;
+	};
+
+	ant_check_l {
+		compatible = "ant_check_l";
+		ant_check_gpio2 = <&tlmm 61 0>;
+	};
 };
 
 &pm660l_wled {
