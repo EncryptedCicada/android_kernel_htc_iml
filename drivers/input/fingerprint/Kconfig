@@ -1,8 +1,15 @@
-menu "Fingerprint Drivers"
+#
+# Fingerprint driver configuration
+#
 
-config FINGERPRINT_GF3208
-	tristate "goodix gf3208 fingerprint drvier support"
+menuconfig INPUT_FINGERPRINT
+	bool "Fingerprints"
 	help
-	  say y here to enable goodix gf3208 fingerprint driver support!
+	  Say Y here, and a list of supported fingerprints will be displayed.
+	  This option doesn't affect the kernel.
 
-endmenu
+	  If unsure, say Y.
+
+if INPUT_FINGERPRINT
+source "drivers/input/fingerprint/goodix/Kconfig"
+endif
