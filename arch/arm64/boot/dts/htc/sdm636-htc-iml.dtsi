@@ -738,11 +738,13 @@
 	};
 };
 
+/* Remove useless node
 &hostless {
 	audio_test_mod {
 		compatible = "qcom,audio-test-mod";
 	};
 };
+*/
 
 &spmi_bus {
 	qcom,pm660@0 {
