@@ -172,8 +172,8 @@
 	
 	/delete-node/ qcom,actuator@1;
 	/delete-node/ qcom,actuator@2;
-	/delete-node/ ois0: qcom,ois@0;
-	/delete-node/ tof0: qcom,tof@29;
+	/delete-node/ qcom,ois@0;
+	/delete-node/ qcom,tof@29;
 	
 	qcom,camera@0 {
 		qcom,mount-angle = <90>;

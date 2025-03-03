@@ -397,21 +397,21 @@
 	spi_3 {
 		spi_3_active: spi_3_active {
 			mux {
-				/delete-property/ pins;
+				/delete-property/ pins;/* PROPERTY UNDEFINED IN STOCK. TODO: CONFIRM IF IT ID NEEDED */
 			};
 
 			config {
-				/delete-property/ pins;
+				/delete-property/ pins;/* PROPERTY UNDEFINED IN STOCK. TODO: CONFIRM IF IT ID NEEDED */
 			};
 		};
 
 		spi_3_sleep: spi_3_sleep {
 			mux {
-				/delete-property/ pins;
+				/delete-property/ pins;/* PROPERTY UNDEFINED IN STOCK. TODO: CONFIRM IF IT ID NEEDED */
 			};
 
 			config {
-				/delete-property/ pins;
+				/delete-property/ pins;/* PROPERTY UNDEFINED IN STOCK. TODO: CONFIRM IF IT ID NEEDED */
 			};
 		};
 	};
@@ -419,21 +419,21 @@
 	spi_6 {
 		spi_6_active: spi_6_active {
 			mux {
-				pins = "gpio22", "gpio23";
+				pins = "gpio22", "gpio23";/* TODO: CONFIRM IF IT IS CORRECT */
 			};
 
 			config {
-				pins = "gpio22", "gpio23";
+				pins = "gpio22", "gpio23";/* TODO: CONFIRM IF IT IS CORRECT */
 			};
 		};
 
 		spi_6_sleep: spi_6_sleep {
 			mux {
-				pins = "gpio22", "gpio23";
+				pins = "gpio22", "gpio23";/* TODO: CONFIRM IF IT IS CORRECT */
 			};
 
 			config {
-				pins = "gpio22", "gpio23";
+				pins = "gpio22", "gpio23";/* TODO: CONFIRM IF IT IS CORRECT */
 			};
 		};
 	};
@@ -441,21 +441,21 @@
 	wcd_usbc_analog_en2n {
 		wcd_usbc_analog_en2n_idle: wcd_usbc_ana_en2n_idle {
 			mux {
-				/delete-property/ pins;
+				/delete-property/ pins;/* PROPERTY UNDEFINED IN STOCK. TODO: CONFIRM IF IT ID NEEDED */
 			};
 
 			config {
-				/delete-property/ pins;
+				/delete-property/ pins;/* PROPERTY UNDEFINED IN STOCK. TODO: CONFIRM IF IT ID NEEDED */
 			};
 		};
 
 		wcd_usbc_analog_en2n_active: wcd_usbc_ana_en2n_active {
 			mux {
-				/delete-property/ pins;
+				/delete-property/ pins;/* PROPERTY UNDEFINED IN STOCK. TODO: CONFIRM IF IT ID NEEDED */
 			};
 
 			config {
-				/delete-property/ pins;
+				/delete-property/ pins;/* PROPERTY UNDEFINED IN STOCK. TODO: CONFIRM IF IT ID NEEDED */
 			};
 		};
 	};
@@ -463,21 +463,21 @@
 	spkr_1_sd_n {
 		spkr_1_sd_n_sleep: spkr_1_sd_n_sleep {
 			mux {
-				/delete-property/ pins;
+				/delete-property/ pins;/* PROPERTY UNDEFINED IN STOCK. TODO: CONFIRM IF IT ID NEEDED */
 			};
 
 			config {
-				/delete-property/ pins;
+				/delete-property/ pins;/* PROPERTY UNDEFINED IN STOCK. TODO: CONFIRM IF IT ID NEEDED */
 			};
 		};
 
 		spkr_1_sd_n_active: spkr_1_sd_n_active {
 			mux {
-				/delete-property/ pins;
+				/delete-property/ pins;/* PROPERTY UNDEFINED IN STOCK. TODO: CONFIRM IF IT ID NEEDED */
 			};
 
 			config {
-				/delete-property/ pins;
+				/delete-property/ pins;/* PROPERTY UNDEFINED IN STOCK. TODO: CONFIRM IF IT ID NEEDED */
 			};
 		};
 	};
@@ -485,21 +485,21 @@
 	spkr_2_sd_n {
 		spkr_2_sd_n_sleep: spkr_2_sd_n_sleep {
 			mux {
-				/delete-property/ pins;
+				/delete-property/ pins;/* PROPERTY UNDEFINED IN STOCK. TODO: CONFIRM IF IT ID NEEDED */
 			};
 
 			config {
-				/delete-property/ pins;
+				/delete-property/ pins;/* PROPERTY UNDEFINED IN STOCK. TODO: CONFIRM IF IT ID NEEDED */
 			};
 		};
 
 		spkr_2_sd_n_active: spkr_2_sd_n_active {
 			mux {
-				/delete-property/ pins;
+				/delete-property/ pins;/* PROPERTY UNDEFINED IN STOCK. TODO: CONFIRM IF IT ID NEEDED */
 			};
 
 			config {
-				/delete-property/ pins;
+				/delete-property/ pins;/* PROPERTY UNDEFINED IN STOCK. TODO: CONFIRM IF IT ID NEEDED */
 			};
 		};
 	};
@@ -507,28 +507,103 @@
 	/* DIFF: MALFORMED IN STOCK DTS. DEFINED FOR FUTURE OVERRIDES. IF USING THIS NODE, THEN REMOVE DELETE NODE DIRECTIVE BELOW */
 	trigout_a: trigout_a {
 		mux {
-			pins = "gpio49";
-			function = "qdss_cti0_a";
+			/delete-property/ pins; /* pins = "gpio49"; PROPERTY UNDEFINED IN STOCK. TODO: CONFIRM IF IT ID NEEDED */
 		};
 
 		config {
-			pins = "gpio49";
-			drive-strength = <16>;
-			bias-disable;
-			output-low;
+			/delete-property/ pins; /* pins = "gpio49"; PROPERTY UNDEFINED IN STOCK. TODO: CONFIRM IF IT ID NEEDED */
 		};
 	};
 
-	/* DIFF: MALFORMED IN STOCK DTS. PROBABLY UNUSED NODES */
-	/delete-node/ trigout_a;
-	/delete-node/ cam_actuator_vaf_active;
-	/delete-node/ cam_actuator_vaf_suspend;
-	/delete-node/ cam_tof_active;
-	/delete-node/ cam_tof_suspend;
-	/delete-node/ cam_sensor_mclk2_active;
-	/delete-node/ cam_sensor_mclk2_suspend;
-	/delete-node/ cam_sensor_front_iris_active;
-	/delete-node/ cam_sensor_front_iris_suspend;
+	cam_tof_active: cam_tof_active {
+		/* LASER */
+		mux {
+			pins = "gpio42";
+		};
+
+		config {
+			pins = "gpio42";
+		};
+	};
+
+	cam_tof_suspend: cam_tof_suspend {
+		/* LASER */
+		mux {
+			pins = "gpio42";
+		};
+
+		config {
+			pins = "gpio42";
+		};
+	};
+
+	cam_actuator_vaf_active: cam_actuator_vaf_active {
+		/* ACTUATOR POWER */
+		mux {
+			/delete-property/ pins; /* pins = "gpio50"; PROPERTY UNDEFINED IN STOCK. TODO: CONFIRM IF IT ID NEEDED */
+		};
+
+		config {
+			/delete-property/ pins; /* pins = "gpio50"; PROPERTY UNDEFINED IN STOCK. TODO: CONFIRM IF IT ID NEEDED */
+		};
+	};
+
+	cam_actuator_vaf_suspend: cam_actuator_vaf_suspend {
+		/* ACTUATOR POWER */
+		mux {
+			/delete-property/ pins; /* pins = "gpio50"; PROPERTY UNDEFINED IN STOCK. TODO: CONFIRM IF IT ID NEEDED */
+		};
+
+		config {
+			/delete-property/ pins; /* pins = "gpio50"; PROPERTY UNDEFINED IN STOCK. TODO: CONFIRM IF IT ID NEEDED */
+		};
+	};
+
+	cam_sensor_mclk2_active: cam_sensor_mclk2_active {
+		/* MCLK1 */
+		mux {
+			/* CLK */
+			/delete-property/ pins; /* pins = "gpio34"; PROPERTY UNDEFINED IN STOCK. TODO: CONFIRM IF IT ID NEEDED */
+		};
+
+		config {
+			/delete-property/ pins; /* pins = "gpio34"; PROPERTY UNDEFINED IN STOCK. TODO: CONFIRM IF IT ID NEEDED */
+		};
+	};
+
+	cam_sensor_mclk2_suspend: cam_sensor_mclk2_suspend {
+		/* MCLK1 */
+		mux {
+			/* CLK */
+			/delete-property/ pins; /* pins = "gpio34"; PROPERTY UNDEFINED IN STOCK. TODO: CONFIRM IF IT ID NEEDED */
+		};
+
+		config {
+			/delete-property/ pins; /* pins = "gpio34"; PROPERTY UNDEFINED IN STOCK. TODO: CONFIRM IF IT ID NEEDED */
+		};
+	};
+
+	cam_sensor_front_iris_active: cam_sensor_front_iris_active {
+		/* RESET */
+		mux {
+			/delete-property/ pins; /* pins = "gpio52"; PROPERTY UNDEFINED IN STOCK. TODO: CONFIRM IF IT ID NEEDED */
+		};
+
+		config {
+			/delete-property/ pins; /* pins = "gpio52"; PROPERTY UNDEFINED IN STOCK. TODO: CONFIRM IF IT ID NEEDED */
+		};
+	};
+
+	cam_sensor_front_iris_suspend: cam_sensor_front_iris_suspend {
+		/* RESET */
+		mux {
+			/delete-property/ pins; /* pins = "gpio52"; PROPERTY UNDEFINED IN STOCK. TODO: CONFIRM IF IT ID NEEDED */
+		};
+
+		config {
+			/delete-property/ pins; /* pins = "gpio52"; PROPERTY UNDEFINED IN STOCK. TODO: CONFIRM IF IT ID NEEDED */
+		};
+	};
 
 	cam_sensor_rear_active: cam_sensor_rear_active {
 		mux {
@@ -593,8 +668,8 @@
 };
 
 &cci {
-	/delete-node/ ois0: qcom,ois@0;
-	/delete-node/ tof0: qcom,tof@29;
+	/delete-node/ qcom,ois@0;
+	/delete-node/ qcom,tof@29;
 };
 
 &i2c_1 {
@@ -718,7 +793,7 @@
 			green_led: qcom,rgb_1 {
 				qcom,start-idx = <0>;
 				qcom,idx-len = <100>;
-				qcom,duty-pcts = [64 00 00 00 00 00 00 00 00 00 00>];
+				qcom,duty-pcts = [64 00 00 00 00 00 00 00 00 00 00];
 				qcom,use-blink;
 			};
 			
@@ -728,9 +803,10 @@
 				qcom,use-blink;
 			};
 
-			pm660l_wled: qcom,leds@d800 {
-				qcom,ovp-mv = <31100>;
-			};
+		};
+		
+		pm660l_wled: qcom,leds@d800 {
+			qcom,ovp-mv = <31100>;
 		};
 	};
 };
@@ -760,3 +836,4 @@
 		qcom,scale-function = <4>;
 	};
 };
+
