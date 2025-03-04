@@ -30,6 +30,4 @@
 /* DEBUG */
 #include "sdm636-htc-iml-ramoops.dtsi"
 
-&dfps_data_mem {
-	status = "okay";
-};
+&dfps_data_mem { };
