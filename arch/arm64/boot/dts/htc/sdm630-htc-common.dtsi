@@ -112,8 +112,6 @@
 		reg = <0x784138 0x4>, <0x78607c 0x4>;
 		reg-names = "sn-base", "fuse-state";
 	};
-
-	/delete-node/ qcom,qbt1000;
 	/* Disable ant_check nodes 
 	ant_check_h {
 		compatible = "ant_check_h";
