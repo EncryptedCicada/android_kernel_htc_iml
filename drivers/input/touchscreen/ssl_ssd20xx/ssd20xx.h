@@ -75,7 +75,8 @@
 #define FW_BOOTUP_FORCE_FULL_PATH ("str_force_fw.img")
 #define FW_FORCE_FULL_PATH ("/sdcard/str_force.img")
 
-#define SOLOMON_NAME ("ssd20xx") /* I2C device name */
+#define I2C_DRIVER_NAME ("ssd20xx_ts") /* driver name */
+#define SOLOMON_DEVICE_NAME ("ssd20xx") /* I2C device name */
 #define SOLOMON_I2C_ADDR (0x53)  /* I2C slave address */
 #define SOLOMON_X_MAX (1080)     /* resolution X */
 #define SOLOMON_Y_MAX (1920)     /* resolution Y */
@@ -201,42 +202,28 @@ ssize_t ssdDrvMainProcfsGestureWakeupModeWrite(struct file *pFile, const char __
  *	Debug msg
  *-----------------------------------------------------
  */
-#define solomon_debug 0
-#define solomon_warning 1
-#define solomon_timecheck 0 /* only use check the boot time */
 
-#if solomon_debug
-#define SOLOMON_DEBUG(fmt, args...)             \
-    pr_info("[SOLOMON-INFO : %-18s] " fmt "\n", \
-            __func__, ##args)
-#else
-#define SOLOMON_DEBUG(fmt, args...) \
-    do                              \
-    {                               \
-    } while (0)
-#endif
+ #ifdef CONFIG_SOLOMON_DEBUGGING
+ #define SOLOMON_DEBUG(fmt, ...) \
+     pr_debug("[SOLOMON-DEBUG] %s: " fmt "\n", __func__, ##__VA_ARGS__)
+ #else
+ #define SOLOMON_DEBUG(fmt, ...) /* No-op */
+ #endif
+ 
+ #ifdef CONFIG_SOLOMON_WARNINGS
+ #define SOLOMON_WARNING(fmt, ...) \
+     pr_warn("[SOLOMON-WARN] %s: " fmt "\n", __func__, ##__VA_ARGS__)
+ #else
+ #define SOLOMON_WARNING(fmt, ...) /* No-op */
+ #endif
+ 
+ #ifdef CONFIG_SOLOMON_TIMECHECK
+ #define SOLOMON_TIME(fmt, ...) \
+     pr_info("[SOLOMON-TIME] %s: " fmt "\n", __func__, ##__VA_ARGS__)
+ #else
+ #define SOLOMON_TIME(fmt, ...) /* No-op */
+ #endif
 
-#if solomon_warning
-#define SOLOMON_WARNING(fmt, args...)          \
-    pr_info("[SOLOMON-WARN : %-18s] " fmt "\n", \
-            __func__, ##args)
-#else
-#define SOLOMON_WARNING(fmt, args...) \
-    do                                 \
-    {                                  \
-    } while (0)
-#endif
-
-#if solomon_timecheck
-#define SOLOMON_TIME(fmt, args...) \
-    dev_info("" fmt "\n",          \
-             ##args)
-#else
-#define SOLOMON_TIME(fmt, args...) \
-    do                             \
-    {                              \
-    } while (0)
-#endif
 /*-----------------------------------------------------
  *	ESD TIMER
  *-----------------------------------------------------
@@ -678,4 +665,5 @@ int solomon_firmware_pre_boot_up_check(struct solomon_device *dev);
 int solomon_get_version_boot(struct solomon_device *dev);
 u8 *solomon_get_version(struct solomon_device *dev, u8 *ver_buff);
 int solomon_free_header(struct solomon_device *dev);
-#endif
+
+#endif /* __SSD20xx_H */

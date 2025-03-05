@@ -4062,7 +4062,7 @@ static int solomon_probe(struct i2c_client *client,
 	if (!ftdev) {
 		SOLOMON_WARNING("Create solomon device failed");
 		err = -ENOMEM;
-		goto create_solomon_failed;
+		goto create_device_failed;
 	}
 	ftdev->client = client;
 
@@ -4165,7 +4165,7 @@ static int solomon_probe(struct i2c_client *client,
 #endif	/* ESD_TIMER_ENABLE */
 
 	snprintf(phys, sizeof(phys), "%s/input1", dev_name(&client->dev));
-	misc_dev->input_dev->name = SOLOMON_NAME;
+	misc_dev->input_dev->name = SOLOMON_DEVICE_NAME;
 	misc_dev->input_dev->phys = phys;
 	misc_dev->input_dev->id.bustype = BUS_I2C;
 	misc_dev->input_dev->evbit[0] = BIT_MASK(EV_KEY) | BIT_MASK(EV_ABS);
@@ -4204,7 +4204,7 @@ static int solomon_probe(struct i2c_client *client,
 	err = request_threaded_irq(ftdev->irq, NULL,
 			solomon_interrupt,
 			IRQF_ONESHOT | IRQF_TRIGGER_FALLING,
-			SOLOMON_NAME, ftdev);
+			SOLOMON_DEVICE_NAME, ftdev);
 	if (err) {
 		pr_err("Irq request failed, ret: %d", err);
 		goto irq_request_failed;
@@ -4300,7 +4300,7 @@ create_config_failed:
 	kfree(ftdata);
 create_data_failed:
 	kfree(ftdev);
-create_solomon_failed:
+create_device_failed:
 i2c_check_failed:
 	misc_dev = NULL;
 	return err;
@@ -4540,47 +4540,43 @@ int solomon_resume_ex(void)
 	return 0;
 }
 #endif	/* CONFIG_PM */
+
 #ifdef CONFIG_OF
 static struct of_device_id ssd20xx_match_table[] = {
 	{ .compatible = "solomon,ssd20xx",},
 	{ },
 };
 #else
-#define dsx_match_table NULL
+#define ssd20xx_match_table NULL
 #endif
 
 static const struct i2c_device_id solomon_id[] = {
-	{SOLOMON_NAME, 0},
-	{},
+	{ SOLOMON_DEVICE_NAME, 0 },
+    {}
 };
 MODULE_DEVICE_TABLE(i2c, solomon_id);
 
 static struct i2c_driver solomon_driver = {
 	.driver = {
 		.owner = THIS_MODULE,
-		.name = SOLOMON_NAME,
+        .name = I2C_DRIVER_NAME,
 		.of_match_table = ssd20xx_match_table,
 #ifdef CONFIG_PM
-		.pm = &solomon_dev_pm_ops,
+        .pm = &solomon_dev_pm_ops,
 #endif	/* CONFIG_PM */
-	},
-
-	.probe = solomon_probe,
-	.remove = solomon_remove,
-	.id_table = solomon_id,
+    },
+    .probe = solomon_probe,
+    .remove = solomon_remove,
+    .id_table = solomon_id,
 };
 
 static int touch_solomon_init(void)
 {
-	int err = 0;
-
-	err = i2c_add_driver(&solomon_driver);
+	int err = i2c_add_driver(&solomon_driver);
 
 	if (err) {
 		SOLOMON_WARNING("add i2c driver failed");
-		goto out;
 	}
-out:
 	return err;
 }
 

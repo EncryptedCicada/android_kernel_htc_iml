@@ -98,4 +98,4 @@ obj-$(CONFIG_TOUCHSCREEN_ZFORCE)	+= zforce_ts.o
 obj-$(CONFIG_TOUCHSCREEN_COLIBRI_VF50)	+= colibri-vf50-ts.o
 obj-$(CONFIG_TOUCHSCREEN_ROHM_BU21023)	+= rohm_bu21023.o
 obj-$(CONFIG_TOUCHSCREEN_ST)		+= st/
-obj-$(CONFIG_TOUCHSCREEN_SSD20xx) 	+= ssl_ssd20xx/
+obj-$(CONFIG_TOUCHSCREEN_SSL_SSD20xx) 	+= ssl_ssd20xx/
